@@ -15,17 +15,30 @@ import { useState } from "react"
 
 export default function Welcome() {
     const [unit, setUnit] = useState<"lbs" | "kg">("lbs")
-    const {} = useForm({
-        initialValues: {
-            gender: "male",
-            age: null,
-            height: null,
-            weight: null,
-            activity: null,
-            goal_weight: null,
-            goal_months: null,
-            unit: "lbs",
-        },
+    const form = useForm<{
+        gender: "male" | "female"
+        age: number | null
+        height: number | null
+        weight: number | null
+        activity:
+            | "sedentary"
+            | "lightly"
+            | "moderately"
+            | "very"
+            | "extra"
+            | null
+        goal_weight: number | null
+        goal_months: number | null
+        unit: "lbs" | "kg"
+    }>({
+        gender: "male",
+        age: null,
+        height: null,
+        weight: null,
+        activity: null,
+        goal_weight: null,
+        goal_months: null,
+        unit: "lbs",
     })
 
     return (
@@ -40,6 +53,10 @@ export default function Welcome() {
                         <RadioGroup
                             className="grid grid-cols-2"
                             defaultValue="male"
+                            value={form.data.gender}
+                            onValueChange={(e) =>
+                                form.setData("gender", e as "female" | "male")
+                            }
                         >
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="male" id="male" />
@@ -54,11 +71,25 @@ export default function Welcome() {
                         <div className="grid gap-2 grid-cols-2">
                             <div className="grid gap-1 items-start">
                                 <Label>Age</Label>
-                                <Input className="w-36" type="number" />
+                                <Input
+                                    value={form.data.age || ""}
+                                    onChange={(e) =>
+                                        form.setData("age", +e.target.value)
+                                    }
+                                    className="w-36"
+                                    type="number"
+                                />
                             </div>
                             <div className="grid gap-1 items-start">
                                 <Label>Height (cm)</Label>
-                                <Input className="w-36" type="number" />
+                                <Input
+                                    onChange={(e) =>
+                                        form.setData("height", +e.target.value)
+                                    }
+                                    value={form.data.height || ""}
+                                    className="w-36"
+                                    type="number"
+                                />
                             </div>
                         </div>
                         <div className="grid gap-1 items-start">
