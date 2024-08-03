@@ -61,7 +61,7 @@ export default function Welcome() {
                         </div>
                     </div>
                     <div className="grid gap-1 items-start">
-                        <Label>Desired months to achieve goal</Label>
+                        <Label>Total months to achieve goal</Label>
                         <Input className="w-36" type="number" />
                     </div>
                 </div>
