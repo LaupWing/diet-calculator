@@ -7,11 +7,9 @@ export default function Welcome() {
         <>
             <Head title="Welcome" />
             <div className="h-screen w-screen flex items-center justify-center">
-                <div className="grid gap-1 justify-start">
-                    <Label>
-                        In how many months you want to achieve your goal
-                    </Label>
-                    <Input type="number" />
+                <div className="grid gap-1 items-start">
+                    <Label>Desired months to achieve goal</Label>
+                    <Input className="w-36" type="number" />
                 </div>
             </div>
         </>
