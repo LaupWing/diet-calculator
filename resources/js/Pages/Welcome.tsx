@@ -1,3 +1,4 @@
+import { Button } from "@/Components/ui/button"
 import { Input } from "@/Components/ui/input"
 import { Label } from "@/Components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/Components/ui/radio-group"
@@ -9,6 +10,7 @@ import {
     SelectValue,
 } from "@/Components/ui/select"
 import { Head } from "@inertiajs/react"
+import { Sparkles } from "lucide-react"
 import { useState } from "react"
 
 export default function Welcome() {
@@ -131,6 +133,9 @@ export default function Welcome() {
                             <Input className="w-36" type="number" />
                         </div>
                     </div>
+                    <Button className="flex gap-2">
+                        Generate <Sparkles size={18} />
+                    </Button>
                 </div>
             </div>
         </>
