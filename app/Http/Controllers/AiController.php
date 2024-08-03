@@ -9,7 +9,19 @@ class AiController extends Controller
 {
     public function generate(AiRequest $request)
     {
+        $data = $request->validated();
+
+        $age = $data["age"];
+        $gender = $data["gender"];
+        $height = $data["height"];
+        $weight = $data["weight"];
+        $activity = $data["activity"];
+        $goal_weight = $data["goal_weight"];
+        $goal_months = $data["goal_months"];
+        $unit = $data["unit"];
+
         $open_ai = OpenAI::client(env("OPENAI_API_KEY"));
+
         $response = $open_ai->chat()->create([
             "model" => "gpt-3.5-turbo-1106",
             "response_format" => [
@@ -32,7 +44,7 @@ class AiController extends Controller
                 ],
                 [
                     "role" => "user",
-                    "content" => "I'm a 25 year old"
+                    "content" => "I'm a $gender and $age years old. I'm $height cm tall and weigh $weight $unit. I'm $activity and I want to reach $goal_weight $unit in $goal_months months."
                 ]
             ],
             "max_tokens" => 4000,
