@@ -40,6 +40,27 @@ export default function Welcome() {
                         </div>
                     </div>
                     <div className="grid gap-1 items-start">
+                        <Label>Desired Weight</Label>
+                        <div className="flex gap-2">
+                            <Input className="w-36" type="number" />
+                            <Select
+                                value={unit}
+                                onValueChange={(e) =>
+                                    setUnit(e as "lbs" | "kg")
+                                }
+                                defaultValue={unit}
+                            >
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Weight" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="kg">KG</SelectItem>
+                                    <SelectItem value="lbs">LBS</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+                    <div className="grid gap-1 items-start">
                         <Label>Desired months to achieve goal</Label>
                         <Input className="w-36" type="number" />
                     </div>
