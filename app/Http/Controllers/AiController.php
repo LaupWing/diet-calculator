@@ -44,11 +44,13 @@ class AiController extends Controller
                     
                     'protein' - The amount of protein in grams that the user should consume daily.
 
-                    'bodyfat' - The estimated bodyfat percentage the user has.
+                    'current_bodyfat' - The estimated current bodyfat percentage the user has.
+
+                    'goal_bodyfat' - The estimated bodyfat percentage the user aim for.
 
                     'calories' - The amount of calories that the user should consume daily.
 
-                    'meal_plan' - A list of meals that the user should consume daily. Each meal should have a 'name' ,'calories', and 'meal_type' key.
+                    'meal_plan' - A list of meals that the user should consume daily. Each meal should have a 'recipe_name'(name of the recipe),'calories', and 'meal_type'(breakfast, lunch, diner, or snack) key.
                     
                     "
                 ],
