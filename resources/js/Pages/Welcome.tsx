@@ -11,10 +11,8 @@ import {
 } from "@/Components/ui/select"
 import { Head, useForm } from "@inertiajs/react"
 import { Sparkles } from "lucide-react"
-import { useState } from "react"
 
 export default function Welcome() {
-    const [unit, setUnit] = useState<"lbs" | "kg">("lbs")
     const form = useForm<{
         gender: "male" | "female"
         age: number | null
@@ -108,7 +106,7 @@ export default function Welcome() {
                                     onValueChange={(e) =>
                                         form.setData("unit", e as "lbs" | "kg")
                                     }
-                                    defaultValue={unit}
+                                    defaultValue={form.data.unit}
                                 >
                                     <SelectTrigger>
                                         <SelectValue placeholder="Weight" />
@@ -135,7 +133,7 @@ export default function Welcome() {
                                             | "extra"
                                     )
                                 }
-                                defaultValue={unit}
+                                defaultValue={form.data.unit}
                             >
                                 <SelectTrigger>
                                     <SelectValue placeholder="Physical Activity" />

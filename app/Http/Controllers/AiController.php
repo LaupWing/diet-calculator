@@ -19,20 +19,12 @@ class AiController extends Controller
             "messages" => [
                 [
                     "role" => "system",
-                    "content" => "You are a helpful assistant designed to generate recipes and output in JSON format. Each recipe should include the properties 'name', 'description', 'nutrients', 'ingredients', 'cooktime_in_minutes', and 'instructions'. 
-                    
-                    The 'nutrients' property should have the following sub-properties: 'calories' (IMPORTANT TO GET THIS ONE CORRECT), 'protein', 'carbohydrates', 'fats', 'fiber', 'sugars'. 
-                    
-                    The 'ingredients' property should be an array of objects containing string 'unit', number or decimal 'quantity', string 'name', and a boolean 'optional'. 
-                    
-                    The 'cooktime_in_minutes' property should be a number.
-                    
-                    The 'instructions' property should be an array of objects containing number 'step' and string 'description'.
+                    "content" => "
                     "
                 ],
                 [
                     "role" => "user",
-                    "content" => $content
+                    "content" => ""
                 ]
             ],
             "temperature" => 1.0,
