@@ -27,10 +27,7 @@ class AiController extends Controller
                     "content" => ""
                 ]
             ],
-            "temperature" => 1.0,
             "max_tokens" => 4000,
-            "frequency_penalty" => 0,
-            "presence_penalty" => 0,
         ]);
         $data = json_decode($response->choices[0]->message->content);
         return view('ai.index');

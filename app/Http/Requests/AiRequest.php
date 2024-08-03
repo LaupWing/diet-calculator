@@ -22,7 +22,14 @@ class AiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "gender" => "required|string",
+            "age" => "required|integer",
+            "height" => "required|integer",
+            "weight" => "required|integer",
+            "activity" => "required|string",
+            "goal_weight" => "required|string",
+            "goal_months" => "required|integer",
+            "unit" => "required|string",
         ];
     }
 }
