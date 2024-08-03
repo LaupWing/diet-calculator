@@ -27,7 +27,7 @@ class AiController extends Controller
 
                     'calories' - The amount of calories that the user should consume daily.
 
-                    'meal_plan' - A list of meals that the user should consume daily. Each meal should have a 'name' and 'calories' key.
+                    'meal_plan' - A list of meals that the user should consume daily. Each meal should have a 'name' ,'calories', and 'meal_type' key.
                     
                     "
                 ],
