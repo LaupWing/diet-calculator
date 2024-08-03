@@ -41,7 +41,7 @@ export default function Welcome() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log(form.data)
+        // form.post()
     }
 
     return (
