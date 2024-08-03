@@ -41,7 +41,7 @@ export default function Welcome() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        // form.post()
+        form.post(route("generate"))
     }
 
     return (
