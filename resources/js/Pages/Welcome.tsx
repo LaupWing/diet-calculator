@@ -70,20 +70,17 @@ export default function Welcome() {
                                         Sedentary: Little or no exercise.
                                     </SelectItem>
                                     <SelectItem value="lightly">
-                                        Lightly active: Light exercise 1-3 days
-                                        a week.
+                                        Lightly: Light exercise 1-3 days a week.
                                     </SelectItem>
                                     <SelectItem value="moderately">
-                                        Moderately active: Moderate exercise 3-5
-                                        days a week.
+                                        Moderately: Moderate 3-5 days a week.
                                     </SelectItem>
                                     <SelectItem value="very">
-                                        Very active: Hard exercise 6-7 days a
-                                        week.
+                                        Very: Hard exercise 6-7 days a week.
                                     </SelectItem>
                                     <SelectItem value="extra">
-                                        Extra active: Very hard exercise or
-                                        physical job.
+                                        Extra: Very hard exercise or physical
+                                        job.
                                     </SelectItem>
                                 </SelectContent>
                             </Select>
