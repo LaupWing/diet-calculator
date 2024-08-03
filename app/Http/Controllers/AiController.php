@@ -20,6 +20,16 @@ class AiController extends Controller
         $goal_months = $data["goal_months"];
         $unit = $data["unit"];
 
+        $activities = [
+            "sedentary" => "Little or no exercise.",
+            "lightly" => "Light exercise 1-3 days a week.",
+            "moderately" => "Moderate 3-5 days a week.",
+            "very" => "Hard exercise 6-7 days a week.",
+            "extra" => "Very hard exercise or physical job.",
+        ];
+
+        $activity = $activities[$activity];
+
         $open_ai = OpenAI::client(env("OPENAI_API_KEY"));
 
         $response = $open_ai->chat()->create([
@@ -49,6 +59,7 @@ class AiController extends Controller
             ],
             "max_tokens" => 4000,
         ]);
+
         $data = json_decode($response->choices[0]->message->content);
         logger($data);
         return redirect()->back()->with("data", $data);
