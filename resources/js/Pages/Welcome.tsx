@@ -171,7 +171,17 @@ export default function Welcome() {
                         <div className="grid gap-1 items-start">
                             <Label>Desired Weight</Label>
                             <div className="flex gap-2">
-                                <Input className="w-36" type="number" />
+                                <Input
+                                    value={form.data.weight || ""}
+                                    onChange={(e) => {
+                                        form.setData(
+                                            "goal_weight",
+                                            +e.target.value
+                                        )
+                                    }}
+                                    className="w-36"
+                                    type="number"
+                                />
                                 <Select
                                     value={form.data.unit}
                                     onValueChange={(e) =>
