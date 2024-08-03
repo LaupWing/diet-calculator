@@ -172,7 +172,7 @@ export default function Welcome() {
                             <Label>Desired Weight</Label>
                             <div className="flex gap-2">
                                 <Input
-                                    value={form.data.weight || ""}
+                                    value={form.data.goal_weight || ""}
                                     onChange={(e) => {
                                         form.setData(
                                             "goal_weight",
