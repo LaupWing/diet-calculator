@@ -45,7 +45,7 @@ export default function Welcome() {
                                 <Input className="w-36" type="number" />
                             </div>
                             <div className="grid gap-1 items-start">
-                                <Label>Height</Label>
+                                <Label>Height (cm)</Label>
                                 <Input className="w-36" type="number" />
                             </div>
                         </div>
