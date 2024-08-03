@@ -25,21 +25,15 @@ export default function Welcome() {
                         </h2>
                         <RadioGroup
                             className="grid grid-cols-2"
-                            defaultValue="option-one"
+                            defaultValue="male"
                         >
                             <div className="flex items-center space-x-2">
-                                <RadioGroupItem
-                                    value="option-one"
-                                    id="option-one"
-                                />
-                                <Label htmlFor="option-one">Option One</Label>
+                                <RadioGroupItem value="male" id="male" />
+                                <Label htmlFor="male">Male</Label>
                             </div>
                             <div className="flex items-center space-x-2">
-                                <RadioGroupItem
-                                    value="option-two"
-                                    id="option-two"
-                                />
-                                <Label htmlFor="option-two">Option Two</Label>
+                                <RadioGroupItem value="female" id="female" />
+                                <Label htmlFor="female">Female</Label>
                             </div>
                         </RadioGroup>
 
