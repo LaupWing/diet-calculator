@@ -95,11 +95,18 @@ export default function Welcome() {
                         <div className="grid gap-1 items-start">
                             <Label>Current Weight</Label>
                             <div className="flex gap-2">
-                                <Input className="w-36" type="number" />
+                                <Input
+                                    value={form.data.weight || ""}
+                                    onChange={(e) =>
+                                        form.setData("weight", +e.target.value)
+                                    }
+                                    className="w-36"
+                                    type="number"
+                                />
                                 <Select
-                                    value={unit}
+                                    value={form.data.unit}
                                     onValueChange={(e) =>
-                                        setUnit(e as "lbs" | "kg")
+                                        form.setData("unit", e as "lbs" | "kg")
                                     }
                                     defaultValue={unit}
                                 >
@@ -116,9 +123,17 @@ export default function Welcome() {
                         <div className="grid gap-1 items-start">
                             <Label>Physical Activity</Label>
                             <Select
-                                value={unit}
+                                value={form.data.activity || ""}
                                 onValueChange={(e) =>
-                                    setUnit(e as "lbs" | "kg")
+                                    form.setData(
+                                        "activity",
+                                        e as
+                                            | "sedentary"
+                                            | "lightly"
+                                            | "moderately"
+                                            | "very"
+                                            | "extra"
+                                    )
                                 }
                                 defaultValue={unit}
                             >
