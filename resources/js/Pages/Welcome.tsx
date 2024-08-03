@@ -170,11 +170,11 @@ export default function Welcome() {
                             <div className="flex gap-2">
                                 <Input className="w-36" type="number" />
                                 <Select
-                                    value={unit}
+                                    value={form.data.unit}
                                     onValueChange={(e) =>
-                                        setUnit(e as "lbs" | "kg")
+                                        form.setData("unit", e as "lbs" | "kg")
                                     }
-                                    defaultValue={unit}
+                                    defaultValue={form.data.unit}
                                 >
                                     <SelectTrigger>
                                         <SelectValue placeholder="Weight" />
@@ -188,7 +188,14 @@ export default function Welcome() {
                         </div>
                         <div className="grid gap-1 items-start">
                             <Label>Total months to achieve goal</Label>
-                            <Input className="w-36" type="number" />
+                            <Input
+                                onChange={(e) => {
+                                    form.setData("goal_months", +e.target.value)
+                                }}
+                                className="w-36"
+                                value={form.data.goal_months || ""}
+                                type="number"
+                            />
                         </div>
                     </div>
                     <Button className="flex gap-2">
