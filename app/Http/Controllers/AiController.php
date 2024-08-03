@@ -63,7 +63,6 @@ class AiController extends Controller
         ]);
 
         $data = json_decode($response->choices[0]->message->content);
-        logger($response->choices[0]->message->content);
         return redirect()->back()->with("data", $data);
     }
 }
