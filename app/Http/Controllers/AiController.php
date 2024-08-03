@@ -50,6 +50,7 @@ class AiController extends Controller
             "max_tokens" => 4000,
         ]);
         $data = json_decode($response->choices[0]->message->content);
-        return view('ai.index');
+        logger($data);
+        return redirect()->back()->with("data", $data);
     }
 }
