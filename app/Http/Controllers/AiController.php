@@ -32,7 +32,7 @@ class AiController extends Controller
                 ],
                 [
                     "role" => "user",
-                    "content" => ""
+                    "content" => "I'm a 25 year old"
                 ]
             ],
             "max_tokens" => 4000,
