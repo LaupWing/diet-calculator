@@ -27,7 +27,7 @@ class AiRequest extends FormRequest
             "height" => ["required", "integer"],
             "weight" => ["required", "integer"],
             "activity" => ["required", "string"],
-            "goal_weight" => ["required", "string"],
+            "goal_weight" => ["required", "integer"],
             "goal_months" => ["required", "integer"],
             "unit" => ["required", "string"],
         ];

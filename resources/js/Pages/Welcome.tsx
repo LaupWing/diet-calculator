@@ -9,7 +9,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/Components/ui/select"
-import { Head, useForm } from "@inertiajs/react"
+import { Head, useForm, usePage } from "@inertiajs/react"
 import { Sparkles } from "lucide-react"
 
 export default function Welcome() {
@@ -38,6 +38,8 @@ export default function Welcome() {
         goal_months: null,
         unit: "lbs",
     })
+    const page = usePage()
+    console.log(page.props.errors)
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
