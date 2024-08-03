@@ -1,5 +1,6 @@
 import { Input } from "@/Components/ui/input"
 import { Label } from "@/Components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/Components/ui/radio-group"
 import {
     Select,
     SelectContent,
@@ -22,6 +23,26 @@ export default function Welcome() {
                         <h2 className="uppercase font-bold text-sm text-slate-300">
                             Info
                         </h2>
+                        <RadioGroup
+                            className="grid grid-cols-2"
+                            defaultValue="option-one"
+                        >
+                            <div className="flex items-center space-x-2">
+                                <RadioGroupItem
+                                    value="option-one"
+                                    id="option-one"
+                                />
+                                <Label htmlFor="option-one">Option One</Label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <RadioGroupItem
+                                    value="option-two"
+                                    id="option-two"
+                                />
+                                <Label htmlFor="option-two">Option Two</Label>
+                            </div>
+                        </RadioGroup>
+
                         <div className="grid gap-2 grid-cols-2">
                             <div className="grid gap-1 items-start">
                                 <Label>Age</Label>
