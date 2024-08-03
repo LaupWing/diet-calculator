@@ -9,12 +9,24 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/Components/ui/select"
-import { Head } from "@inertiajs/react"
+import { Head, useForm } from "@inertiajs/react"
 import { Sparkles } from "lucide-react"
 import { useState } from "react"
 
 export default function Welcome() {
     const [unit, setUnit] = useState<"lbs" | "kg">("lbs")
+    const {} = useForm({
+        initialValues: {
+            gender: "male",
+            age: null,
+            height: null,
+            weight: null,
+            activity: null,
+            goal_weight: null,
+            goal_months: null,
+            unit: "lbs",
+        },
+    })
 
     return (
         <>
