@@ -18,6 +18,16 @@ export default function Welcome() {
             <Head title="Welcome" />
             <div className="h-screen w-screen flex flex-col gap-6 items-center justify-center">
                 <div className="grid gap-4">
+                    <div className="grid gap-2 grid-cols-2">
+                        <div className="grid gap-1 items-start">
+                            <Label>Age</Label>
+                            <Input className="w-36" type="number" />
+                        </div>
+                        <div className="grid gap-1 items-start">
+                            <Label>Height</Label>
+                            <Input className="w-36" type="number" />
+                        </div>
+                    </div>
                     <div className="grid gap-1 items-start">
                         <Label>Current Weight</Label>
                         <div className="flex gap-2">
