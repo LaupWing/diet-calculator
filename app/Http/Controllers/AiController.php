@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AiRequest;
-use Illuminate\Http\Request;
 use OpenAI;
 
 class AiController extends Controller
