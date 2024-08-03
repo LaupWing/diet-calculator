@@ -39,11 +39,16 @@ export default function Welcome() {
         unit: "lbs",
     })
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        console.log(form.data)
+    }
+
     return (
         <>
             <Head title="Welcome" />
             <div className="h-screen w-screen flex flex-col gap-6 items-center justify-center">
-                <form className="grid gap-10">
+                <form onSubmit={handleSubmit} className="grid gap-10">
                     <div className="grid gap-3">
                         <h2 className="uppercase font-bold text-sm text-slate-300">
                             Info
