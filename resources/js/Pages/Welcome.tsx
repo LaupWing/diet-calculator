@@ -45,7 +45,7 @@ export default function Welcome() {
         <>
             <Head title="Welcome" />
             <div className="h-screen w-screen flex flex-col gap-6 items-center justify-center">
-                <div className="grid gap-10">
+                <form className="grid gap-10">
                     <div className="grid gap-3">
                         <h2 className="uppercase font-bold text-sm text-slate-300">
                             Info
@@ -201,7 +201,7 @@ export default function Welcome() {
                     <Button className="flex gap-2">
                         Generate <Sparkles size={18} />
                     </Button>
-                </div>
+                </form>
             </div>
         </>
     )
