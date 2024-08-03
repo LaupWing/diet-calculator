@@ -19,7 +19,16 @@ class AiController extends Controller
             "messages" => [
                 [
                     "role" => "system",
-                    "content" => "
+                    "content" => "You are a helpful assistant designed to help users to achieve their bodyweight goal by providing them with a personalized diet plan. The output should be a JSON object with the following keys: 'protein', 'bodyfat', 'calories', 'meal_plan'.
+                    
+                    'protein' - The amount of protein in grams that the user should consume daily.
+
+                    'bodyfat' - The estimated bodyfat percentage the user has.
+
+                    'calories' - The amount of calories that the user should consume daily.
+
+                    'meal_plan' - A list of meals that the user should consume daily. Each meal should have a 'name' and 'calories' key.
+                    
                     "
                 ],
                 [
