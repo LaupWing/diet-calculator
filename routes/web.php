@@ -53,7 +53,7 @@ Route::post("/submit-email", function (Request $request) {
         "goal_bodyfat" => $request->goal_bodyfat,
         "protein" => $request->protein,
         "guest_id" => $request->guest_id,
-        "meals" => $request->meals,
+        "meal_plan" => $request->meal_plan,
     ]);
 })->name("submit-email");
 
