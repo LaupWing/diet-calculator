@@ -22,7 +22,7 @@ class AiController extends Controller
         $goal_months = $data["goal_months"];
         $unit = $data["unit"];
 
-        Guest::create([
+        $guest = Guest::create([
             "age" => $age,
             "gender" => $gender,
             "height" => $height,
@@ -57,9 +57,9 @@ class AiController extends Controller
                     
                     'protein' - The amount of protein in grams that the user should consume daily.
 
-                    'current_bodyfat' - The exact current bodyfat percentage the user has.
+                    'current_bodyfat' - The exact current bodyfat percentage the user has as a number.
 
-                    'goal_bodyfat' - The exact bodyfat percentage the user aim for.
+                    'goal_bodyfat' - The exact bodyfat percentage the user aim for as a number.
 
                     'calories' - The amount of calories that the user should consume daily.
 
@@ -76,7 +76,7 @@ class AiController extends Controller
         ]);
 
         $data = json_decode($response->choices[0]->message->content);
-        return redirect(route("generated"))->with("data", $data);
+        return redirect(route("generated"))->with("data", $data)->with("guest_id", $guest->id);
     }
 
     public function generated()

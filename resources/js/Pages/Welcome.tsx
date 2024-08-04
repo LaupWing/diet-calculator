@@ -40,8 +40,6 @@ export default function Welcome() {
         unit: "lbs",
     })
     const page = usePage()
-    console.log(page.props.errors)
-    console.log(page.props.flash)
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()

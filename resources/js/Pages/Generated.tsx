@@ -32,6 +32,7 @@ export default function Welcome() {
     if (!page.props.flash.data) {
         router.replace("/")
     }
+    console.log(page.props.flash)
     const form = useForm({
         email: "",
         protein: page.props.flash.data.protein,
