@@ -57,7 +57,10 @@ export default function Welcome() {
                         <LoaderCircle size={40} className="animate-spin" />
                     </div>
                 )}
-                <form onSubmit={handleSubmit} className="grid gap-10">
+                <form
+                    onSubmit={handleSubmit}
+                    className="grid gap-10 max-w-[300px]"
+                >
                     <div className="grid gap-3">
                         <h2 className="uppercase font-bold text-sm text-slate-300">
                             Info
@@ -212,6 +215,10 @@ export default function Welcome() {
                         <h2 className="uppercase font-bold text-sm text-slate-300">
                             Goal
                         </h2>
+                        <p className="text-xs">
+                            Please be realistic with your goals. A healthy
+                            weight loss is 1lbs or 0.5kg per week.
+                        </p>
                         <div className="grid gap-1 items-start">
                             <Label
                                 className={
