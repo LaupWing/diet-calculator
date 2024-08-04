@@ -70,13 +70,13 @@ export default function Welcome() {
                         </DialogTrigger>
                         <DialogContent>
                             <DialogHeader>
-                                <DialogTitle>
-                                    Are you absolutely sure?
-                                </DialogTitle>
+                                <DialogTitle>Example Diet</DialogTitle>
                                 <DialogDescription>
-                                    This action cannot be undone. This will
-                                    permanently delete your account and remove
-                                    your data from our servers.
+                                    This is just an example diet plan based on
+                                    your current bodyfat % and your goal bodyfat
+                                    %. But remember, this is just an example and
+                                    you should always consult a professional
+                                    before starting a diet.
                                 </DialogDescription>
                             </DialogHeader>
                         </DialogContent>
