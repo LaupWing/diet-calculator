@@ -68,10 +68,10 @@ export default function Welcome() {
                                 Show Example Diet
                             </Button>
                         </DialogTrigger>
-                        <DialogContent>
+                        <DialogContent className="max-w-[90%] rounded">
                             <DialogHeader>
                                 <DialogTitle>Example Diet</DialogTitle>
-                                <DialogDescription>
+                                <DialogDescription className="text-xs text-left">
                                     This is just an example diet plan based on
                                     your current bodyfat % and your goal bodyfat
                                     %. But remember, this is just an example and
