@@ -31,6 +31,7 @@ export default function Welcome() {
                     <div className="flex flex-col">
                         <h2>Current Bodyfat %</h2>
                         <CountUp
+                            duration={1}
                             className="font-bold text-2xl text-red-400"
                             end={page.props.flash.data.current_bodyfat}
                         />
@@ -38,6 +39,8 @@ export default function Welcome() {
                     <div className="flex flex-col">
                         <h2>Goal Bodyfat %</h2>
                         <CountUp
+                            delay={0.5}
+                            duration={1}
                             className="font-bold text-2xl text-blue-400"
                             end={page.props.flash.data.goal_bodyfat}
                         />
@@ -45,6 +48,8 @@ export default function Welcome() {
                     <div className="flex flex-col">
                         <h2>Maximum calories per day</h2>
                         <CountUp
+                            delay={1}
+                            duration={2}
                             className="font-bold text-2xl text-green-500"
                             end={page.props.flash.data.calories}
                         />
