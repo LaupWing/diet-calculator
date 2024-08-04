@@ -1,3 +1,4 @@
+import { Button } from "@/Components/ui/button"
 import { Head, usePage } from "@inertiajs/react"
 import CountUp from "react-countup"
 
@@ -19,10 +20,10 @@ export default function Welcome() {
                         />
                     </div>
                     <div className="flex flex-col">
-                        <h2>Current Bodyfat %</h2>
+                        <h2>Goal Bodyfat %</h2>
                         <CountUp
-                            className="font-bold text-2xl text-red-400"
-                            end={25}
+                            className="font-bold text-2xl text-blue-400"
+                            end={15}
                         />
                     </div>
                     <div className="flex flex-col">
@@ -32,6 +33,7 @@ export default function Welcome() {
                             end={1900}
                         />
                     </div>
+                    <Button className="mx-auto mt-10">Show Example Diet</Button>
                 </div>
             </div>
         </>
