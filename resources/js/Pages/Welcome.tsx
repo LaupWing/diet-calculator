@@ -11,7 +11,7 @@ import {
 } from "@/Components/ui/select"
 import { cn } from "@/lib/utils"
 import { Head, useForm, usePage } from "@inertiajs/react"
-import { Sparkles } from "lucide-react"
+import { LoaderCircle, Sparkles } from "lucide-react"
 
 export default function Welcome() {
     const form = useForm<{
@@ -52,6 +52,11 @@ export default function Welcome() {
         <>
             <Head title="Welcome" />
             <div className="h-screen w-screen flex flex-col gap-6 items-center justify-center">
+                {form.processing && (
+                    <div className="absolute flex items-center justify-center inset-0 bg-background/80 z-50">
+                        <LoaderCircle size={40} className="animate-spin" />
+                    </div>
+                )}
                 <form onSubmit={handleSubmit} className="grid gap-10">
                     <div className="grid gap-3">
                         <h2 className="uppercase font-bold text-sm text-slate-300">

@@ -45,9 +45,9 @@ class AiController extends Controller
                     
                     'protein' - The amount of protein in grams that the user should consume daily.
 
-                    'current_bodyfat' - The estimated current bodyfat percentage the user has.
+                    'current_bodyfat' - The exact current bodyfat percentage the user has.
 
-                    'goal_bodyfat' - The estimated bodyfat percentage the user aim for.
+                    'goal_bodyfat' - The exact bodyfat percentage the user aim for.
 
                     'calories' - The amount of calories that the user should consume daily.
 
