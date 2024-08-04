@@ -41,7 +41,14 @@ Route::post("/submit-email", function (Request $request) {
     //     "guest_id" => $request->session()->get("guest_id"),
     // ]);
 
-    return redirect()->back();
+    return redirect()->back()->with("data", [
+        "email" => $request->email,
+        "calories" => $request->calories,
+        "current_bodyfat" => $request->current_bodyfat,
+        "goal_bodyfat" => $request->goal_bodyfat,
+        "protein" => $request->protein,
+        "guest_id" => $request->guest_id,
+    ]);
 })->name("submit-email");
 
 Route::get('/dashboard', function () {
