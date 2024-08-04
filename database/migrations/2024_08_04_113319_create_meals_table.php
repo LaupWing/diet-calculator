@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('recipe_name');
             $table->integer('calories');
             $table->string('meal_type');
+            $table->foreignId('guest_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
