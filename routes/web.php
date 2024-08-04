@@ -18,6 +18,10 @@ Route::get('/', function () {
 Route::post("/generate", [AiController::class, "generate"])->name("generate");
 Route::get("/generated", [AiController::class, "generated"])->name("generated");
 
+Route::post("/submit-email", function () {
+    return redirect()->back();
+})->name("submit-email");
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
