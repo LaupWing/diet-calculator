@@ -38,7 +38,7 @@ Route::post("/submit-email", function (Request $request) {
         "protein" => $request->protein ?? 0,
     ]);
 
-    foreach ($request->meals as $meal) {
+    foreach ($request->meal_plan as $meal) {
         $guest->meals()->create([
             "recipe_name" => $meal["recipe_name"],
             "calories" => $meal["calories"],
