@@ -11,8 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('guests', function (Blueprint $table) {
+        Schema::create("guest", function (Blueprint $table) {
             $table->id();
+            $table->string("age");
+            $table->string("gender");
+            $table->string("height");
+            $table->string("weight");
+            $table->string("activity");
+            $table->string("goal_weight");
+            $table->string("goal_months");
+            $table->string("unit");
             $table->timestamps();
         });
     }
