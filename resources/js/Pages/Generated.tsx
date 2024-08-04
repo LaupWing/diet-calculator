@@ -79,7 +79,7 @@ export default function Welcome() {
                                     before starting a diet.
                                 </DialogDescription>
                             </DialogHeader>
-                            <ul className="grid gap-1">
+                            <ul className="grid gap-1 text-sm">
                                 {page.props.flash.data.meal_plan.map((meal) => (
                                     <li
                                         key={meal.recipe_name}
