@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create("submissions", function (Blueprint $table) {
+        Schema::create('meals', function (Blueprint $table) {
             $table->id();
-            $table->string("email");
-            $table->string("calories");
-            $table->string("current_bodyfat");
-            $table->string("goal_bodyfat");
-            $table->foreignId("guest_id")->constrained()->onDelete("cascade");
             $table->timestamps();
         });
     }
@@ -27,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists("submissions");
+        Schema::dropIfExists('meals');
     }
 };
