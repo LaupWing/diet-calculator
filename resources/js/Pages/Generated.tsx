@@ -9,7 +9,7 @@ import {
 } from "@/Components/ui/dialog"
 import { Input } from "@/Components/ui/input"
 import { Label } from "@/Components/ui/label"
-import { Head, router, usePage } from "@inertiajs/react"
+import { Head, router, useForm, usePage } from "@inertiajs/react"
 import CountUp from "react-countup"
 
 export default function Welcome() {
@@ -32,6 +32,14 @@ export default function Welcome() {
     if (!page.props.flash.data) {
         router.replace("/")
     }
+    const form = useForm({
+        email: "",
+        protein: page.props.flash.data.protein,
+        current_bodyfat: page.props.flash.data.current_bodyfat,
+        calories: page.props.flash.data.calories,
+        goal_bodyfat: page.props.flash.data.goal_bodyfat,
+        meal_plan: page.props.flash.data.meal_plan,
+    })
 
     return (
         <>
