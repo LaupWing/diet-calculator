@@ -24,21 +24,21 @@ Route::get("/generated", [AiController::class, "generated"])->name("generated");
 Route::post("/submit-email", function (Request $request) {
     $request->validate([
         "email" => ["required", "email"],
-        "guest_id" => ["required", "integer"],
-        // "calories" => ["required", "integer"],
-        // "current_bodyfat" => ["required", "integer"],
-        // "goal_bodyfat" => ["required", "integer"],
     ]);
 
+    logger($request->all());
+
     $guest  = Guest::where("id", $request->guest_id)->firstOrFail();
-    logger($guest);
+
     $guest->submissions()->create([
         "email" => $request->email,
         "calories" => $request->calories ?? 0,
         "current_bodyfat" => $request->current_bodyfat ?? 0,
         "goal_bodyfat" => $request->goal_bodyfat ?? 0,
-
+        "protein" => $request->protein ?? 0,
     ]);
+
+
 
     // Submission::create([
     //     "email" => $request->email,
