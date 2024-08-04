@@ -14,4 +14,9 @@ class Meal extends Model
         "calories",
         "meal_type"
     ];
+
+    public function guest()
+    {
+        return $this->belongsTo(Guest::class);
+    }
 }

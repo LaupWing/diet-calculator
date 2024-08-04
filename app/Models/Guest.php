@@ -18,4 +18,14 @@ class Guest extends Model
         "goal_months",
         "unit",
     ];
+
+    public function submissions()
+    {
+        return $this->hasMany(Submission::class);
+    }
+
+    public function meals()
+    {
+        return $this->hasMany(Meal::class);
+    }
 }

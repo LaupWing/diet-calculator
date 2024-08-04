@@ -16,4 +16,9 @@ class Submission extends Model
         "goal_bodyfat",
         "guest_id"
     ];
+
+    public function guest()
+    {
+        return $this->belongsTo(Guest::class);
+    }
 }
