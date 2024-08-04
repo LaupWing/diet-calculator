@@ -41,6 +41,11 @@ export default function Welcome() {
         meal_plan: page.props.flash.data.meal_plan,
     })
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        console.log(form.data)
+    }
+
     return (
         <>
             <Head title="Welcome" />
@@ -78,7 +83,7 @@ export default function Welcome() {
                                 Show Example Diet
                             </Button>
                         </DialogTrigger>
-                        <DialogContent className="max-w-[90%] rounded">
+                        <DialogContent className="w-[90%] max-w-sm rounded">
                             <DialogHeader>
                                 <DialogTitle>Example Diet</DialogTitle>
                                 <DialogDescription className="text-xs text-left">
@@ -100,17 +105,30 @@ export default function Welcome() {
                                     </li>
                                 ))}
                             </ul>
-                            <div className="mt-4 grid gap-2 text-sm">
+                            <form
+                                onSubmit={handleSubmit}
+                                className="mt-4 grid gap-2 text-sm"
+                            >
                                 <p>
                                     Want to receive a pdf with the info? Fill in
                                     your email below
                                 </p>
                                 <div className="grid gap-1">
                                     <Label>Email</Label>
-                                    <Input type="email" />
+                                    <Input
+                                        required
+                                        value={form.data.email}
+                                        onChange={(e) =>
+                                            form.setData(
+                                                "email",
+                                                e.target.value
+                                            )
+                                        }
+                                        type="email"
+                                    />
                                 </div>
                                 <Button>Send</Button>
-                            </div>
+                            </form>
                         </DialogContent>
                     </Dialog>
                 </div>
