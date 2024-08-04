@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create("submissions", function (Blueprint $table) {
             $table->id();
             $table->string("email");
-            $table->string("calories");
-            $table->string("current_bodyfat");
-            $table->string("goal_bodyfat");
+            $table->integer("calories");
+            $table->integer("protein");
+            $table->integer("current_bodyfat");
+            $table->integer("goal_bodyfat");
             $table->foreignId("guest_id")->constrained()->onDelete("cascade");
             $table->timestamps();
         });

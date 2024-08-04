@@ -32,6 +32,13 @@ Route::post("/submit-email", function (Request $request) {
 
     $guest  = Guest::where("id", $request->guest_id)->firstOrFail();
     logger($guest);
+    $guest->submissions()->create([
+        "email" => $request->email,
+        "calories" => $request->calories ?? 0,
+        "current_bodyfat" => $request->current_bodyfat ?? 0,
+        "goal_bodyfat" => $request->goal_bodyfat ?? 0,
+
+    ]);
 
     // Submission::create([
     //     "email" => $request->email,

@@ -14,7 +14,8 @@ class Submission extends Model
         "calories",
         "current_bodyfat",
         "goal_bodyfat",
-        "guest_id"
+        "guest_id",
+        "protein",
     ];
 
     public function guest()
