@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::post("/generate", [AiController::class, "generate"])->name("generate");
+Route::get("/generated", [AiController::class, "generated"])->name("generated");
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

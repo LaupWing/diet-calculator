@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AiRequest;
+use Inertia\Inertia;
 use OpenAI;
 
 class AiController extends Controller
@@ -63,6 +64,11 @@ class AiController extends Controller
         ]);
 
         $data = json_decode($response->choices[0]->message->content);
-        return redirect()->back()->with("data", $data);
+        return redirect(route("generated"));
+    }
+
+    public function generated()
+    {
+        return Inertia::render("Generated");
     }
 }
