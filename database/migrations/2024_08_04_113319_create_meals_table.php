@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('meals', function (Blueprint $table) {
             $table->id();
+            $table->string('recipe_name');
+            $table->integer('calories');
+            $table->string('meal_type');
             $table->timestamps();
         });
     }
