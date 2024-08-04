@@ -56,7 +56,22 @@ export default function Welcome() {
             })
             return
         }
-        form.post(route("submit-email"))
+        form.post(route("submit-email"), {
+            preserveState: true,
+            onSuccess: () => {
+                toast({
+                    title: "Success",
+                    description: "Email sent",
+                })
+            },
+            onError: () => {
+                toast({
+                    title: "Error",
+                    description: "An error occurred",
+                    variant: "destructive",
+                })
+            },
+        })
         console.log(form.data)
     }
 
