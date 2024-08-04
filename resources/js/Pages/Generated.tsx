@@ -7,6 +7,8 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/Components/ui/dialog"
+import { Input } from "@/Components/ui/input"
+import { Label } from "@/Components/ui/label"
 import { Head, router, usePage } from "@inertiajs/react"
 import CountUp from "react-countup"
 
@@ -90,6 +92,17 @@ export default function Welcome() {
                                     </li>
                                 ))}
                             </ul>
+                            <div className="mt-4 grid gap-2 text-sm">
+                                <p>
+                                    Want to receive a pdf with the info? Fill in
+                                    your email below
+                                </p>
+                                <div className="grid gap-1">
+                                    <Label>Email</Label>
+                                    <Input type="email" />
+                                </div>
+                                <Button>Send</Button>
+                            </div>
                         </DialogContent>
                     </Dialog>
                 </div>
