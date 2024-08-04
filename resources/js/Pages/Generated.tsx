@@ -9,6 +9,7 @@ import {
 } from "@/Components/ui/dialog"
 import { Input } from "@/Components/ui/input"
 import { Label } from "@/Components/ui/label"
+import { useToast } from "@/Components/ui/use-toast"
 import { Head, router, useForm, usePage } from "@inertiajs/react"
 import CountUp from "react-countup"
 
@@ -41,13 +42,21 @@ export default function Welcome() {
         calories: page.props.flash.data.calories,
         goal_bodyfat: page.props.flash.data.goal_bodyfat,
         meal_plan: page.props.flash.data.meal_plan,
+        guest_id: page.props.flash.guest_id,
     })
+    const { toast } = useToast()
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (form.data.email === "") {
+            toast({
+                title: "Error",
+                description: "Email is required",
+                variant: "destructive",
+            })
             return
         }
+        form.post(route("submit-email"))
         console.log(form.data)
     }
 

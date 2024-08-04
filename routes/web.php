@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\AiController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Guest;
+use App\Models\Submission;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -18,7 +21,26 @@ Route::get('/', function () {
 Route::post("/generate", [AiController::class, "generate"])->name("generate");
 Route::get("/generated", [AiController::class, "generated"])->name("generated");
 
-Route::post("/submit-email", function () {
+Route::post("/submit-email", function (Request $request) {
+    $request->validate([
+        "email" => ["required", "email"],
+        "guest_id" => ["required", "integer"],
+        // "calories" => ["required", "integer"],
+        // "current_bodyfat" => ["required", "integer"],
+        // "goal_bodyfat" => ["required", "integer"],
+    ]);
+
+    $guest  = Guest::where("id", $request->guest_id)->firstOrFail();
+    logger($guest);
+
+    // Submission::create([
+    //     "email" => $request->email,
+    //     // "calories" => $request->calories,
+    //     // "current_bodyfat" => $request->current_bodyfat,
+    //     // "goal_bodyfat" => $request->goal_bodyfat,
+    //     "guest_id" => $request->session()->get("guest_id"),
+    // ]);
+
     return redirect()->back();
 })->name("submit-email");
 
