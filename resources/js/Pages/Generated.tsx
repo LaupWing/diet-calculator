@@ -26,13 +26,14 @@ export default function Welcome() {
                     meal_type: "breakfast" | "lunch" | "diner" | "snack"
                 }[]
             }
+            guest_id: string
         }
     }>()
 
     if (!page.props.flash.data) {
         router.replace("/")
     }
-    console.log(page.props.flash)
+
     const form = useForm({
         email: "",
         protein: page.props.flash.data.protein,
@@ -44,6 +45,9 @@ export default function Welcome() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        if (form.data.email === "") {
+            return
+        }
         console.log(form.data)
     }
 
