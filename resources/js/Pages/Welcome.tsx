@@ -9,6 +9,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/Components/ui/select"
+import { cn } from "@/lib/utils"
 import { Head, useForm, usePage } from "@inertiajs/react"
 import { Sparkles } from "lucide-react"
 
@@ -76,37 +77,62 @@ export default function Welcome() {
 
                         <div className="grid gap-2 grid-cols-2">
                             <div className="grid gap-1 items-start">
-                                <Label>Age</Label>
+                                <Label
+                                    className={
+                                        form.errors.age && "text-red-400"
+                                    }
+                                >
+                                    Age
+                                </Label>
                                 <Input
                                     value={form.data.age || ""}
                                     onChange={(e) =>
                                         form.setData("age", +e.target.value)
                                     }
-                                    className="w-36"
+                                    className={cn(
+                                        "w-36",
+                                        form.errors.age && "border-red-400"
+                                    )}
                                     type="number"
                                 />
                             </div>
                             <div className="grid gap-1 items-start">
-                                <Label>Height (cm)</Label>
+                                <Label
+                                    className={
+                                        form.errors.height && "text-red-400"
+                                    }
+                                >
+                                    Height (cm)
+                                </Label>
                                 <Input
                                     onChange={(e) =>
                                         form.setData("height", +e.target.value)
                                     }
                                     value={form.data.height || ""}
-                                    className="w-36"
+                                    className={cn(
+                                        "w-36",
+                                        form.errors.height && "border-red-400"
+                                    )}
                                     type="number"
                                 />
                             </div>
                         </div>
                         <div className="grid gap-1 items-start">
-                            <Label>Current Weight</Label>
+                            <Label
+                                className={form.errors.weight && "text-red-400"}
+                            >
+                                Current Weight
+                            </Label>
                             <div className="flex gap-2">
                                 <Input
                                     value={form.data.weight || ""}
                                     onChange={(e) =>
                                         form.setData("weight", +e.target.value)
                                     }
-                                    className="w-36"
+                                    className={cn(
+                                        "w-36",
+                                        form.errors.weight && "border-red-400"
+                                    )}
                                     type="number"
                                 />
                                 <Select
@@ -127,7 +153,13 @@ export default function Welcome() {
                             </div>
                         </div>
                         <div className="grid gap-1 items-start">
-                            <Label>Physical Activity</Label>
+                            <Label
+                                className={
+                                    form.errors.activity && "text-red-400"
+                                }
+                            >
+                                Physical Activity
+                            </Label>
                             <Select
                                 value={form.data.activity || ""}
                                 onValueChange={(e) =>
@@ -143,7 +175,11 @@ export default function Welcome() {
                                 }
                                 defaultValue={form.data.unit}
                             >
-                                <SelectTrigger>
+                                <SelectTrigger
+                                    className={
+                                        form.errors.activity && "border-red-400"
+                                    }
+                                >
                                     <SelectValue placeholder="Physical Activity" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -172,7 +208,13 @@ export default function Welcome() {
                             Goal
                         </h2>
                         <div className="grid gap-1 items-start">
-                            <Label>Desired Weight</Label>
+                            <Label
+                                className={
+                                    form.errors.goal_weight && "text-red-400"
+                                }
+                            >
+                                Desired Weight
+                            </Label>
                             <div className="flex gap-2">
                                 <Input
                                     value={form.data.goal_weight || ""}
@@ -182,7 +224,11 @@ export default function Welcome() {
                                             +e.target.value
                                         )
                                     }}
-                                    className="w-36"
+                                    className={cn(
+                                        "w-36",
+                                        form.errors.goal_weight &&
+                                            "border-red-400"
+                                    )}
                                     type="number"
                                 />
                                 <Select
@@ -203,12 +249,21 @@ export default function Welcome() {
                             </div>
                         </div>
                         <div className="grid gap-1 items-start">
-                            <Label>Total months to achieve goal</Label>
+                            <Label
+                                className={
+                                    form.errors.goal_months && "text-red-400"
+                                }
+                            >
+                                Total months to achieve goal
+                            </Label>
                             <Input
                                 onChange={(e) => {
                                     form.setData("goal_months", +e.target.value)
                                 }}
-                                className="w-36"
+                                className={cn(
+                                    "w-36",
+                                    form.errors.goal_months && "border-red-400"
+                                )}
                                 value={form.data.goal_months || ""}
                                 type="number"
                             />
