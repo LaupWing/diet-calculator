@@ -8,7 +8,9 @@ export default function Welcome() {
     return (
         <>
             <Head title="Welcome" />
-            <div className="h-screen w-screen flex flex-col gap-6 items-center justify-center"></div>
+            <div className="h-screen w-screen flex flex-col gap-6 items-center justify-center">
+                <div>Showing results</div>
+            </div>
         </>
     )
 }
