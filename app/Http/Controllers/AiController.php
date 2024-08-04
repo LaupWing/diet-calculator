@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AiRequest;
+use App\Models\Guest;
 use Inertia\Inertia;
 use OpenAI;
 
@@ -20,6 +21,17 @@ class AiController extends Controller
         $goal_weight = $data["goal_weight"];
         $goal_months = $data["goal_months"];
         $unit = $data["unit"];
+
+        Guest::create([
+            "age" => $age,
+            "gender" => $gender,
+            "height" => $height,
+            "weight" => $weight,
+            "activity" => $activity,
+            "goal_weight" => $goal_weight,
+            "goal_months" => $goal_months,
+            "unit" => $unit,
+        ]);
 
         $activities = [
             "sedentary" => "Little or no exercise.",
