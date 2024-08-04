@@ -1,11 +1,27 @@
 import { Button } from "@/Components/ui/button"
-import { Head, usePage } from "@inertiajs/react"
+import { Head, router, usePage } from "@inertiajs/react"
 import CountUp from "react-countup"
 
 export default function Welcome() {
-    const page = usePage()
-    console.log(page.props.errors)
-    console.log(page.props.flash)
+    const page = usePage<{
+        flash: {
+            data: {
+                protein: number
+                current_bodyfat: number
+                calories: number
+                goal_bodyfat: number
+                meal_plan: {
+                    recipe_name: string
+                    calories: number
+                    meal_type: "breakfast" | "lunch" | "diner" | "snack"
+                }[]
+            }
+        }
+    }>()
+
+    if (!page.props.flash.data) {
+        router.replace("/")
+    }
 
     return (
         <>
@@ -16,21 +32,21 @@ export default function Welcome() {
                         <h2>Current Bodyfat %</h2>
                         <CountUp
                             className="font-bold text-2xl text-red-400"
-                            end={25}
+                            end={page.props.flash.data.current_bodyfat}
                         />
                     </div>
                     <div className="flex flex-col">
                         <h2>Goal Bodyfat %</h2>
                         <CountUp
                             className="font-bold text-2xl text-blue-400"
-                            end={15}
+                            end={page.props.flash.data.goal_bodyfat}
                         />
                     </div>
                     <div className="flex flex-col">
                         <h2>Maximum calories per day</h2>
                         <CountUp
                             className="font-bold text-2xl text-green-500"
-                            end={1900}
+                            end={page.props.flash.data.calories}
                         />
                     </div>
                     <Button className="mx-auto mt-10">Show Example Diet</Button>
