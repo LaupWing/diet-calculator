@@ -106,6 +106,15 @@ export default function Welcome() {
                             end={page.props.flash.data.calories}
                         />
                     </div>
+                    <div className="flex flex-col">
+                        <h2>Protein goal per day</h2>
+                        <CountUp
+                            delay={1.5}
+                            duration={1}
+                            className="font-bold text-2xl text-purple-500"
+                            end={page.props.flash.data.protein}
+                        />
+                    </div>
                     <Dialog>
                         <DialogTrigger asChild>
                             <Button className="mx-auto mt-10">

@@ -38,15 +38,13 @@ Route::post("/submit-email", function (Request $request) {
         "protein" => $request->protein ?? 0,
     ]);
 
-
-
-    // Submission::create([
-    //     "email" => $request->email,
-    //     // "calories" => $request->calories,
-    //     // "current_bodyfat" => $request->current_bodyfat,
-    //     // "goal_bodyfat" => $request->goal_bodyfat,
-    //     "guest_id" => $request->session()->get("guest_id"),
-    // ]);
+    foreach ($request->meals as $meal) {
+        $guest->meals()->create([
+            "recipe_name" => $meal["recipe_name"],
+            "calories" => $meal["calories"],
+            "meal_type" => $meal["meal_type"],
+        ]);
+    }
 
     return redirect()->back()->with("data", [
         "email" => $request->email,
@@ -55,6 +53,7 @@ Route::post("/submit-email", function (Request $request) {
         "goal_bodyfat" => $request->goal_bodyfat,
         "protein" => $request->protein,
         "guest_id" => $request->guest_id,
+        "meals" => $request->meals,
     ]);
 })->name("submit-email");
 
