@@ -1,4 +1,12 @@
 import { Button } from "@/Components/ui/button"
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/Components/ui/dialog"
 import { Head, router, usePage } from "@inertiajs/react"
 import CountUp from "react-countup"
 
@@ -54,7 +62,25 @@ export default function Welcome() {
                             end={page.props.flash.data.calories}
                         />
                     </div>
-                    <Button className="mx-auto mt-10">Show Example Diet</Button>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button className="mx-auto mt-10">
+                                Show Example Diet
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>
+                                    Are you absolutely sure?
+                                </DialogTitle>
+                                <DialogDescription>
+                                    This action cannot be undone. This will
+                                    permanently delete your account and remove
+                                    your data from our servers.
+                                </DialogDescription>
+                            </DialogHeader>
+                        </DialogContent>
+                    </Dialog>
                 </div>
             </div>
         </>
