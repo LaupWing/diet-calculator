@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\AiController;
 use App\Http\Controllers\ProfileController;
+use App\Mail\DietInfo;
 use App\Models\Guest;
 use App\Models\Submission;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -39,6 +41,15 @@ Route::post("/submit-email", function (Request $request) {
         "goal_bodyfat" => $request->goal_bodyfat ?? 0,
         "protein" => $request->protein ?? 0,
     ]);
+    Mail::to($request->email)->send(new DietInfo([
+        "email" => $request->email,
+        "calories" => $request->calories,
+        "current_bodyfat" => $request->current_bodyfat,
+        "goal_bodyfat" => $request->goal_bodyfat,
+        "protein" => $request->protein,
+        "guest_id" => $request->guest_id,
+        "meal_plan" => $request->meal_plan,
+    ]));
 
     foreach ($request->meal_plan as $meal) {
         $guest->meals()->create([
