@@ -168,7 +168,7 @@ export default function Welcome() {
                                         type="email"
                                     />
                                 </div>
-                                <Button>Send</Button>
+                                <Button disabled={form.processing}>Send</Button>
                             </form>
                         </DialogContent>
                     </Dialog>
