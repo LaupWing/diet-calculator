@@ -42,6 +42,7 @@ Route::post("/submit-email", function (Request $request) {
         "protein" => $request->protein ?? 0,
     ]);
     Mail::to($request->email)->send(new DietInfo([
+        "email" => $request->email,
         "calories" => $request->calories,
         "current_bodyfat" => $request->current_bodyfat,
         "goal_bodyfat" => $request->goal_bodyfat,
