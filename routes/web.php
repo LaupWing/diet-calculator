@@ -28,6 +28,10 @@ Route::post("/submit-email", function (Request $request) {
 
     $guest  = Guest::where("id", $request->guest_id)->firstOrFail();
 
+    if ($guest->submissions()->where("email", $request->email)->exists()) {
+        return redirect()->back()->with("error", "You have already submitted your email.");
+    }
+
     $guest->submissions()->create([
         "email" => $request->email,
         "calories" => $request->calories ?? 0,
