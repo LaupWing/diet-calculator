@@ -26,8 +26,6 @@ Route::post("/submit-email", function (Request $request) {
         "email" => ["required", "email"],
     ]);
 
-    logger($request->all());
-
     $guest  = Guest::where("id", $request->guest_id)->firstOrFail();
 
     $guest->submissions()->create([
