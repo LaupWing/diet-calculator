@@ -11,6 +11,7 @@ import { Input } from "@/Components/ui/input"
 import { Label } from "@/Components/ui/label"
 import { useToast } from "@/Components/ui/use-toast"
 import { Head, router, useForm, usePage } from "@inertiajs/react"
+import { useState } from "react"
 import CountUp from "react-countup"
 
 export default function Welcome() {
@@ -30,6 +31,7 @@ export default function Welcome() {
             guest_id: string
         }
     }>()
+    const [open, setOpen] = useState(false)
 
     if (!page.props.flash.data) {
         router.replace("/")
@@ -72,7 +74,6 @@ export default function Welcome() {
                 })
             },
         })
-        console.log(form.data)
     }
 
     return (
@@ -115,7 +116,7 @@ export default function Welcome() {
                             end={page.props.flash.data.protein}
                         />
                     </div>
-                    <Dialog>
+                    <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
                             <Button className="mx-auto mt-10">
                                 Show Example Diet
