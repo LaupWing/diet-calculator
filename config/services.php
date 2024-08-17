@@ -34,5 +34,7 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    "beehiiv" => [
+        "secret" => env("BEEHIIV_SECRET"),
+    ],
 ];

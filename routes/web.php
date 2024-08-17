@@ -41,6 +41,7 @@ Route::post("/submit-email", function (Request $request) {
     ])->post("https://api.beehiiv.com/v2/publications/pub_933eff84-523b-4a44-8fc1-2c0166fa0fd8/subscriptions", [
         "email" => $request->email,
     ]);
+
     $guest->submissions()->create([
         "email" => $request->email,
         "calories" => $request->calories ?? 0,
