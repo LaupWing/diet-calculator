@@ -65,6 +65,7 @@ export default function Welcome() {
                     title: "Success",
                     description: "Email sent",
                 })
+                setOpen(false)
             },
             onError: () => {
                 toast({
@@ -72,6 +73,7 @@ export default function Welcome() {
                     description: "An error occurred",
                     variant: "destructive",
                 })
+                setOpen(false)
             },
         })
     }
