@@ -72,8 +72,8 @@ export default function Welcome() {
     return (
         <>
             <Head title="Welcome" />
-            <div className="min-h-screen w-screen py-10 flex flex-col gap-6 items-center justify-center">
-                {form.processing && (
+            <div className="min-h-screen w-screen py-10 flex flex-col gap-6 items-center justify-center relative">
+                {true && (
                     <div className="absolute flex items-center justify-center inset-0 bg-background/80 z-50">
                         <LoaderCircle size={40} className="animate-spin" />
                     </div>
