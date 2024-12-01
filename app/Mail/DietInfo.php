@@ -82,15 +82,12 @@ class DietInfo extends Mailable
         ]);
 
         $data = json_decode($response->choices[0]->message->content);
+        // Generate PDF content in memory
+        $pdfContent = Pdf::loadView('pdf.meal_plan', ['data' => $data])->output();
 
-        $pdf = Pdf::loadView('pdf.meal_plan', ['data' => $data]);
-
-        // Save the PDF to a temporary file
-        $filePath = storage_path('app/public/diet_plan.pdf');
-        $pdf->save($filePath);
+        // Return the PDF as an attachment
         return [
-            Attachment::fromPath($filePath)
-                ->as('Diet_Plan.pdf')
+            Attachment::fromData(fn() => $pdfContent, 'Diet_Plan.pdf')
                 ->withMime('application/pdf')
         ];
     }
