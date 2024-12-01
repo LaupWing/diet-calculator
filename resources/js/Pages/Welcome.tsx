@@ -22,11 +22,11 @@ type PhysicalActivityType =
     | null
 
 type CuisineType =
-    | "italian"
-    | "mexican"
-    | "indian"
-    | "chinese"
-    | "japanese"
+    | "mediterranean"
+    | "asian"
+    | "american"
+    | "middleEastern"
+    | "latinAmerican"
     | "iLoveEverything"
     | null
 
@@ -39,6 +39,7 @@ export default function Welcome() {
         activity: PhysicalActivityType
         goal_weight: number | null
         goal_months: number | null
+        cuisine: CuisineType
         unit: "lbs" | "kg"
     }>({
         gender: "male",
@@ -47,6 +48,7 @@ export default function Welcome() {
         weight: null,
         activity: null,
         goal_weight: null,
+        cuisine: "iLoveEverything",
         goal_months: null,
         unit: "lbs",
     })
@@ -216,49 +218,41 @@ export default function Welcome() {
                         <div className="grid gap-1 items-start">
                             <Label
                                 className={
-                                    form.errors.activity && "text-red-400"
+                                    form.errors.cuisine && "text-red-400"
                                 }
                             >
-                                Physical Activity
+                                Preferred Cuisine
                             </Label>
                             <Select
-                                value={form.data.activity || ""}
+                                value={form.data.cuisine || ""}
                                 onValueChange={(e) =>
-                                    form.setData(
-                                        "activity",
-                                        e as
-                                            | "sedentary"
-                                            | "lightly"
-                                            | "moderately"
-                                            | "very"
-                                            | "extra"
-                                    )
+                                    form.setData("cuisine", e as CuisineType)
                                 }
-                                defaultValue={form.data.unit}
+                                defaultValue={form.data.cuisine!}
                             >
                                 <SelectTrigger
                                     className={
-                                        form.errors.activity && "border-red-400"
+                                        form.errors.cuisine && "border-red-400"
                                     }
                                 >
-                                    <SelectValue placeholder="Physical Activity" />
+                                    <SelectValue placeholder="Select a Cuisine" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="sedentary">
-                                        Sedentary: Little or no exercise.
+                                    <SelectItem value="mediterranean">
+                                        Mediterranean
                                     </SelectItem>
-                                    <SelectItem value="lightly">
-                                        Lightly: Light exercise 1-3 days a week.
+                                    <SelectItem value="asian">Asian</SelectItem>
+                                    <SelectItem value="american">
+                                        American
                                     </SelectItem>
-                                    <SelectItem value="moderately">
-                                        Moderately: Moderate 3-5 days a week.
+                                    <SelectItem value="middleEastern">
+                                        Middle Eastern
                                     </SelectItem>
-                                    <SelectItem value="very">
-                                        Very: Hard exercise 6-7 days a week.
+                                    <SelectItem value="latinAmerican">
+                                        Latin American
                                     </SelectItem>
-                                    <SelectItem value="extra">
-                                        Extra: Very hard exercise or physical
-                                        job.
+                                    <SelectItem value="iLoveEverything">
+                                        I love every cuisine!
                                     </SelectItem>
                                 </SelectContent>
                             </Select>
