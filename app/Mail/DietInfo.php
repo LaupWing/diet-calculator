@@ -60,17 +60,11 @@ class DietInfo extends Mailable
             "messages" => [
                 [
                     "role" => "system",
-                    "content" => "You are a helpful assistant designed to help users to achieve their bodyweight goal by providing them with a personalized diet plan. The output should be a JSON object with the following keys: 'protein', 'bodyfat', 'calories', 'meal_plan'.
-                    
-                    'protein' - The amount of protein in grams that the user should consume daily.
+                    "content" => "You are a helpful assistant designed create the meal plan instructions and an grocery list from the meal plan items. The output should be a JSON object with the following keys: 'grocery_list', 'meal_plan_with_instructions'.
 
-                    'current_bodyfat' - The exact current bodyfat percentage the user has as a number.
+                    'grocery_list' - A list of items that the user should buy to prepare the meals. Each item should have a 'name'(name of the item) and 'quantity' key.
 
-                    'goal_bodyfat' - The exact bodyfat percentage the user aim for as a number.
-
-                    'calories' - The amount of calories that the user should consume daily.
-
-                    'meal_plan' - A list of meals that the user should consume daily. Each meal should have a 'recipe_name'(name of the recipe),'calories', and 'meal_type'(breakfast, lunch, diner, or snack) key.
+                    'meal_plan_with_instructions' - Meal plan is provided by user. Each meal should have a 'recipe_name'(name of the recipe),'calories', 'meal_type'(breakfast, lunch, diner, or snack), and instructions (array with the steps in order) key.
                     
                     "
                 ],
@@ -83,6 +77,8 @@ class DietInfo extends Mailable
         ]);
 
         $data = json_decode($response->choices[0]->message->content);
+
+
         return [];
     }
 }
