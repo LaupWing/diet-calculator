@@ -137,11 +137,18 @@ export default function Welcome() {
                             <DialogHeader>
                                 <DialogTitle>Example Diet</DialogTitle>
                                 <DialogDescription className="text-xs text-left">
-                                    This is just an example diet plan based on
-                                    your current bodyfat % and your goal bodyfat
-                                    %. But remember, this is just an example and
-                                    you should always consult a professional
-                                    before starting a diet.
+                                    <p>
+                                        This is just an example diet plan based
+                                        on your current bodyfat % and your goal
+                                        bodyfat %. But remember, this is just an
+                                        example and you should always consult a
+                                        professional before starting a diet.
+                                    </p>
+                                    <p className="text-blue-500 mt-2 font-bold">
+                                        In the email you will receive a pdf with
+                                        instructions on how to prepare the meals
+                                        and a grocery list.
+                                    </p>
                                 </DialogDescription>
                             </DialogHeader>
                             <ul className="grid gap-1 text-sm">
