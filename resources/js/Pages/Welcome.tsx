@@ -20,6 +20,16 @@ type PhysicalActivityType =
     | "very"
     | "extra"
     | null
+
+type CuisineType =
+    | "italian"
+    | "mexican"
+    | "indian"
+    | "chinese"
+    | "japanese"
+    | "iLoveEverything"
+    | null
+
 export default function Welcome() {
     const form = useForm<{
         gender: "male" | "female"
@@ -171,12 +181,7 @@ export default function Welcome() {
                                 onValueChange={(e) =>
                                     form.setData(
                                         "activity",
-                                        e as
-                                            | "sedentary"
-                                            | "lightly"
-                                            | "moderately"
-                                            | "very"
-                                            | "extra"
+                                        e as PhysicalActivityType
                                     )
                                 }
                                 defaultValue={form.data.unit}
