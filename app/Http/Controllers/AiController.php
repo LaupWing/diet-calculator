@@ -110,7 +110,9 @@ class AiController extends Controller
         ]);
 
         $data = json_decode($response->choices[0]->message->content);
-        return redirect(route("generated"))->with("data", $data)->with("guest_id", $guest->id);
+        return redirect(route("generated"))
+            ->with("data", $data)
+            ->with("guest_id", $guest->id);
     }
 
     public function generated()
