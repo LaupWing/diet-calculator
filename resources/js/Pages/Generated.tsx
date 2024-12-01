@@ -11,7 +11,7 @@ import { Input } from "@/Components/ui/input"
 import { Label } from "@/Components/ui/label"
 import { useToast } from "@/Components/ui/use-toast"
 import { Head, router, useForm, usePage } from "@inertiajs/react"
-import { CircleAlert } from "lucide-react"
+import { CircleAlert, Loader2 } from "lucide-react"
 import { useState } from "react"
 import CountUp from "react-countup"
 
@@ -134,6 +134,15 @@ export default function Welcome() {
                             onOpenAutoFocus={(el) => el.preventDefault()}
                             className="w-[90%] max-w-sm rounded"
                         >
+                            {form.processing && (
+                                <div className="inset-0 absolute text-blue-500 flex-col flex items-center px-6 z-[100] justify-center bg-white/90">
+                                    <Loader2 className="animate-spin h-10 w-10  mx-auto" />
+                                    <p className="text-center mt-2 text-sm font-bold">
+                                        Pdf is generating and sending to your
+                                        email!
+                                    </p>
+                                </div>
+                            )}
                             <DialogHeader>
                                 <DialogTitle>Example Diet</DialogTitle>
                                 <DialogDescription className="text-xs text-left">
