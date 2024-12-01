@@ -2,9 +2,11 @@
 
 namespace App\Mail;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -82,6 +84,16 @@ class DietInfo extends Mailable
         $data = json_decode($response->choices[0]->message->content);
 
         logger(print_r($data, true));
-        return [];
+
+        $pdf = Pdf::loadView('pdf.meal_plan', ['data' => $data]);
+
+        // Save the PDF to a temporary file
+        $filePath = storage_path('app/public/diet_plan.pdf');
+        $pdf->save($filePath);
+        return [
+            Attachment::fromPath($filePath)
+                ->as('Diet_Plan.pdf')
+                ->withMime('application/pdf')
+        ];
     }
 }
