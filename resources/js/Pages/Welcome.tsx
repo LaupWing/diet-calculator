@@ -36,7 +36,6 @@ type DietaryPreferenceType =
     | "carnivore"
     | "pescatarian"
     | "omnivore"
-    | "other"
     | null
 
 export default function Welcome() {
@@ -270,9 +269,6 @@ export default function Welcome() {
                                     </SelectItem>
                                     <SelectItem value="omnivore">
                                         Omnivore: No dietary restrictions.
-                                    </SelectItem>
-                                    <SelectItem value="other">
-                                        Other: Custom dietary preference.
                                     </SelectItem>
                                 </SelectContent>
                             </Select>
