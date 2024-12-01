@@ -39,7 +39,7 @@ export default function Welcome() {
         activity: PhysicalActivityType
         goal_weight: number | null
         goal_months: number | null
-        cuisine: CuisineType
+        preferred_cuisine: CuisineType
         unit: "lbs" | "kg"
     }>({
         gender: "male",
@@ -48,7 +48,7 @@ export default function Welcome() {
         weight: null,
         activity: null,
         goal_weight: null,
-        cuisine: "iLoveEverything",
+        preferred_cuisine: "iLoveEverything",
         goal_months: null,
         unit: "lbs",
     })
@@ -57,6 +57,7 @@ export default function Welcome() {
         e.preventDefault()
         form.post(route("generate"))
     }
+    console.log(form.errors)
 
     return (
         <>
@@ -218,21 +219,26 @@ export default function Welcome() {
                         <div className="grid gap-1 items-start">
                             <Label
                                 className={
-                                    form.errors.cuisine && "text-red-400"
+                                    form.errors.preferred_cuisine &&
+                                    "text-red-400"
                                 }
                             >
                                 Preferred Cuisine
                             </Label>
                             <Select
-                                value={form.data.cuisine || ""}
+                                value={form.data.preferred_cuisine || ""}
                                 onValueChange={(e) =>
-                                    form.setData("cuisine", e as CuisineType)
+                                    form.setData(
+                                        "preferred_cuisine",
+                                        e as CuisineType
+                                    )
                                 }
-                                defaultValue={form.data.cuisine!}
+                                defaultValue={form.data.preferred_cuisine!}
                             >
                                 <SelectTrigger
                                     className={
-                                        form.errors.cuisine && "border-red-400"
+                                        form.errors.preferred_cuisine &&
+                                        "border-red-400"
                                     }
                                 >
                                     <SelectValue placeholder="Select a Cuisine" />

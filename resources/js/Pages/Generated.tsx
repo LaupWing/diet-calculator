@@ -48,6 +48,8 @@ export default function Welcome() {
     })
     const { toast } = useToast()
 
+    console.log(page.props.flash.data)
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (form.data.email === "") {
