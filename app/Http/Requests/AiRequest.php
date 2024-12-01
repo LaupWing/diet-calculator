@@ -31,6 +31,7 @@ class AiRequest extends FormRequest
             "goal_months" => ["required", "integer"],
             "unit" => ["required", "string"],
             "preferred_cuisine" => ["required", "string"],
+            "preferred_cuisine" => ["required", "string"],
         ];
     }
 }
