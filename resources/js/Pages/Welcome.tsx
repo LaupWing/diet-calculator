@@ -30,6 +30,15 @@ type CuisineType =
     | "iLoveEverything"
     | null
 
+type DietaryPreferenceType =
+    | "vegetarian"
+    | "vegan"
+    | "carnivore"
+    | "pescatarian"
+    | "omnivore"
+    | "other"
+    | null
+
 export default function Welcome() {
     const form = useForm<{
         gender: "male" | "female"
@@ -40,6 +49,7 @@ export default function Welcome() {
         goal_weight: number | null
         goal_months: number | null
         preferred_cuisine: CuisineType
+        dietary_preference: DietaryPreferenceType
         unit: "lbs" | "kg"
     }>({
         gender: "male",
@@ -49,6 +59,7 @@ export default function Welcome() {
         activity: null,
         goal_weight: null,
         preferred_cuisine: "iLoveEverything",
+        dietary_preference: "omnivore",
         goal_months: null,
         unit: "lbs",
     })
@@ -62,7 +73,7 @@ export default function Welcome() {
     return (
         <>
             <Head title="Welcome" />
-            <div className="h-screen w-screen flex flex-col gap-6 items-center justify-center">
+            <div className="min-h-screen w-screen py-10 flex flex-col gap-6 items-center justify-center">
                 {form.processing && (
                     <div className="absolute flex items-center justify-center inset-0 bg-background/80 z-50">
                         <LoaderCircle size={40} className="animate-spin" />
@@ -212,6 +223,56 @@ export default function Welcome() {
                                     <SelectItem value="extra">
                                         Extra: Very hard exercise or physical
                                         job.
+                                    </SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="grid gap-1 items-start">
+                            <Label
+                                className={
+                                    form.errors.dietary_preference &&
+                                    "text-red-400"
+                                }
+                            >
+                                Dietary Preference
+                            </Label>
+                            <Select
+                                value={form.data.dietary_preference || ""}
+                                onValueChange={(e) =>
+                                    form.setData(
+                                        "dietary_preference",
+                                        e as DietaryPreferenceType
+                                    )
+                                }
+                                defaultValue={form.data.dietary_preference!}
+                            >
+                                <SelectTrigger
+                                    className={
+                                        form.errors.dietary_preference &&
+                                        "border-red-400"
+                                    }
+                                >
+                                    <SelectValue placeholder="Select a Dietary Preference" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="vegetarian">
+                                        Vegetarian: No meat, may include dairy
+                                        and eggs.
+                                    </SelectItem>
+                                    <SelectItem value="vegan">
+                                        Vegan: No animal products.
+                                    </SelectItem>
+                                    <SelectItem value="carnivore">
+                                        Carnivore: Primarily meat-based.
+                                    </SelectItem>
+                                    <SelectItem value="pescatarian">
+                                        Pescatarian: No meat except fish.
+                                    </SelectItem>
+                                    <SelectItem value="omnivore">
+                                        Omnivore: No dietary restrictions.
+                                    </SelectItem>
+                                    <SelectItem value="other">
+                                        Other: Custom dietary preference.
                                     </SelectItem>
                                 </SelectContent>
                             </Select>
