@@ -13,19 +13,20 @@ import { cn } from "@/lib/utils"
 import { Head, useForm } from "@inertiajs/react"
 import { LoaderCircle, Sparkles } from "lucide-react"
 
+type PhysicalActivityType =
+    | "sedentary"
+    | "lightly"
+    | "moderately"
+    | "very"
+    | "extra"
+    | null
 export default function Welcome() {
     const form = useForm<{
         gender: "male" | "female"
         age: number | null
         height: number | null
         weight: number | null
-        activity:
-            | "sedentary"
-            | "lightly"
-            | "moderately"
-            | "very"
-            | "extra"
-            | null
+        activity: PhysicalActivityType
         goal_weight: number | null
         goal_months: number | null
         unit: "lbs" | "kg"
@@ -156,6 +157,56 @@ export default function Welcome() {
                                     </SelectContent>
                                 </Select>
                             </div>
+                        </div>
+                        <div className="grid gap-1 items-start">
+                            <Label
+                                className={
+                                    form.errors.activity && "text-red-400"
+                                }
+                            >
+                                Physical Activity
+                            </Label>
+                            <Select
+                                value={form.data.activity || ""}
+                                onValueChange={(e) =>
+                                    form.setData(
+                                        "activity",
+                                        e as
+                                            | "sedentary"
+                                            | "lightly"
+                                            | "moderately"
+                                            | "very"
+                                            | "extra"
+                                    )
+                                }
+                                defaultValue={form.data.unit}
+                            >
+                                <SelectTrigger
+                                    className={
+                                        form.errors.activity && "border-red-400"
+                                    }
+                                >
+                                    <SelectValue placeholder="Physical Activity" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="sedentary">
+                                        Sedentary: Little or no exercise.
+                                    </SelectItem>
+                                    <SelectItem value="lightly">
+                                        Lightly: Light exercise 1-3 days a week.
+                                    </SelectItem>
+                                    <SelectItem value="moderately">
+                                        Moderately: Moderate 3-5 days a week.
+                                    </SelectItem>
+                                    <SelectItem value="very">
+                                        Very: Hard exercise 6-7 days a week.
+                                    </SelectItem>
+                                    <SelectItem value="extra">
+                                        Extra: Very hard exercise or physical
+                                        job.
+                                    </SelectItem>
+                                </SelectContent>
+                            </Select>
                         </div>
                         <div className="grid gap-1 items-start">
                             <Label
