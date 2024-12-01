@@ -34,6 +34,7 @@ class AiController extends Controller
             "goal_months" => $goal_months,
             "unit" => $unit,
             "preferred_cuisine" => $preferred_cuisine,
+            "dietary_preference" => $dietary_preference,
         ]);
 
         $activities = [
