@@ -56,6 +56,11 @@ class DietInfo extends Mailable
         $open_ai = OpenAI::client(env("OPENAI_API_KEY"));
 
         $meal_plan = $this->dietInfo["meal_plan"];
+        $meal_plan = collect($meal_plan)
+            ->map(function ($meal) {
+                return "{$meal['meal_type']}: {$meal['recipe_name']} ({$meal['calories']} calories)";
+            })
+            ->join("\n");
 
         $response = $open_ai->chat()->create([
             "model" => "gpt-3.5-turbo-1106",
