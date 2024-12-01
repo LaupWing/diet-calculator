@@ -130,7 +130,10 @@ export default function Welcome() {
                                 Show Example Diet
                             </Button>
                         </DialogTrigger>
-                        <DialogContent className="w-[90%] max-w-sm rounded">
+                        <DialogContent
+                            onOpenAutoFocus={(el) => el.preventDefault()}
+                            className="w-[90%] max-w-sm rounded"
+                        >
                             <DialogHeader>
                                 <DialogTitle>Example Diet</DialogTitle>
                                 <DialogDescription className="text-xs text-left">
