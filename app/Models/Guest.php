@@ -17,7 +17,8 @@ class Guest extends Model
         "goal_weight",
         "goal_months",
         "unit",
-        "preferred_cuisine"
+        "preferred_cuisine",
+        "dietary_preference"
     ];
 
     public function submissions()

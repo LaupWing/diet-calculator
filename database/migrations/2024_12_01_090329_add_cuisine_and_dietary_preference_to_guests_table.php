@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('guests', function (Blueprint $table) {
             $table->string("preferred_cuisine")->nullable()->after("activity");
+            $table->string("dietary_preference")->nullable()->after("preferred_cuisine");
         });
     }
 
@@ -23,6 +24,7 @@ return new class extends Migration
     {
         Schema::table('guests', function (Blueprint $table) {
             $table->dropColumn("preferred_cuisine");
+            $table->dropColumn("dietary_preference");
         });
     }
 };
