@@ -83,8 +83,6 @@ class DietInfo extends Mailable
 
         $data = json_decode($response->choices[0]->message->content);
 
-        logger(print_r($data, true));
-
         $pdf = Pdf::loadView('pdf.meal_plan', ['data' => $data]);
 
         // Save the PDF to a temporary file
