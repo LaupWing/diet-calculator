@@ -66,7 +66,7 @@
 <body>
     <!-- Grocery List Page -->
     <div class="header">
-        <h1>Weekly Meal Plan</h1>
+        <h1>Daily Meal Plan</h1>
         <p>Your personalized grocery list and meal plan instructions.</p>
     </div>
     <div class="grocery-list">
