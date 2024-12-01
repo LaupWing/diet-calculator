@@ -69,11 +69,14 @@ class AiController extends Controller
 
         $content = "I'm a $gender and $age years old. I'm $height cm tall and weigh $weight $unit. I'm $activity and I want to reach $goal_weight $unit in $goal_months months.";
 
+        $content .= " My dietary preference is $dietary_preference.";
+
         if ($preferred_cuisine === "I love everything") {
             $content .= "For Cuisine. I love everything.";
         } else {
             $content .= " I prefer $preferred_cuisine cuisine.";
         }
+
 
         $response = $open_ai->chat()->create([
             "model" => "gpt-3.5-turbo-1106",
