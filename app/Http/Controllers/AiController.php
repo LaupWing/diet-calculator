@@ -78,7 +78,6 @@ class AiController extends Controller
             $content .= " I prefer $preferred_cuisine cuisine.";
         }
 
-
         $response = $open_ai->chat()->create([
             "model" => "gpt-3.5-turbo-1106",
             "response_format" => [
