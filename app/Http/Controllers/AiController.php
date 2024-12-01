@@ -22,6 +22,7 @@ class AiController extends Controller
         $goal_months = $data["goal_months"];
         $unit = $data["unit"];
         $preferred_cuisine = $data["preferred_cuisine"];
+        $dietary_preference = $data["dietary_preference"];
 
         $guest = Guest::create([
             "age" => $age,
@@ -52,8 +53,17 @@ class AiController extends Controller
             "iLoveEverything" => "I love everything",
         ];
 
+        $dietary_preferences = [
+            "vegetarian" => "Vegetarian: No meat, may include dairy and eggs.",
+            "vegan" => "Vegan: No animal products.",
+            "carnivore" => "Carnivore: Primarily meat-based.",
+            "pescatarian" => "Pescatarian: No meat except fish.",
+            "omnivore" => "Omnivore: No dietary restrictions.",
+        ];
+
         $activity = $activities[$activity];
         $preferred_cuisine = $preferred_cuisines[$preferred_cuisine];
+        $dietary_preference = $dietary_preferences[$dietary_preference];
 
         $open_ai = OpenAI::client(env("OPENAI_API_KEY"));
 
