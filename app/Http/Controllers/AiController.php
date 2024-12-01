@@ -21,6 +21,7 @@ class AiController extends Controller
         $goal_weight = $data["goal_weight"];
         $goal_months = $data["goal_months"];
         $unit = $data["unit"];
+        $preferred_cuisine = $data["preferred_cuisine"];
 
         $guest = Guest::create([
             "age" => $age,
