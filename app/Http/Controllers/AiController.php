@@ -32,6 +32,7 @@ class AiController extends Controller
             "goal_weight" => $goal_weight,
             "goal_months" => $goal_months,
             "unit" => $unit,
+            "preferred_cuisine" => $preferred_cuisine,
         ]);
 
         $activities = [
@@ -42,9 +43,27 @@ class AiController extends Controller
             "extra" => "Very hard exercise or physical job.",
         ];
 
+        $preferred_cuisines = [
+            "mediterranean" => "Mediterranean",
+            "asian" => "Asian",
+            "american" => "American",
+            "middleEastern" => "Middle Eastern",
+            "latinAmerican" => "Latin American",
+            "iLoveEverything" => "I love everything",
+        ];
+
         $activity = $activities[$activity];
+        $preferred_cuisine = $preferred_cuisines[$preferred_cuisine];
 
         $open_ai = OpenAI::client(env("OPENAI_API_KEY"));
+
+        $content = "I'm a $gender and $age years old. I'm $height cm tall and weigh $weight $unit. I'm $activity and I want to reach $goal_weight $unit in $goal_months months.";
+
+        if ($preferred_cuisine === "I love everything") {
+            $content .= "For Cuisine. I love everything.";
+        } else {
+            $content .= " I prefer $preferred_cuisine cuisine.";
+        }
 
         $response = $open_ai->chat()->create([
             "model" => "gpt-3.5-turbo-1106",
@@ -70,7 +89,7 @@ class AiController extends Controller
                 ],
                 [
                     "role" => "user",
-                    "content" => "I'm a $gender and $age years old. I'm $height cm tall and weigh $weight $unit. I'm $activity and I want to reach $goal_weight $unit in $goal_months months."
+                    "content" => $content
                 ]
             ],
             "max_tokens" => 4000,
