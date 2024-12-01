@@ -11,6 +11,7 @@ import { Input } from "@/Components/ui/input"
 import { Label } from "@/Components/ui/label"
 import { useToast } from "@/Components/ui/use-toast"
 import { Head, router, useForm, usePage } from "@inertiajs/react"
+import { CircleAlert } from "lucide-react"
 import { useState } from "react"
 import CountUp from "react-countup"
 
@@ -47,8 +48,6 @@ export default function Welcome() {
         guest_id: page.props.flash.guest_id,
     })
     const { toast } = useToast()
-
-    console.log(page.props.flash.data)
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -120,6 +119,11 @@ export default function Welcome() {
                             end={page.props.flash.data.protein}
                         />
                     </div>
+                    <p className="text-red-400 flex text-xs items-center max-w-xs font-bold">
+                        <CircleAlert className="flex-shrink-0 mr-2" /> Note:
+                        Bodyfat % is an approximation based on the data you
+                        provided and may not be 100% accurate.
+                    </p>
                     <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
                             <Button className="mx-auto mt-10">
