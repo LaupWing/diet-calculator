@@ -52,7 +52,6 @@ class DietInfo extends Mailable
      */
     public function attachments(): array
     {
-        logger($this->dietInfo);
         $open_ai = OpenAI::client(env("OPENAI_API_KEY"));
 
         $meal_plan = $this->dietInfo["meal_plan"];
