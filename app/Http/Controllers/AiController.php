@@ -78,12 +78,38 @@ class AiController extends Controller
             $content .= " I prefer $preferred_cuisine cuisine.";
         }
 
+        $mealSchema = [
+            "type" => "object",
+            "properties" => [
+                "name" => ["type" => "string"],
+                "calories" => ["type" => "number"],
+                "protein" => ["type" => "number"],
+                "carbs" => ["type" => "number"],
+                "fats" => ["type" => "number"],
+                "instructions" => ["type" => "string"]
+            ],
+            "required" => ["name", "calories", "protein", "carbs", "fats", "instructions"],
+            "additionalProperties" => false
+        ];
+
+        $daySchema = [
+            "type" => "object",
+            "properties" => [
+                "breakfast" => $mealSchema,
+                "lunch" => $mealSchema,
+                "dinner" => $mealSchema,
+                "snack" => $mealSchema
+            ],
+            "required" => ["breakfast", "lunch", "dinner", "snack"],
+            "additionalProperties" => false
+        ];
+
         $response = $open_ai->chat()->create([
             "model" => "gpt-4o-mini",
             "messages" => [
                 [
                     "role" => "system",
-                    "content" => "You are a helpful assistant designed to help users achieve their bodyweight goal by providing them with a personalized diet plan. Respond using a JSON object with the following schema exactly. Do not include any explanations, just the JSON."
+                    "content" => "You are a helpful assistant that generates a 2-day meal plan for health and fitness goals. Each day includes breakfast, lunch, dinner, and snack with macros and instructions. Respond in JSON format matching the schema exactly. No explanations."
                 ],
                 [
                     "role" => "user",
@@ -93,50 +119,23 @@ class AiController extends Controller
             "response_format" => [
                 "type" => "json_schema",
                 "json_schema" => [
-                    "name" => "diet_plan",
+                    "name" => "two_day_meal_plan",
                     "strict" => true,
                     "schema" => [
                         "type" => "object",
                         "properties" => [
-                            "protein" => [
-                                "type" => "number",
-                                "description" => "Daily protein intake in grams"
-                            ],
-                            "current_bodyfat" => [
-                                "type" => "number",
-                                "description" => "Current body fat percentage"
-                            ],
-                            "goal_bodyfat" => [
-                                "type" => "number",
-                                "description" => "Target body fat percentage"
-                            ],
-                            "calories" => [
-                                "type" => "number",
-                                "description" => "Daily calorie intake"
-                            ],
+                            "protein" => ["type" => "number"],
+                            "current_bodyfat" => ["type" => "number"],
+                            "goal_bodyfat" => ["type" => "number"],
+                            "calories" => ["type" => "number"],
                             "meal_plan" => [
-                                "type" => "array",
-                                "description" => "Daily meals",
-                                "items" => [
-                                    "type" => "object",
-                                    "properties" => [
-                                        "recipe_name" => [
-                                            "type" => "string",
-                                            "description" => "Name of the recipe"
-                                        ],
-                                        "calories" => [
-                                            "type" => "number",
-                                            "description" => "Calories in the meal"
-                                        ],
-                                        "meal_type" => [
-                                            "type" => "string",
-                                            "enum" => ["breakfast", "lunch", "dinner", "snack"],
-                                            "description" => "Type of the meal"
-                                        ]
-                                    ],
-                                    "required" => ["recipe_name", "calories", "meal_type"],
-                                    "additionalProperties" => false
-                                ]
+                                "type" => "object",
+                                "properties" => [
+                                    "day1" => $daySchema,
+                                    "day2" => $daySchema
+                                ],
+                                "required" => ["day1", "day2"],
+                                "additionalProperties" => false
                             ]
                         ],
                         "required" => ["protein", "current_bodyfat", "goal_bodyfat", "calories", "meal_plan"],
