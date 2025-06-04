@@ -341,7 +341,45 @@ function DietPlanModal({
                         body fat in {timeframe} months
                     </p>
                 </div>
+                <div className="bg-gray-50 p-4 border rounded-lg">
+                    <h3 className="font-medium mb-2">
+                        Want your full 7-day plan, grocery list, and prep guide?
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-4">
+                        We'll send it right to your inbox, along with tips to
+                        help you stay on track.
+                    </p>
 
+                    <form onSubmit={handleSubmit}>
+                        <div className="space-y-3">
+                            <Input
+                                type="email"
+                                placeholder="Enter your email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                                className="w-full"
+                            />
+                            <Button
+                                type="submit"
+                                className="w-full"
+                                disabled={isSubmitting}
+                            >
+                                {isSubmitting ? (
+                                    <span className="flex items-center gap-2">
+                                        <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
+                                        Sending...
+                                    </span>
+                                ) : (
+                                    <span className="flex items-center gap-2">
+                                        <Send size={16} />
+                                        Send My Plan
+                                    </span>
+                                )}
+                            </Button>
+                        </div>
+                    </form>
+                </div>
                 <div className="flex space-x-2">
                     <Tabs defaultValue="day1" className="flex-1">
                         <TabsList className="grid grid-cols-2">
@@ -419,50 +457,6 @@ function DietPlanModal({
                         </div>
                     ))}
                 </div>
-
-                <div className="bg-gray-50 p-4 rounded-lg">
-                    <h3 className="font-medium mb-2">
-                        Want your full 7-day plan, grocery list, and prep guide?
-                    </h3>
-                    <p className="text-sm text-gray-600 mb-4">
-                        We'll send it right to your inbox, along with tips to
-                        help you stay on track.
-                    </p>
-
-                    <form onSubmit={handleSubmit}>
-                        <div className="space-y-3">
-                            <Input
-                                type="email"
-                                placeholder="Enter your email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                                className="w-full"
-                            />
-                            <Button
-                                type="submit"
-                                className="w-full"
-                                disabled={isSubmitting}
-                            >
-                                {isSubmitting ? (
-                                    <span className="flex items-center gap-2">
-                                        <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
-                                        Sending...
-                                    </span>
-                                ) : (
-                                    <span className="flex items-center gap-2">
-                                        <Send size={16} />
-                                        Send My Plan
-                                    </span>
-                                )}
-                            </Button>
-                        </div>
-                    </form>
-                </div>
-
-                <p className="text-center text-sm text-emerald-600 font-medium">
-                    Day 1 of your transformation starts here!
-                </p>
             </div>
         </DialogContent>
     )
