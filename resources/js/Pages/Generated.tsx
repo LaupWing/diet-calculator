@@ -293,7 +293,6 @@ function DietPlanModal({
     const [email, setEmail] = useState("")
     const [expandedMeal, setExpandedMeal] = useState<string | null>(null)
     const [currentDay, setCurrentDay] = useState("day1")
-    const [showAlternatives, setShowAlternatives] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     const toggleMealExpansion = (mealType: string) => {
@@ -331,13 +330,6 @@ function DietPlanModal({
             </DialogHeader>
 
             <div className="space-y-4">
-                <p className="text-gray-600 text-sm">
-                    This is a personalized example diet plan based on your
-                    current body fat ({currentBodyFat}%) and your goal body fat
-                    ({goalBodyFat}%). Remember, this is just an example and you
-                    should always consult a professional before starting a diet.
-                </p>
-
                 <div className="space-y-2">
                     <div className="flex justify-between text-sm text-gray-600">
                         <span>Current: {currentBodyFat}%</span>
@@ -351,15 +343,6 @@ function DietPlanModal({
                 </div>
 
                 <div className="flex space-x-2">
-                    <Button
-                        variant={showAlternatives ? "default" : "outline"}
-                        size="sm"
-                        onClick={() => setShowAlternatives(!showAlternatives)}
-                        className="text-xs"
-                    >
-                        Show Alternatives
-                    </Button>
-
                     <Tabs defaultValue="day1" className="flex-1">
                         <TabsList className="grid grid-cols-2">
                             <TabsTrigger
@@ -431,28 +414,6 @@ function DietPlanModal({
                                             )
                                         )}
                                     </ol>
-
-                                    {showAlternatives && (
-                                        <div className="mt-3 pt-3 border-t">
-                                            <h4 className="font-medium mb-2">
-                                                Alternative Options:
-                                            </h4>
-                                            <ul className="list-disc pl-5 space-y-1 text-gray-600">
-                                                <li>
-                                                    Similar macros with
-                                                    Mediterranean flavors
-                                                </li>
-                                                <li>
-                                                    Higher protein, lower carb
-                                                    version
-                                                </li>
-                                                <li>
-                                                    Vegetarian alternative with
-                                                    same nutrition profile
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    )}
                                 </div>
                             )}
                         </div>
