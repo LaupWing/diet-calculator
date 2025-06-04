@@ -59,6 +59,25 @@ Route::post("/submit-email", function (Request $request) {
     //     "guest_id" => $request->guest_id,
     //     "meal_plan" => $request->meal_plan,
     // ]));
+    Mail::to($request->email)->send(new DietInfo([
+        "email" => $request->email,
+        "calories" => $request->calories,
+        "current_bodyfat" => $request->current_bodyfat,
+        "goal_bodyfat" => $request->goal_bodyfat,
+        "protein" => $request->protein,
+        "guest_id" => $request->guest_id,
+        "meal_plan" => $request->meal_plan,
+        'age' => $guest->age,
+        'gender' => $guest->gender,
+        'height' => $guest->height,
+        'weight' => $guest->weight,
+        'activity' => $guest->activity,
+        'preferred_cuisine' => $guest->preferred_cuisine,
+        'dietary_preference' => $guest->dietary_preference,
+        'goal_weight' => $guest->goal_weight,
+        'goal_months' => $guest->goal_months,
+        'unit' => $guest->unit,
+    ]));
 
     // foreach ($request->meal_plan as $meal) {
     //     $guest->meals()->create([

@@ -52,47 +52,47 @@ class DietInfo extends Mailable
      */
     public function attachments(): array
     {
-        $open_ai = OpenAI::client(env("OPENAI_API_KEY"));
+        // $open_ai = OpenAI::client(env("OPENAI_API_KEY"));
 
-        $meal_plan = $this->dietInfo["meal_plan"];
-        $meal_plan = collect($meal_plan)
-            ->map(function ($meal) {
-                return "{$meal['meal_type']}: {$meal['recipe_name']} ({$meal['calories']} calories)";
-            })
-            ->join("\n");
+        // $meal_plan = $this->dietInfo["meal_plan"];
+        // $meal_plan = collect($meal_plan)
+        //     ->map(function ($meal) {
+        //         return "{$meal['meal_type']}: {$meal['recipe_name']} ({$meal['calories']} calories)";
+        //     })
+        //     ->join("\n");
 
-        $response = $open_ai->chat()->create([
-            "model" => "gpt-3.5-turbo-1106",
-            "response_format" => [
-                "type" => "json_object",
-            ],
-            "messages" => [
-                [
-                    "role" => "system",
-                    "content" => "You are a helpful assistant designed create the meal plan instructions and an grocery list from the meal plan items. The output should be a JSON object with the following keys: 'grocery_list', 'meal_plan_with_instructions'.
+        // $response = $open_ai->chat()->create([
+        //     "model" => "gpt-3.5-turbo-1106",
+        //     "response_format" => [
+        //         "type" => "json_object",
+        //     ],
+        //     "messages" => [
+        //         [
+        //             "role" => "system",
+        //             "content" => "You are a helpful assistant designed create the meal plan instructions and an grocery list from the meal plan items. The output should be a JSON object with the following keys: 'grocery_list', 'meal_plan_with_instructions'.
 
-                    'grocery_list' - A list of items that the user should buy to prepare the meals. Each item should have a 'name'(name of the item) and 'quantity' key.
+        //             'grocery_list' - A list of items that the user should buy to prepare the meals. Each item should have a 'name'(name of the item) and 'quantity' key.
 
-                    'meal_plan_with_instructions' - Meal plan is provided by user. Each meal should have a 'recipe_name'(name of the recipe),'calories', 'meal_type'(breakfast, lunch, diner, or snack), and instructions (array with the steps in order) key.
+        //             'meal_plan_with_instructions' - Meal plan is provided by user. Each meal should have a 'recipe_name'(name of the recipe),'calories', 'meal_type'(breakfast, lunch, diner, or snack), and instructions (array with the steps in order) key.
 
-                    "
-                ],
-                [
-                    "role" => "user",
-                    "content" => "This is my meal plan $meal_plan"
-                ]
-            ],
-            "max_tokens" => 4000,
-        ]);
+        //             "
+        //         ],
+        //         [
+        //             "role" => "user",
+        //             "content" => "This is my meal plan $meal_plan"
+        //         ]
+        //     ],
+        //     "max_tokens" => 4000,
+        // ]);
 
-        $data = json_decode($response->choices[0]->message->content);
-        // Generate PDF content in memory
-        $pdfContent = Pdf::loadView('pdf.meal_plan', ['data' => $data])->output();
+        // $data = json_decode($response->choices[0]->message->content);
+        // // Generate PDF content in memory
+        // $pdfContent = Pdf::loadView('pdf.meal_plan', ['data' => $data])->output();
 
         // Return the PDF as an attachment
         return [
-            Attachment::fromData(fn() => $pdfContent, 'Diet_Plan.pdf')
-                ->withMime('application/pdf')
+            // Attachment::fromData(fn() => $pdfContent, 'Diet_Plan.pdf')
+            //     ->withMime('application/pdf')
         ];
     }
 }
