@@ -57,6 +57,14 @@
             margin-top: 5px;
         }
 
+        .cta {
+            background-color: #e8f5e9;
+            border-left: 4px solid #2ecc71;
+            padding: 15px;
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
         footer {
             margin-top: 30px;
             text-align: center;
@@ -72,6 +80,18 @@
     <div class="header">
         <h1>2-Day Meal Plan</h1>
         <p>Your grocery list and detailed meal instructions</p>
+    </div>
+
+    <div class="cta">
+        🔥 Want the full system that helped me lose 44 lbs and stay lean year-round?
+        <strong><a href="https://slingshot.loc-ng.com/" target="_blank">Check out The Slingshot Diet</a></strong> —
+        my personal, proven strategy that makes fat loss simple, sustainable, and actually enjoyable.
+    </div>
+
+
+    <div class="cta">
+        ⚠️ Your custom 7-day meal plan will be sent to your email shortly. It takes a few minutes to generate — thank
+        you for your patience!
     </div>
 
     <div class="section grocery-list">
@@ -130,6 +150,14 @@
             <div class="page-break"></div>
         @endif
     @endforeach
+
+    <div class="cta">
+        💪 If this 2-day plan helped, imagine what you could do with the full method.
+        <strong><a href="https://slingshot.loc-ng.com/" target="_blank">Get The Slingshot Diet</a></strong> — my
+        exact diet system that helped me lose 44 lbs and stay lean all year without giving up food I love.
+        It includes a full breakdown, psychology tips, 10 air-fried recipes, and an exclusive recipe-generating web app.
+    </div>
+
 
 </body>
 
