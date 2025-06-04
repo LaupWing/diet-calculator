@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AiController;
 use App\Http\Controllers\ProfileController;
+use App\Jobs\SevenDayPdf;
 use App\Mail\DietInfo;
 use App\Models\Guest;
 use App\Models\Submission;
@@ -77,6 +78,19 @@ Route::post("/submit-email", function (Request $request) {
         'goal_months' => $guest->goal_months,
         'unit' => $guest->unit,
     ]));
+
+    //  public string $email,
+    //     public int $calories,
+    //     public string $dietary_preference,
+    //     public string $preferred_cuisine,
+    //     public $two_day_meal_plan
+    SevenDayPdf::dispatch(
+        $request->email,
+        $request->calories,
+        $guest->dietary_preference,
+        $guest->preferred_cuisine,
+        $request->meal_plan
+    );
 
     // foreach ($request->meal_plan as $meal) {
     //     $guest->meals()->create([
