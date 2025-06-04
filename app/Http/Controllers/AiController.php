@@ -79,33 +79,71 @@ class AiController extends Controller
         }
 
         $response = $open_ai->chat()->create([
-            "model" => "gpt-3.5-turbo-1106",
-            "response_format" => [
-                "type" => "json_object",
-            ],
+            "model" => "gpt-4o-mini",
             "messages" => [
                 [
                     "role" => "system",
-                    "content" => "You are a helpful assistant designed to help users to achieve their bodyweight goal by providing them with a personalized diet plan. The output should be a JSON object with the following keys: 'protein', 'bodyfat', 'calories', 'meal_plan'.
-                    
-                    'protein' - The amount of protein in grams that the user should consume daily.
-
-                    'current_bodyfat' - The exact current bodyfat percentage the user has as a number.
-
-                    'goal_bodyfat' - The exact bodyfat percentage the user aim for as a number.
-
-                    'calories' - The amount of calories that the user should consume daily.
-
-                    'meal_plan' - A list of meals that the user should consume daily. Each meal should have a 'recipe_name'(name of the recipe),'calories', and 'meal_type'(breakfast, lunch, diner, or snack) key.
-                    
-                    "
+                    "content" => "You are a helpful assistant designed to help users achieve their bodyweight goal by providing them with a personalized diet plan. Respond using a JSON object with the following schema exactly. Do not include any explanations, just the JSON."
                 ],
                 [
                     "role" => "user",
                     "content" => $content
                 ]
             ],
-            "max_tokens" => 4000,
+            "response_format" => [
+                "type" => "json_schema",
+                "json_schema" => [
+                    "name" => "diet_plan",
+                    "strict" => true,
+                    "schema" => [
+                        "type" => "object",
+                        "properties" => [
+                            "protein" => [
+                                "type" => "number",
+                                "description" => "Daily protein intake in grams"
+                            ],
+                            "current_bodyfat" => [
+                                "type" => "number",
+                                "description" => "Current body fat percentage"
+                            ],
+                            "goal_bodyfat" => [
+                                "type" => "number",
+                                "description" => "Target body fat percentage"
+                            ],
+                            "calories" => [
+                                "type" => "number",
+                                "description" => "Daily calorie intake"
+                            ],
+                            "meal_plan" => [
+                                "type" => "array",
+                                "description" => "Daily meals",
+                                "items" => [
+                                    "type" => "object",
+                                    "properties" => [
+                                        "recipe_name" => [
+                                            "type" => "string",
+                                            "description" => "Name of the recipe"
+                                        ],
+                                        "calories" => [
+                                            "type" => "number",
+                                            "description" => "Calories in the meal"
+                                        ],
+                                        "meal_type" => [
+                                            "type" => "string",
+                                            "enum" => ["breakfast", "lunch", "dinner", "snack"],
+                                            "description" => "Type of the meal"
+                                        ]
+                                    ],
+                                    "required" => ["recipe_name", "calories", "meal_type"],
+                                    "additionalProperties" => false
+                                ]
+                            ]
+                        ],
+                        "required" => ["protein", "current_bodyfat", "goal_bodyfat", "calories", "meal_plan"],
+                        "additionalProperties" => false
+                    ]
+                ]
+            ]
         ]);
 
         $data = json_decode($response->choices[0]->message->content);
