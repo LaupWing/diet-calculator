@@ -45,6 +45,10 @@ class SevenDayPdf implements ShouldQueue
         ));
         foreach ($recipes as $day => $meals) {
             foreach ($meals as $mealType => $recipe) {
+                Meal2::where('day', $day)
+                    ->where('meal_type', $mealType)
+                    ->where('email', $this->email)
+                    ->delete();
                 Meal2::create([
                     'day' => $day,
                     'meal_type' => $mealType,
@@ -61,6 +65,14 @@ class SevenDayPdf implements ShouldQueue
                 ]);
             }
         }
+        $recipesStructure = [
+            "day1" => Meal2::where("day", "day1")->where("email", $this->email)->get(),
+            "day2" => Meal2::where("day", "day2")->where("email", $this->email)->get(),
+            "day3" => Meal2::where("day", "day3")->where("email", $this->email)->get(),
+            "day4" => Meal2::where("day", "day4")->where("email", $this->email)->get(),
+            "day5" => Meal2::where("day", "day5")->where("email", $this->email)->get(),
+            "day6" => Meal2::where("day", "day6")->where("email", $this->email)->get(),
+        ];
         Mail::to($this->email)->send(new SevenDayMealplan(
             $recipes
         ));
