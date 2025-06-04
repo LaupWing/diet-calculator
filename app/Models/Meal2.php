@@ -21,6 +21,7 @@ class Meal2 extends Model
         'ingredients',
         'instructions',
         'serving_suggestions',
+        'email',
     ];
 
     protected $casts = [

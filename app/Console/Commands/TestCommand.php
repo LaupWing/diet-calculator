@@ -95,7 +95,7 @@ class TestCommand extends Command
             'vegetarian',
             'Mediterranean'
         ));
-
+        logger($recipes);
         foreach ($recipes as $day => $meals) {
             foreach ($meals as $mealType => $recipe) {
                 Meal2::create([
@@ -110,6 +110,7 @@ class TestCommand extends Command
                     'ingredients' => $recipe['ingredients'] ?? [],
                     'instructions' => $recipe['instructions'] ?? [],
                     'serving_suggestions' => $recipe['serving_suggestions'] ?? [],
+                    'email' => 'test@test.com'
                 ]);
             }
         }
@@ -280,7 +281,9 @@ class TestCommand extends Command
                             "protein",
                             "ingredients",
                             "instructions",
-                            "serving_suggestions"
+                            "serving_suggestions",
+                            "carbs",
+                            "fats"
                         ],
                         "additionalProperties" => false
                     ]
