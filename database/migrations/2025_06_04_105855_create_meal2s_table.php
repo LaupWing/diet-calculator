@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('meal2s', function (Blueprint $table) {
             $table->id();
 
-            $table->string('day');           // e.g., day1, day2, etc.
-            $table->string('meal_type');     // e.g., breakfast, lunch, etc.
+            $table->string('day');
+            $table->string('meal_type');
+            $table->string('email');
 
             $table->string('name');
             $table->integer('calories');
@@ -26,7 +27,7 @@ return new class extends Migration
             $table->text('description');
 
             $table->json('ingredients');
-            $table->json('instructions'); // array of objects with title + description
+            $table->json('instructions');
             $table->json('serving_suggestions');
 
             $table->timestamps();
