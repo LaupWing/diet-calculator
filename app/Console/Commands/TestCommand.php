@@ -13,7 +13,7 @@ class TestCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:test-command';
+    protected $signature = 'test:command';
 
     /**
      * The console command description.
@@ -27,7 +27,7 @@ class TestCommand extends Command
      */
     public function handle()
     {
-        $this->generateFull7DayMealPlan(
+        logger($this->generateFull7DayMealPlan(
             [
                 "day1" => [
                     "breakfast" => [
@@ -36,11 +36,6 @@ class TestCommand extends Command
                         "protein" => 30,
                         "carbs" => 60,
                         "fats" => 10,
-                        "instructions" => [
-                            "Cook 1 cup of oats with water or milk.",
-                            "Stir in a scoop of protein powder after cooking.",
-                            "Top with 1 sliced banana and a handful of berries."
-                        ]
                     ],
                     "lunch" => [
                         "name" => "Grilled Chicken Salad",
@@ -48,11 +43,6 @@ class TestCommand extends Command
                         "protein" => 45,
                         "carbs" => 20,
                         "fats" => 18,
-                        "instructions" => [
-                            "Grill 150g of chicken breast and slice it.",
-                            "Toss with mixed greens, cherry tomatoes, cucumber, and avocado.",
-                            "Dress with olive oil and vinegar."
-                        ]
                     ],
                     "dinner" => [
                         "name" => "Stir-Fried Tofu with Vegetables",
@@ -60,11 +50,6 @@ class TestCommand extends Command
                         "protein" => 35,
                         "carbs" => 50,
                         "fats" => 20,
-                        "instructions" => [
-                            "Cube 200g of firm tofu and pan-fry until golden.",
-                            "Add a mix of bell peppers, broccoli, and carrots.",
-                            "Stir in soy sauce and serve over 1 cup of cooked brown rice."
-                        ]
                     ],
                     "snack" => [
                         "name" => "Greek Yogurt with Honey and Nuts",
@@ -72,11 +57,6 @@ class TestCommand extends Command
                         "protein" => 30,
                         "carbs" => 40,
                         "fats" => 20,
-                        "instructions" => [
-                            "Spoon 1 cup of Greek yogurt into a bowl.",
-                            "Drizzle with 1 tablespoon of honey.",
-                            "Top with a handful of mixed nuts."
-                        ]
                     ]
                 ],
                 "day2" => [
@@ -86,11 +66,6 @@ class TestCommand extends Command
                         "protein" => 25,
                         "carbs" => 30,
                         "fats" => 15,
-                        "instructions" => [
-                            "Scramble 3 eggs in a pan.",
-                            "Add a handful of fresh spinach until wilted.",
-                            "Serve with 2 slices of whole grain toast."
-                        ]
                     ],
                     "lunch" => [
                         "name" => "Turkey and Avocado Wrap",
@@ -98,11 +73,6 @@ class TestCommand extends Command
                         "protein" => 40,
                         "carbs" => 45,
                         "fats" => 20,
-                        "instructions" => [
-                            "Spread hummus on a whole wheat wrap.",
-                            "Layer with sliced turkey, avocado, lettuce, and tomato.",
-                            "Roll tightly and slice in half."
-                        ]
                     ],
                     "dinner" => [
                         "name" => "Baked Salmon with Quinoa and Asparagus",
@@ -110,11 +80,6 @@ class TestCommand extends Command
                         "protein" => 40,
                         "carbs" => 40,
                         "fats" => 25,
-                        "instructions" => [
-                            "Season a salmon fillet with lemon, salt, and pepper, and bake at 200°C for 15 minutes.",
-                            "Cook 1 cup of quinoa according to package instructions.",
-                            "Steam asparagus until tender and serve with the salmon and quinoa."
-                        ]
                     ],
                     "snack" => [
                         "name" => "Cottage Cheese with Pineapple",
@@ -122,17 +87,13 @@ class TestCommand extends Command
                         "protein" => 30,
                         "carbs" => 40,
                         "fats" => 10,
-                        "instructions" => [
-                            "Spoon 1 cup of cottage cheese into a bowl.",
-                            "Top with fresh pineapple chunks or canned (in juice)."
-                        ]
                     ]
                 ]
             ],
-            'Lose body fat and maintain muscle',
+            1800,
             'vegetarian',
             'Mediterranean'
-        );
+        ));
     }
 
     public function generateFull7DayMealPlan(
@@ -168,12 +129,12 @@ class TestCommand extends Command
                 "protein" => ["type" => "number"],
                 "carbs" => ["type" => "number"],
                 "fats" => ["type" => "number"],
-                "instructions" => [
-                    "type" => "array",
-                    "items" => ["type" => "string"]
-                ]
+                // "instructions" => [
+                //     "type" => "array",
+                //     "items" => ["type" => "string"]
+                // ]
             ],
-            "required" => ["name", "calories", "protein", "carbs", "fats", "instructions"],
+            "required" => ["name", "calories", "protein", "carbs", "fats"],
             "additionalProperties" => false
         ];
 
@@ -214,16 +175,15 @@ class TestCommand extends Command
                             "day3" => $daySchema,
                             "day4" => $daySchema,
                             "day5" => $daySchema,
-                            "day6" => $daySchema,
-                            "day7" => $daySchema
+                            "day6" => $daySchema
                         ],
-                        "required" => ["day3", "day4", "day5", "day6", "day7"],
+                        "required" => ["day3", "day4", "day5", "day6"],
                         "additionalProperties" => false
                     ]
                 ]
             ]
         ]);
-        logger($response->choices[0]->message->content);
+
         $newDays = json_decode($response->choices[0]->message->content, true);
 
         if (is_null($newDays)) {
@@ -238,5 +198,103 @@ class TestCommand extends Command
                 $newDays
             )
         ];
+    }
+
+    public function generateRecipeFromMeal(array $meal): array
+    {
+        $open_ai = OpenAI::client(env("OPENAI_API_KEY"));
+
+        $response = $open_ai->chat()->create([
+            "model" => "gpt-4o-mini",
+            "messages" => [
+                [
+                    "role" => "system",
+                    "content" => "You are a recipe assistant that generates detailed recipes based on user preferences."
+                ],
+                [
+                    "role" => "user",
+                    "content" =>
+                    "Generate a detailed recipe for my fitness plan. " .
+                        "Name: {$meal['name']}. " .
+                        "Calories: {$meal['calories']}. " .
+                        "Protein: {$meal['protein']}. " .
+                        "Description: A meal called '{$meal['name']}' with approximately {$meal['calories']} calories, {$meal['protein']}g protein, and a Mediterranean vegetarian style. " .
+                        "Additional notes: Use healthy oils and spices. " .
+                        "Respond in JSON format matching the provided schema exactly. Do not include any explanations, just the JSON."
+                ]
+            ],
+            "response_format" => [
+                "type" => "json_schema",
+                "json_schema" => [
+                    "name" => "recipe",
+                    "strict" => true,
+                    "schema" => [
+                        "type" => "object",
+                        "properties" => [
+                            "name" => ["type" => "string"],
+                            "description" => ["type" => "string"],
+                            "calories" => ["type" => "integer"],
+                            "protein" => ["type" => "integer"],
+                            "ingredients" => [
+                                "type" => "array",
+                                "items" => ["type" => "string"]
+                            ],
+                            "instructions" => [
+                                "type" => "array",
+                                "items" => [
+                                    "type" => "object",
+                                    "properties" => [
+                                        "title" => ["type" => "string"],
+                                        "description" => ["type" => "string"]
+                                    ],
+                                    "required" => ["title", "description"],
+                                    "additionalProperties" => false
+                                ]
+                            ],
+                            "serving_suggestions" => [
+                                "type" => "array",
+                                "items" => ["type" => "string"]
+                            ]
+                        ],
+                        "required" => [
+                            "name",
+                            "description",
+                            "calories",
+                            "protein",
+                            "ingredients",
+                            "instructions",
+                            "serving_suggestions"
+                        ],
+                        "additionalProperties" => false
+                    ]
+                ]
+            ]
+        ]);
+
+        return json_decode($response->choices[0]->message->content, true);
+    }
+
+    public function generateAllRecipesFromMealPlan(array $mealPlan): array
+    {
+        $detailedRecipes = [];
+
+        foreach ($mealPlan['meal_plan'] as $day => $meals) {
+            $detailedRecipes[$day] = [];
+
+            foreach ($meals as $mealType => $meal) {
+                try {
+                    $recipe = $this->generateRecipeFromMeal($meal);
+                    $detailedRecipes[$day][$mealType] = $recipe;
+                } catch (Exception $e) {
+                    // Optional: fallback or log the error
+                    $detailedRecipes[$day][$mealType] = [
+                        'error' => "Failed to generate recipe: " . $e->getMessage(),
+                        'fallback' => $meal
+                    ];
+                }
+            }
+        }
+
+        return $detailedRecipes;
     }
 }
