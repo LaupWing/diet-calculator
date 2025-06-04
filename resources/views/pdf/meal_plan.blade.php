@@ -83,19 +83,19 @@
     </div>
 
     <div class="cta">
-        🔥 Want the full system that helped me lose 44 lbs and stay lean year-round?
+        Want the full system that helped me lose 44 lbs and stay lean year-round?
         <strong><a href="https://slingshot.loc-ng.com/" target="_blank">Check out The Slingshot Diet</a></strong> —
         my personal, proven strategy that makes fat loss simple, sustainable, and actually enjoyable.
     </div>
 
 
     <div class="cta">
-        ⚠️ Your custom 7-day meal plan will be sent to your email shortly. It takes a few minutes to generate — thank
+        Your custom 7-day meal plan will be sent to your email shortly. It takes a few minutes to generate — thank
         you for your patience!
     </div>
 
     <div class="section grocery-list">
-        <h2>🛒 Grocery List</h2>
+        <h2>Grocery List</h2>
         <ul>
             @foreach ($data->grocery_list as $item)
                 <li><strong>{{ $item->name }}</strong>: {{ $item->quantity }}</li>
@@ -152,7 +152,7 @@
     @endforeach
 
     <div class="cta">
-        💪 If this 2-day plan helped, imagine what you could do with the full method.
+        If this 2-day plan helped, imagine what you could do with the full method.
         <strong><a href="https://slingshot.loc-ng.com/" target="_blank">Get The Slingshot Diet</a></strong> — my
         exact diet system that helped me lose 44 lbs and stay lean all year without giving up food I love.
         It includes a full breakdown, psychology tips, 10 air-fried recipes, and an exclusive recipe-generating web app.
