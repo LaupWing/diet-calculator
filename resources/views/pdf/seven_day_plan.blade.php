@@ -78,9 +78,9 @@
     @foreach ($days as $day => $meals)
         <div class="day-header">Day {{ $loop->iteration }}</div>
 
-        @foreach ($meals as $meal)
+        @foreach ($meals as $mealType => $meal)
             <div class="meal-section">
-                <h2>{{ ucfirst($meal['meal_type']) }}: {{ $meal['name'] }}</h2>
+                <h2>{{ ucfirst($mealType) }}: {{ $meal['name'] }}</h2>
                 <p class="macro-info">
                     Calories: {{ $meal['calories'] }} kcal | Protein: {{ $meal['protein'] }}g | Carbs:
                     {{ $meal['carbs'] }}g | Fats: {{ $meal['fats'] }}g
