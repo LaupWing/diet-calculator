@@ -86,7 +86,11 @@ class AiController extends Controller
                 "protein" => ["type" => "number"],
                 "carbs" => ["type" => "number"],
                 "fats" => ["type" => "number"],
-                "instructions" => ["type" => "string"]
+                "instructions" => [
+                    "type" => "array",
+                    "items" => ["type" => "string"],
+                    "description" => "Step-by-step preparation instructions"
+                ]
             ],
             "required" => ["name", "calories", "protein", "carbs", "fats", "instructions"],
             "additionalProperties" => false
