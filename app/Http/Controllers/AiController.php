@@ -149,7 +149,7 @@ class AiController extends Controller
             ]
         ]);
 
-        $data = json_decode($response->choices[0]->message->content);
+        $data = json_decode($response->choices[0]->message->content, true);
         return redirect(route("generated"))
             ->with("data", array_merge($data, ["months" => $goal_months]))
             ->with("guest_id", $guest->id);

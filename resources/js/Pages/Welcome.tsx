@@ -67,7 +67,6 @@ export default function Welcome() {
         e.preventDefault()
         form.post(route("generate"))
     }
-    console.log(form.errors)
 
     return (
         <>
