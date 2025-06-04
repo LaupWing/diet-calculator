@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Meal2;
 use Exception;
 use Illuminate\Console\Command;
 use OpenAI;
@@ -27,7 +28,7 @@ class TestCommand extends Command
      */
     public function handle()
     {
-        logger($this->generateFull7DayMealPlan(
+        $recipes = $this->generateAllRecipesFromMealPlan($this->generateFull7DayMealPlan(
             [
                 "day1" => [
                     "breakfast" => [
@@ -94,6 +95,24 @@ class TestCommand extends Command
             'vegetarian',
             'Mediterranean'
         ));
+
+        foreach ($recipes as $day => $meals) {
+            foreach ($meals as $mealType => $recipe) {
+                Meal2::create([
+                    'day' => $day,
+                    'meal_type' => $mealType,
+                    'name' => $recipe['name'],
+                    'calories' => $recipe['calories'],
+                    'protein' => $recipe['protein'],
+                    'carbs' => $recipe['carbs'] ?? null,
+                    'fats' => $recipe['fats'] ?? null,
+                    'description' => $recipe['description'] ?? null,
+                    'ingredients' => $recipe['ingredients'] ?? [],
+                    'instructions' => $recipe['instructions'] ?? [],
+                    'serving_suggestions' => $recipe['serving_suggestions'] ?? [],
+                ]);
+            }
+        }
     }
 
     public function generateFull7DayMealPlan(
@@ -129,10 +148,6 @@ class TestCommand extends Command
                 "protein" => ["type" => "number"],
                 "carbs" => ["type" => "number"],
                 "fats" => ["type" => "number"],
-                // "instructions" => [
-                //     "type" => "array",
-                //     "items" => ["type" => "string"]
-                // ]
             ],
             "required" => ["name", "calories", "protein", "carbs", "fats"],
             "additionalProperties" => false
