@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('meal2s', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('day');           // e.g., day1, day2, etc.
+            $table->string('day');           // e.g., day1, day2, etc.
             $table->string('meal_type');     // e.g., breakfast, lunch, etc.
 
             $table->string('name');
