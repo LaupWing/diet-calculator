@@ -24,6 +24,22 @@ import {
 import { useState } from "react"
 import CountUp from "react-countup"
 
+interface Meal {
+    name: string
+    calories: number
+    protein: number
+    carbs: number
+    fats: number
+    instructions: string[]
+}
+
+interface DayPlan {
+    breakfast: Meal
+    lunch: Meal
+    dinner: Meal
+    snack: Meal
+}
+
 export default function Welcome() {
     const page = usePage<{
         flash: {
@@ -33,10 +49,9 @@ export default function Welcome() {
                 calories: number
                 goal_bodyfat: number
                 meal_plan: {
-                    recipe_name: string
-                    calories: number
-                    meal_type: "breakfast" | "lunch" | "diner" | "snack"
-                }[]
+                    day1: DayPlan
+                    day2: DayPlan
+                }
             }
             guest_id: string
         }
@@ -141,6 +156,7 @@ export default function Welcome() {
                             </Button>
                         </DialogTrigger>
                         <DietPlanModal
+                            mealPlan={page.props.flash.data.meal_plan}
                             isOpen={open}
                             onClose={() => setOpen(false)}
                             currentBodyFat={
@@ -154,22 +170,6 @@ export default function Welcome() {
             </div>
         </>
     )
-}
-
-interface Meal {
-    name: string
-    calories: number
-    protein: number
-    carbs: number
-    fats: number
-    instructions: string[]
-}
-
-interface DayPlan {
-    breakfast: Meal
-    lunch: Meal
-    dinner: Meal
-    snack: Meal
 }
 
 const SAMPLE_PLAN: Record<string, DayPlan> = {
@@ -281,6 +281,7 @@ interface DietPlanModalProps {
     currentBodyFat: number
     goalBodyFat: number
     timeframe: number // in months
+    mealPlan: Record<string, DayPlan>
 }
 
 function DietPlanModal({
@@ -289,6 +290,7 @@ function DietPlanModal({
     currentBodyFat = 25,
     goalBodyFat = 15,
     timeframe = 3,
+    mealPlan = SAMPLE_PLAN,
 }: DietPlanModalProps) {
     const [email, setEmail] = useState("")
     const [expandedMeal, setExpandedMeal] = useState<string | null>(null)
@@ -316,7 +318,7 @@ function DietPlanModal({
         }, 1500)
     }
 
-    const dayPlan = SAMPLE_PLAN[currentDay]
+    const dayPlan = mealPlan[currentDay]
     const progressPercentage = Math.round(
         ((currentBodyFat - goalBodyFat) / currentBodyFat) * 100
     )
