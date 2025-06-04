@@ -162,7 +162,7 @@ export default function Welcome() {
                                 </DialogDescription>
                             </DialogHeader>
                             <ul className="grid gap-1 text-sm">
-                                {page.props.flash.data.meal_plan.map((meal) => (
+                                {/* {page.props.flash.data.meal_plan.map((meal) => (
                                     <li
                                         key={meal.recipe_name}
                                         className="flex justify-between"
@@ -170,7 +170,7 @@ export default function Welcome() {
                                         <span>{meal.recipe_name}</span>
                                         <span>{meal.calories} kcal</span>
                                     </li>
-                                ))}
+                                ))} */}
                             </ul>
                             <form
                                 onSubmit={handleSubmit}
