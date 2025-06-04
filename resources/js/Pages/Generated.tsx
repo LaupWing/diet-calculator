@@ -218,7 +218,7 @@ function DietPlanModal({
     )
 
     return (
-        <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-md max-h-[90vh] w-[95vw] rounded-md overflow-y-auto">
             <DialogHeader>
                 <DialogTitle>
                     Here's a Sample Day Based on Your Goals
