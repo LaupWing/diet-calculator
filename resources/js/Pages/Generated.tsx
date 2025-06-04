@@ -72,6 +72,7 @@ export default function Welcome() {
         goal_bodyfat: page.props.flash.data.goal_bodyfat,
         meal_plan: page.props.flash.data.meal_plan,
         guest_id: page.props.flash.guest_id,
+        months: page.props.flash.data.months,
     })
     const { toast } = useToast()
 
