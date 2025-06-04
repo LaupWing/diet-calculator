@@ -76,7 +76,7 @@ export default function Welcome() {
     })
     const { toast } = useToast()
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         if (form.data.email === "") {
             toast({
@@ -158,9 +158,10 @@ export default function Welcome() {
                             </Button>
                         </DialogTrigger>
                         <DietPlanModal
+                            handleSubmit={handleSubmit}
                             mealPlan={page.props.flash.data.meal_plan}
                             months={page.props.flash.data.months}
-                            onClose={() => setOpen(false)}
+                            form={form}
                             currentBodyFat={
                                 page.props.flash.data.current_bodyfat
                             }
@@ -176,21 +177,22 @@ export default function Welcome() {
 
 interface DietPlanModalProps {
     months: number
-    onClose: () => void
     currentBodyFat: number
     goalBodyFat: number
     timeframe: number // in months
     mealPlan: Record<string, DayPlan>
+    form: any
+    handleSubmit: (e: React.FormEvent) => void
 }
 
 function DietPlanModal({
     months,
-    onClose,
     currentBodyFat,
     goalBodyFat,
     mealPlan,
+    handleSubmit,
+    form,
 }: DietPlanModalProps) {
-    const [email, setEmail] = useState("")
     const [expandedMeal, setExpandedMeal] = useState<string | null>(null)
     const [currentDay, setCurrentDay] = useState("day1")
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -201,19 +203,6 @@ function DietPlanModal({
         } else {
             setExpandedMeal(mealType)
         }
-    }
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
-        setIsSubmitting(true)
-
-        // Simulate sending email
-        setTimeout(() => {
-            setIsSubmitting(false)
-            // Here you would typically handle the success state
-            // For now we'll just close the modal
-            onClose()
-        }, 1500)
     }
 
     const dayPlan = mealPlan[currentDay]
@@ -255,8 +244,10 @@ function DietPlanModal({
                             <Input
                                 type="email"
                                 placeholder="Enter your email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={form.email}
+                                onChange={(e) =>
+                                    form.setData("email", e.target.value)
+                                }
                                 required
                                 className="w-full"
                             />

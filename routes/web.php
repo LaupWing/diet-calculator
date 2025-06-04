@@ -30,42 +30,43 @@ Route::post("/submit-email", function (Request $request) {
     ]);
 
     $guest  = Guest::where("id", $request->guest_id)->firstOrFail();
+    logger($request->all());
+    logger($guest);
+    // if ($guest->submissions()->where("email", $request->email)->exists()) {
+    //     return redirect()->back()->with("error", "You have already submitted your email.");
+    // }
+    // $api_key = config("services.beehiiv.secret");
 
-    if ($guest->submissions()->where("email", $request->email)->exists()) {
-        return redirect()->back()->with("error", "You have already submitted your email.");
-    }
-    $api_key = config("services.beehiiv.secret");
+    // Http::withHeaders([
+    //     "Authorization" => "Bearer $api_key"
+    // ])->post("https://api.beehiiv.com/v2/publications/pub_933eff84-523b-4a44-8fc1-2c0166fa0fd8/subscriptions", [
+    //     "email" => $request->email,
+    // ]);
 
-    Http::withHeaders([
-        "Authorization" => "Bearer $api_key"
-    ])->post("https://api.beehiiv.com/v2/publications/pub_933eff84-523b-4a44-8fc1-2c0166fa0fd8/subscriptions", [
-        "email" => $request->email,
-    ]);
+    // $guest->submissions()->create([
+    //     "email" => $request->email,
+    //     "calories" => $request->calories ?? 0,
+    //     "current_bodyfat" => $request->current_bodyfat ?? 0,
+    //     "goal_bodyfat" => $request->goal_bodyfat ?? 0,
+    //     "protein" => $request->protein ?? 0,
+    // ]);
+    // Mail::to($request->email)->send(new DietInfo([
+    //     "email" => $request->email,
+    //     "calories" => $request->calories,
+    //     "current_bodyfat" => $request->current_bodyfat,
+    //     "goal_bodyfat" => $request->goal_bodyfat,
+    //     "protein" => $request->protein,
+    //     "guest_id" => $request->guest_id,
+    //     "meal_plan" => $request->meal_plan,
+    // ]));
 
-    $guest->submissions()->create([
-        "email" => $request->email,
-        "calories" => $request->calories ?? 0,
-        "current_bodyfat" => $request->current_bodyfat ?? 0,
-        "goal_bodyfat" => $request->goal_bodyfat ?? 0,
-        "protein" => $request->protein ?? 0,
-    ]);
-    Mail::to($request->email)->send(new DietInfo([
-        "email" => $request->email,
-        "calories" => $request->calories,
-        "current_bodyfat" => $request->current_bodyfat,
-        "goal_bodyfat" => $request->goal_bodyfat,
-        "protein" => $request->protein,
-        "guest_id" => $request->guest_id,
-        "meal_plan" => $request->meal_plan,
-    ]));
-
-    foreach ($request->meal_plan as $meal) {
-        $guest->meals()->create([
-            "recipe_name" => $meal["recipe_name"],
-            "calories" => $meal["calories"],
-            "meal_type" => $meal["meal_type"],
-        ]);
-    }
+    // foreach ($request->meal_plan as $meal) {
+    //     $guest->meals()->create([
+    //         "recipe_name" => $meal["recipe_name"],
+    //         "calories" => $meal["calories"],
+    //         "meal_type" => $meal["meal_type"],
+    //     ]);
+    // }
 
     return redirect()->back()->with("data", [
         "email" => $request->email,
