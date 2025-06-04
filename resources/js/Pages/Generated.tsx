@@ -140,72 +140,15 @@ export default function Welcome() {
                                 Show Example Diet
                             </Button>
                         </DialogTrigger>
-                        <DialogContent
-                            onOpenAutoFocus={(el) => el.preventDefault()}
-                            className="w-[90%] max-w-sm rounded"
-                        >
-                            {form.processing && (
-                                <div className="inset-0 absolute text-blue-500 flex-col flex items-center px-6 z-[100] justify-center bg-white/90">
-                                    <Loader2 className="animate-spin h-10 w-10  mx-auto" />
-                                    <p className="text-center mt-2 text-sm font-bold">
-                                        Pdf is generating and sending to your
-                                        email!
-                                    </p>
-                                </div>
-                            )}
-                            <DialogHeader>
-                                <DialogTitle>Example Diet</DialogTitle>
-                                <DialogDescription className="text-xs text-left">
-                                    <p>
-                                        This is just an example diet plan based
-                                        on your current bodyfat % and your goal
-                                        bodyfat %. But remember, this is just an
-                                        example and you should always consult a
-                                        professional before starting a diet.
-                                    </p>
-                                    <p className="text-blue-500 mt-2 font-bold">
-                                        In the email you will receive a pdf with
-                                        instructions on how to prepare the meals
-                                        and a grocery list.
-                                    </p>
-                                </DialogDescription>
-                            </DialogHeader>
-                            <ul className="grid gap-1 text-sm">
-                                {/* {page.props.flash.data.meal_plan.map((meal) => (
-                                    <li
-                                        key={meal.recipe_name}
-                                        className="flex justify-between"
-                                    >
-                                        <span>{meal.recipe_name}</span>
-                                        <span>{meal.calories} kcal</span>
-                                    </li>
-                                ))} */}
-                            </ul>
-                            <form
-                                onSubmit={handleSubmit}
-                                className="mt-4 grid gap-2 text-sm"
-                            >
-                                <p>
-                                    Want to receive a pdf with the info? Fill in
-                                    your email below
-                                </p>
-                                <div className="grid gap-1">
-                                    <Label>Email</Label>
-                                    <Input
-                                        required
-                                        value={form.data.email}
-                                        onChange={(e) =>
-                                            form.setData(
-                                                "email",
-                                                e.target.value
-                                            )
-                                        }
-                                        type="email"
-                                    />
-                                </div>
-                                <Button disabled={form.processing}>Send</Button>
-                            </form>
-                        </DialogContent>
+                        <DietPlanModal
+                            isOpen={open}
+                            onClose={() => setOpen(false)}
+                            currentBodyFat={
+                                page.props.flash.data.current_bodyfat
+                            }
+                            goalBodyFat={page.props.flash.data.goal_bodyfat}
+                            timeframe={3}
+                        />
                     </Dialog>
                 </div>
             </div>
@@ -353,8 +296,6 @@ function DietPlanModal({
     const [showAlternatives, setShowAlternatives] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false)
 
-    if (!isOpen) return null
-
     const toggleMealExpansion = (mealType: string) => {
         if (expandedMeal === mealType) {
             setExpandedMeal(null)
@@ -382,202 +323,186 @@ function DietPlanModal({
     )
 
     return (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
-                <div className="p-4 border-b flex justify-between items-center sticky top-0 bg-white z-10">
-                    <h2 className="text-xl font-bold">
-                        Here's a Sample Day Based on Your Goals
-                    </h2>
-                    <button
-                        onClick={onClose}
-                        className="text-gray-500 hover:text-gray-700"
-                    >
-                        <X size={20} />
-                    </button>
+        <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+                <DialogTitle>
+                    Here's a Sample Day Based on Your Goals
+                </DialogTitle>
+            </DialogHeader>
+
+            <div className="space-y-4">
+                <p className="text-gray-600 text-sm">
+                    This is a personalized example diet plan based on your
+                    current body fat ({currentBodyFat}%) and your goal body fat
+                    ({goalBodyFat}%). Remember, this is just an example and you
+                    should always consult a professional before starting a diet.
+                </p>
+
+                <div className="space-y-2">
+                    <div className="flex justify-between text-sm text-gray-600">
+                        <span>Current: {currentBodyFat}%</span>
+                        <span>Goal: {goalBodyFat}%</span>
+                    </div>
+                    <Progress value={progressPercentage} className="h-2" />
+                    <p className="text-sm text-center text-emerald-600 font-medium">
+                        You're aiming to drop {currentBodyFat - goalBodyFat}%
+                        body fat in {timeframe} months
+                    </p>
                 </div>
 
-                <div className="p-4">
-                    <p className="text-gray-600 mb-4">
-                        This is a personalized example diet plan based on your
-                        current body fat ({currentBodyFat}%) and your goal body
-                        fat ({goalBodyFat}%). Remember, this is just an example
-                        and you should always consult a professional before
-                        starting a diet.
-                    </p>
+                <div className="flex space-x-2">
+                    <Button
+                        variant={showAlternatives ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setShowAlternatives(!showAlternatives)}
+                        className="text-xs"
+                    >
+                        Show Alternatives
+                    </Button>
 
-                    <div className="mb-6 space-y-2">
-                        <div className="flex justify-between text-sm text-gray-600">
-                            <span>Current: {currentBodyFat}%</span>
-                            <span>Goal: {goalBodyFat}%</span>
-                        </div>
-                        <Progress value={progressPercentage} className="h-2" />
-                        <p className="text-sm text-center text-emerald-600 font-medium">
-                            You're aiming to drop {currentBodyFat - goalBodyFat}
-                            % body fat in {timeframe} months
-                        </p>
-                    </div>
-
-                    <div className="mb-4 flex space-x-2">
-                        <Button
-                            variant={showAlternatives ? "default" : "outline"}
-                            size="sm"
-                            onClick={() =>
-                                setShowAlternatives(!showAlternatives)
-                            }
-                            className="text-xs"
-                        >
-                            Show Alternatives
-                        </Button>
-
-                        <Tabs defaultValue="day1" className="flex-1">
-                            <TabsList className="grid grid-cols-2">
-                                <TabsTrigger
-                                    value="day1"
-                                    onClick={() => setCurrentDay("day1")}
-                                >
-                                    Day 1
-                                </TabsTrigger>
-                                <TabsTrigger
-                                    value="day2"
-                                    onClick={() => setCurrentDay("day2")}
-                                >
-                                    Day 2
-                                </TabsTrigger>
-                            </TabsList>
-                        </Tabs>
-                    </div>
-
-                    <div className="space-y-4 mb-6">
-                        {Object.entries(dayPlan).map(([mealType, meal]) => (
-                            <div
-                                key={mealType}
-                                className="border rounded-lg p-3 cursor-pointer hover:bg-gray-50 transition-colors"
-                                onClick={() => toggleMealExpansion(mealType)}
+                    <Tabs defaultValue="day1" className="flex-1">
+                        <TabsList className="grid grid-cols-2">
+                            <TabsTrigger
+                                value="day1"
+                                onClick={() => setCurrentDay("day1")}
                             >
-                                <div className="flex justify-between items-center">
-                                    <div>
-                                        <div className="flex items-center gap-2">
-                                            {mealType === "breakfast" && (
-                                                <span>🥣</span>
-                                            )}
-                                            {mealType === "lunch" && (
-                                                <span>🍲</span>
-                                            )}
-                                            {mealType === "dinner" && (
-                                                <span>🍽️</span>
-                                            )}
-                                            {mealType === "snack" && (
-                                                <span>🥪</span>
-                                            )}
-                                            <h3 className="font-medium capitalize">
-                                                {mealType}: {meal.name}
-                                            </h3>
-                                        </div>
-                                        <div className="text-sm text-gray-600 mt-1">
-                                            Calories: {meal.calories} kcal |
-                                            Protein: {meal.protein}g | Carbs:{" "}
-                                            {meal.carbs}g | Fats: {meal.fats}g
-                                        </div>
-                                    </div>
-                                    <div>
-                                        {expandedMeal === mealType ? (
-                                            <ChevronUp size={18} />
-                                        ) : (
-                                            <ChevronDown size={18} />
+                                Day 1
+                            </TabsTrigger>
+                            <TabsTrigger
+                                value="day2"
+                                onClick={() => setCurrentDay("day2")}
+                            >
+                                Day 2
+                            </TabsTrigger>
+                        </TabsList>
+                    </Tabs>
+                </div>
+
+                <div className="space-y-3">
+                    {Object.entries(dayPlan).map(([mealType, meal]) => (
+                        <div
+                            key={mealType}
+                            className="border rounded-lg p-3 cursor-pointer hover:bg-gray-50 transition-colors"
+                            onClick={() => toggleMealExpansion(mealType)}
+                        >
+                            <div className="flex justify-between items-center">
+                                <div>
+                                    <div className="flex items-center gap-2">
+                                        {mealType === "breakfast" && (
+                                            <span>🥣</span>
                                         )}
+                                        {mealType === "lunch" && (
+                                            <span>🍲</span>
+                                        )}
+                                        {mealType === "dinner" && (
+                                            <span>🍽️</span>
+                                        )}
+                                        {mealType === "snack" && (
+                                            <span>🥪</span>
+                                        )}
+                                        <h3 className="font-medium capitalize">
+                                            {mealType}: {meal.name}
+                                        </h3>
+                                    </div>
+                                    <div className="text-sm text-gray-600 mt-1">
+                                        Calories: {meal.calories} kcal |
+                                        Protein: {meal.protein}g | Carbs:{" "}
+                                        {meal.carbs}g | Fats: {meal.fats}g
                                     </div>
                                 </div>
-
-                                {expandedMeal === mealType && (
-                                    <div className="mt-3 pt-3 border-t text-sm">
-                                        <h4 className="font-medium mb-2">
-                                            Instructions:
-                                        </h4>
-                                        <ol className="list-decimal pl-5 space-y-1 text-gray-600">
-                                            {meal.instructions.map(
-                                                (
-                                                    step: string,
-                                                    index: number
-                                                ) => (
-                                                    <li key={index}>{step}</li>
-                                                )
-                                            )}
-                                        </ol>
-
-                                        {showAlternatives && (
-                                            <div className="mt-3 pt-3 border-t">
-                                                <h4 className="font-medium mb-2">
-                                                    Alternative Options:
-                                                </h4>
-                                                <ul className="list-disc pl-5 space-y-1 text-gray-600">
-                                                    <li>
-                                                        Similar macros with
-                                                        Mediterranean flavors
-                                                    </li>
-                                                    <li>
-                                                        Higher protein, lower
-                                                        carb version
-                                                    </li>
-                                                    <li>
-                                                        Vegetarian alternative
-                                                        with same nutrition
-                                                        profile
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className="bg-gray-50 p-4 rounded-lg mb-4">
-                        <h3 className="font-medium mb-2">
-                            Want your full 7-day plan, grocery list, and prep
-                            guide?
-                        </h3>
-                        <p className="text-sm text-gray-600 mb-4">
-                            We'll send it right to your inbox, along with tips
-                            to help you stay on track.
-                        </p>
-
-                        <form onSubmit={handleSubmit}>
-                            <div className="space-y-3">
-                                <Input
-                                    type="email"
-                                    placeholder="Enter your email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                    className="w-full"
-                                />
-                                <Button
-                                    type="submit"
-                                    className="w-full"
-                                    disabled={isSubmitting}
-                                >
-                                    {isSubmitting ? (
-                                        <span className="flex items-center gap-2">
-                                            <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
-                                            Sending...
-                                        </span>
+                                <div>
+                                    {expandedMeal === mealType ? (
+                                        <ChevronUp size={18} />
                                     ) : (
-                                        <span className="flex items-center gap-2">
-                                            <Send size={16} />
-                                            Send My Plan
-                                        </span>
+                                        <ChevronDown size={18} />
                                     )}
-                                </Button>
+                                </div>
                             </div>
-                        </form>
-                    </div>
 
-                    <p className="text-center text-sm text-emerald-600 font-medium">
-                        Day 1 of your transformation starts here!
-                    </p>
+                            {expandedMeal === mealType && (
+                                <div className="mt-3 pt-3 border-t text-sm">
+                                    <h4 className="font-medium mb-2">
+                                        Instructions:
+                                    </h4>
+                                    <ol className="list-decimal pl-5 space-y-1 text-gray-600">
+                                        {meal.instructions.map(
+                                            (step: string, index: number) => (
+                                                <li key={index}>{step}</li>
+                                            )
+                                        )}
+                                    </ol>
+
+                                    {showAlternatives && (
+                                        <div className="mt-3 pt-3 border-t">
+                                            <h4 className="font-medium mb-2">
+                                                Alternative Options:
+                                            </h4>
+                                            <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                                                <li>
+                                                    Similar macros with
+                                                    Mediterranean flavors
+                                                </li>
+                                                <li>
+                                                    Higher protein, lower carb
+                                                    version
+                                                </li>
+                                                <li>
+                                                    Vegetarian alternative with
+                                                    same nutrition profile
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    ))}
                 </div>
+
+                <div className="bg-gray-50 p-4 rounded-lg">
+                    <h3 className="font-medium mb-2">
+                        Want your full 7-day plan, grocery list, and prep guide?
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-4">
+                        We'll send it right to your inbox, along with tips to
+                        help you stay on track.
+                    </p>
+
+                    <form onSubmit={handleSubmit}>
+                        <div className="space-y-3">
+                            <Input
+                                type="email"
+                                placeholder="Enter your email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                                className="w-full"
+                            />
+                            <Button
+                                type="submit"
+                                className="w-full"
+                                disabled={isSubmitting}
+                            >
+                                {isSubmitting ? (
+                                    <span className="flex items-center gap-2">
+                                        <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
+                                        Sending...
+                                    </span>
+                                ) : (
+                                    <span className="flex items-center gap-2">
+                                        <Send size={16} />
+                                        Send My Plan
+                                    </span>
+                                )}
+                            </Button>
+                        </div>
+                    </form>
+                </div>
+
+                <p className="text-center text-sm text-emerald-600 font-medium">
+                    Day 1 of your transformation starts here!
+                </p>
             </div>
-        </div>
+        </DialogContent>
     )
 }
