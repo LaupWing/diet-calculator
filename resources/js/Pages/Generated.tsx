@@ -17,6 +17,7 @@ import {
     ChevronDown,
     ChevronUp,
     CircleAlert,
+    Loader,
     Loader2,
     Send,
     X,
@@ -58,6 +59,7 @@ export default function Welcome() {
         }
     }>()
     const [open, setOpen] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
     if (!page.props.flash.data) {
         router.replace("/")
@@ -86,9 +88,11 @@ export default function Welcome() {
             })
             return
         }
+        setIsSubmitting(true)
         form.post(route("submit-email"), {
             preserveState: true,
             onSuccess: () => {
+                setIsSubmitting(false)
                 toast({
                     title: "Success",
                     description: "Email sent",
@@ -96,6 +100,7 @@ export default function Welcome() {
                 setOpen(false)
             },
             onError: () => {
+                setIsSubmitting(false)
                 toast({
                     title: "Error",
                     description: "An error occurred",
@@ -158,6 +163,7 @@ export default function Welcome() {
                             </Button>
                         </DialogTrigger>
                         <DietPlanModal
+                            isSubmitting={isSubmitting}
                             handleSubmit={handleSubmit}
                             mealPlan={page.props.flash.data.meal_plan}
                             months={page.props.flash.data.months}
@@ -183,6 +189,7 @@ interface DietPlanModalProps {
     mealPlan: Record<string, DayPlan>
     form: any
     handleSubmit: (e: React.FormEvent) => void
+    isSubmitting: boolean
 }
 
 function DietPlanModal({
@@ -192,10 +199,10 @@ function DietPlanModal({
     mealPlan,
     handleSubmit,
     form,
+    isSubmitting,
 }: DietPlanModalProps) {
     const [expandedMeal, setExpandedMeal] = useState<string | null>(null)
     const [currentDay, setCurrentDay] = useState("day1")
-    const [isSubmitting, setIsSubmitting] = useState(false)
 
     const toggleMealExpansion = (mealType: string) => {
         if (expandedMeal === mealType) {
@@ -217,7 +224,17 @@ function DietPlanModal({
                     Here's a Sample Day Based on Your Goals
                 </DialogTitle>
             </DialogHeader>
-
+            {isSubmitting && (
+                <div className="absolute z-50 flex-col inset-0 bg-white bg-opacity-50 backdrop-blur-sm flex items-center justify-center gap-2">
+                    <Loader
+                        className="animate-spin h-8 w-8 text-blue-500"
+                        size={32}
+                    />
+                    <p className="animate-pulse">
+                        Sending your personalize meal plan...
+                    </p>
+                </div>
+            )}
             <div className="space-y-4">
                 <div className="space-y-2">
                     <div className="flex justify-between text-sm text-gray-600">
