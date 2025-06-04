@@ -20,14 +20,14 @@ return new class extends Migration
             $table->string('name');
             $table->integer('calories');
             $table->integer('protein');
-            $table->integer('carbs')->nullable();
-            $table->integer('fats')->nullable();
+            $table->integer('carbs');
+            $table->integer('fats');
 
-            $table->text('description')->nullable();
+            $table->text('description');
 
-            $table->json('ingredients')->nullable();
-            $table->json('instructions')->nullable(); // array of objects with title + description
-            $table->json('serving_suggestions')->nullable();
+            $table->json('ingredients');
+            $table->json('instructions'); // array of objects with title + description
+            $table->json('serving_suggestions');
 
             $table->timestamps();
         });

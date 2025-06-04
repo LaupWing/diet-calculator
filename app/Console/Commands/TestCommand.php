@@ -250,6 +250,8 @@ class TestCommand extends Command
                             "description" => ["type" => "string"],
                             "calories" => ["type" => "integer"],
                             "protein" => ["type" => "integer"],
+                            "carbs" => ["type" => "integer"],
+                            "fats" => ["type" => "integer"],
                             "ingredients" => [
                                 "type" => "array",
                                 "items" => ["type" => "string"]
