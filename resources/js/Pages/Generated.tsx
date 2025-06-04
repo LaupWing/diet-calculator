@@ -173,109 +173,6 @@ export default function Welcome() {
     )
 }
 
-const SAMPLE_PLAN: Record<string, DayPlan> = {
-    day1: {
-        breakfast: {
-            name: "Oatmeal w/ Banana & Almonds",
-            calories: 300,
-            protein: 8,
-            carbs: 40,
-            fats: 10,
-            instructions: [
-                "Cook 1/2 cup oats with water or almond milk",
-                "Top with sliced banana and 10 almonds",
-                "Add a drizzle of honey if desired",
-            ],
-        },
-        lunch: {
-            name: "Grilled Chicken Shawarma",
-            calories: 400,
-            protein: 35,
-            carbs: 25,
-            fats: 15,
-            instructions: [
-                "Marinate chicken in shawarma spices for 30 minutes",
-                "Grill until cooked through (165°F internal temp)",
-                "Serve with a small pita and fresh vegetables",
-            ],
-        },
-        dinner: {
-            name: "Middle Eastern Lamb Chops",
-            calories: 500,
-            protein: 40,
-            carbs: 15,
-            fats: 30,
-            instructions: [
-                "Season lamb chops with herbs and spices",
-                "Grill or pan-sear to desired doneness",
-                "Serve with a side of roasted vegetables",
-            ],
-        },
-        snack: {
-            name: "Greek Yogurt with Berries",
-            calories: 200,
-            protein: 15,
-            carbs: 20,
-            fats: 5,
-            instructions: [
-                "Use 1 cup of plain Greek yogurt",
-                "Add 1/2 cup mixed berries",
-                "Optional: sprinkle with cinnamon",
-            ],
-        },
-    },
-    day2: {
-        breakfast: {
-            name: "Protein Smoothie Bowl",
-            calories: 320,
-            protein: 25,
-            carbs: 35,
-            fats: 8,
-            instructions: [
-                "Blend protein powder, frozen berries, and almond milk",
-                "Pour into bowl and top with granola and sliced fruit",
-                "Add chia seeds for extra nutrition",
-            ],
-        },
-        lunch: {
-            name: "Beef Kebabs with Quinoa",
-            calories: 450,
-            protein: 30,
-            carbs: 30,
-            fats: 20,
-            instructions: [
-                "Marinate beef chunks in olive oil and herbs for 1 hour",
-                "Skewer with vegetables (bell peppers, onions)",
-                "Grill for 10-12 minutes and serve over 1/2 cup cooked quinoa",
-            ],
-        },
-        dinner: {
-            name: "Baked Salmon with Asparagus",
-            calories: 480,
-            protein: 35,
-            carbs: 10,
-            fats: 30,
-            instructions: [
-                "Season salmon fillet with lemon and dill",
-                "Bake at 375°F for 15-20 minutes",
-                "Serve with roasted asparagus drizzled with olive oil",
-            ],
-        },
-        snack: {
-            name: "Hummus with Vegetable Sticks",
-            calories: 180,
-            protein: 6,
-            carbs: 15,
-            fats: 10,
-            instructions: [
-                "Use 1/4 cup hummus as dip",
-                "Cut carrot, cucumber, and bell pepper into sticks",
-                "Add a sprinkle of paprika on top of hummus",
-            ],
-        },
-    },
-}
-
 interface DietPlanModalProps {
     months: number
     onClose: () => void
@@ -288,10 +185,9 @@ interface DietPlanModalProps {
 function DietPlanModal({
     months,
     onClose,
-    currentBodyFat = 25,
-    goalBodyFat = 15,
-    timeframe = 3,
-    mealPlan = SAMPLE_PLAN,
+    currentBodyFat,
+    goalBodyFat,
+    mealPlan,
 }: DietPlanModalProps) {
     const [email, setEmail] = useState("")
     const [expandedMeal, setExpandedMeal] = useState<string | null>(null)
