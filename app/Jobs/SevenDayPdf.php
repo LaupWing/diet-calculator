@@ -57,6 +57,7 @@ class SevenDayPdf implements ShouldQueue
                 ]);
             }
         }
+        logger($recipes);
     }
 
     public function generateFull7DayMealPlan(
