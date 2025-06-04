@@ -52,6 +52,7 @@ export default function Welcome() {
                     day1: DayPlan
                     day2: DayPlan
                 }
+                months: number
             }
             guest_id: string
         }
@@ -157,7 +158,7 @@ export default function Welcome() {
                         </DialogTrigger>
                         <DietPlanModal
                             mealPlan={page.props.flash.data.meal_plan}
-                            isOpen={open}
+                            months={page.props.flash.data.months}
                             onClose={() => setOpen(false)}
                             currentBodyFat={
                                 page.props.flash.data.current_bodyfat
@@ -276,7 +277,7 @@ const SAMPLE_PLAN: Record<string, DayPlan> = {
 }
 
 interface DietPlanModalProps {
-    isOpen: boolean
+    months: number
     onClose: () => void
     currentBodyFat: number
     goalBodyFat: number
@@ -285,7 +286,7 @@ interface DietPlanModalProps {
 }
 
 function DietPlanModal({
-    isOpen,
+    months,
     onClose,
     currentBodyFat = 25,
     goalBodyFat = 15,
@@ -340,7 +341,7 @@ function DietPlanModal({
                     <Progress value={progressPercentage} className="h-2" />
                     <p className="text-sm text-center text-emerald-600 font-medium">
                         You're aiming to drop {currentBodyFat - goalBodyFat}%
-                        body fat in {timeframe} months
+                        body fat in {months} months
                     </p>
                 </div>
                 <div className="bg-gray-50 p-4 border rounded-lg">
