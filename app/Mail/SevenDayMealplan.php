@@ -2,9 +2,11 @@
 
 namespace App\Mail;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -16,8 +18,9 @@ class SevenDayMealplan extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
-    {
+    public function __construct(
+        public $sevenDayMealplan,
+    ) {
         //
     }
 
@@ -48,6 +51,11 @@ class SevenDayMealplan extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        $pdfContent = Pdf::loadView('pdf.seven_day_plan', ['days' => $this->sevenDayMealplan])->output();
+
+        return [
+            Attachment::fromData(fn() => $pdfContent, 'Seven_Day_Mealplan.pdf')
+                ->withMime('application/pdf')
+        ];
     }
 }

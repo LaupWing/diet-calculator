@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Mail\SevenDayMealplan;
 use App\Models\Meal2;
 use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -9,6 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
 use OpenAI;
 
 class SevenDayPdf implements ShouldQueue
@@ -55,10 +57,13 @@ class SevenDayPdf implements ShouldQueue
                     'ingredients' => $recipe['ingredients'] ?? [],
                     'instructions' => $recipe['instructions'] ?? [],
                     'serving_suggestions' => $recipe['serving_suggestions'] ?? [],
-                    'email' => 'test@test.com'
+                    'email' => $this->email,
                 ]);
             }
         }
+        Mail::to($this->email)->send(new SevenDayMealplan(
+            $recipes
+        ));
         logger($recipes);
     }
 
