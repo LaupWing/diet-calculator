@@ -50,15 +50,7 @@ Route::post("/submit-email", function (Request $request) {
         "goal_bodyfat" => $request->goal_bodyfat ?? 0,
         "protein" => $request->protein ?? 0,
     ]);
-    // Mail::to($request->email)->send(new DietInfo([
-    //     "email" => $request->email,
-    //     "calories" => $request->calories,
-    //     "current_bodyfat" => $request->current_bodyfat,
-    //     "goal_bodyfat" => $request->goal_bodyfat,
-    //     "protein" => $request->protein,
-    //     "guest_id" => $request->guest_id,
-    //     "meal_plan" => $request->meal_plan,
-    // ]));
+
     Mail::to($request->email)->send(new DietInfo([
         "email" => $request->email,
         "calories" => $request->calories,
@@ -79,11 +71,6 @@ Route::post("/submit-email", function (Request $request) {
         'unit' => $guest->unit,
     ]));
 
-    //  public string $email,
-    //     public int $calories,
-    //     public string $dietary_preference,
-    //     public string $preferred_cuisine,
-    //     public $two_day_meal_plan
     SevenDayPdf::dispatch(
         $request->meal_plan,
         [
