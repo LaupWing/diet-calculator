@@ -4,6 +4,14 @@
         <h1 style="font-size: 24px; color: #2c3e50; text-align: center;">Hi, {{ $dietInfo['email'] }}</h1>
         <p style="font-size: 16px; text-align: center; margin-top: -10px;">Here is your personalized diet plan:</p>
         <div
+            style="margin: 20px 0; padding: 15px; background-color: #fff3cd; border-left: 5px solid #ffc107; border-radius: 6px;">
+            <p style="margin: 0; font-size: 14px; color: #856404;">
+                ⚠️ This is the <strong>first of two emails</strong>. Your custom 7-day meal plan is still being
+                generated and will arrive shortly. It takes a few minutes to process your unique inputs. Hang tight!
+            </p>
+        </div>
+
+        <div
             style="margin-top: 20px; padding: 15px; background-color: #e8f6f3; border-left: 5px solid #16a085; border-radius: 8px;">
             <h2 style="color: #16a085; margin-top: 0;">🔥 My Personal Strategy to Get Lean (And Stay Lean)</h2>
             <p style="margin-bottom: 10px;">
