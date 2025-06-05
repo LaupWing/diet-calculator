@@ -72,6 +72,7 @@ class SevenDayPdf implements ShouldQueue
             "day6" => Meal2::where("day", "day6")->where("email", $this->user_info['email'])->get(),
         ];
         Mail::to($this->user_info['email'])->send(new SevenDayMealplan(
+            $this->user_info,
             $recipesStructure
         ));
     }

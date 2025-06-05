@@ -78,23 +78,24 @@
 
 <body>
     <div class="container">
-        <h1>Hello, {{ $data['email'] }}</h1>
+        <h1>Hello, {{ $data['userInfo']['email'] }}</h1>
         <p>Here is your personalized weekly meal plan along with your health data and fitness goals.</p>
 
         <div class="section">
             <h2>User Info</h2>
-            <p><strong>Age:</strong> {{ $data['age'] }}</p>
-            <p><strong>Height:</strong> {{ $data['height'] }} {{ $data['unit'] }}</p>
-            <p><strong>Weight:</strong> {{ $data['weight'] }} {{ $data['unit'] }}</p>
-            <p><strong>Activity Level:</strong> {{ ucfirst($data['activity']) }}</p>
-            <p><strong>Preferred Cuisine:</strong> {{ $data['preferred_cuisine'] }}</p>
-            <p><strong>Dietary Preference:</strong> {{ ucfirst($data['dietary_preference']) }}</p>
-            <p><strong>Current Body Fat:</strong> {{ $data['current_bodyfat'] }}%</p>
-            <p><strong>Goal Body Fat:</strong> {{ $data['goal_bodyfat'] }}%</p>
-            <p><strong>Goal Weight:</strong> {{ $data['goal_weight'] }} {{ $data['unit'] }}</p>
-            <p><strong>Goal Duration:</strong> {{ $data['goal_months'] }} months</p>
-            <p><strong>Daily Calories:</strong> {{ $data['calories'] }}</p>
-            <p><strong>Daily Protein Target:</strong> {{ $data['protein'] }}g</p>
+            <p><strong>Age:</strong> {{ $data['userInfo']['age'] }}</p>
+            <p><strong>Height:</strong> {{ $data['userInfo']['height'] }} {{ $data['userInfo']['unit'] }}</p>
+            <p><strong>Weight:</strong> {{ $data['userInfo']['weight'] }} {{ $data['userInfo']['unit'] }}</p>
+            <p><strong>Activity Level:</strong> {{ ucfirst($data['userInfo']['activity']) }}</p>
+            <p><strong>Preferred Cuisine:</strong> {{ $data['userInfo']['preferred_cuisine'] }}</p>
+            <p><strong>Dietary Preference:</strong> {{ ucfirst($data['userInfo']['dietary_preference']) }}</p>
+            <p><strong>Current Body Fat:</strong> {{ $data['userInfo']['current_bodyfat'] }}%</p>
+            <p><strong>Goal Body Fat:</strong> {{ $data['userInfo']['goal_bodyfat'] }}%</p>
+            <p><strong>Goal Weight:</strong> {{ $data['userInfo']['goal_weight'] }} {{ $data['userInfo']['unit'] }}
+            </p>
+            <p><strong>Goal Duration:</strong> {{ $data['userInfo']['goal_months'] }} months</p>
+            <p><strong>Daily Calories:</strong> {{ $data['userInfo']['calories'] }}</p>
+            <p><strong>Daily Protein Target:</strong> {{ $data['userInfo']['protein'] }}g</p>
         </div>
 
         <div class="section">
@@ -102,8 +103,8 @@
 
             @foreach (range(1, 6) as $i)
                 <h3>Day {{ $i }}</h3>
-                @if (isset($data['meal_plan']['day' . $i]))
-                    @foreach ($data['meal_plan']['day' . $i] as $mealType => $meal)
+                @if (isset($data['sevenDayMealplan']['day' . $i]))
+                    @foreach ($data['sevenDayMealplan']['day' . $i] as $mealType => $meal)
                         <div class="meal">
                             <h4>{{ ucfirst($mealType) }} <span class="badge">{{ $meal['name'] }}</span></h4>
                             <p>{{ $meal['description'] }}</p>

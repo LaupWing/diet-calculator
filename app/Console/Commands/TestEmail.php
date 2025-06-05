@@ -42,8 +42,8 @@ class TestEmail extends Command
 
         ];
         logger($example);
-        Mail::to("laupwing@gmail.com")->send(new SevenDayMealplan(
-            $example
-        ));
+        // Mail::to("laupwing@gmail.com")->send(new SevenDayMealplan(
+        //     $example
+        // ));
     }
 }
