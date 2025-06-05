@@ -97,6 +97,27 @@
             <p><strong>Daily Calories:</strong> {{ $userInfo['calories'] }}</p>
             <p><strong>Daily Protein Target:</strong> {{ $userInfo['protein'] }}g</p>
         </div>
+        <div
+            style="background-color: #e9f7ef; padding: 20px; border-left: 6px solid #16a085; border-radius: 8px; margin-bottom: 30px;">
+            <h2 style="margin-top: 0; color: #16a085;">🔥 My Personal Fat Loss Strategy That Changed Everything</h2>
+            <p style="margin-bottom: 10px;">
+                I went from feeling stuck and frustrated with my body to being <strong>lean year-round</strong> —
+                without starving, without cardio hell, and without giving up the foods I love.
+            </p>
+            <p style="margin-bottom: 10px;">
+                The <strong>Slingshot Diet</strong> is the exact method I used — and it’s now helping others do the
+                same.
+            </p>
+            <p style="margin-bottom: 10px;">
+                If you’re tired of endless dieting, inconsistent results, and gaining all the weight back...
+                this strategy is for you.
+            </p>
+            <p>
+                👉 <a href="https://slingshot.loc-ng.com/"
+                    style="color: #16a085; font-weight: bold; text-decoration: underline;">Get The Slingshot Diet
+                    Now</a> — and finally lose fat the sustainable way.
+            </p>
+        </div>
 
         <div class="section">
             <h2>Meal Plan (Days 1–6)</h2>
@@ -109,7 +130,8 @@
                             <h4>{{ ucfirst($meal['meal_type']) }} <span class="badge">{{ $meal['name'] }}</span></h4>
                             <p>{{ $meal['description'] }}</p>
                             <div class="macro">
-                                <strong>Calories:</strong> <span class="highlight">{{ $meal['calories'] }} kcal</span> |
+                                <strong>Calories:</strong> <span class="highlight">{{ $meal['calories'] }} kcal</span>
+                                |
                                 <strong>Protein:</strong> <span class="highlight">{{ $meal['protein'] }}g</span> |
                                 <strong>Carbs:</strong> <span class="highlight">{{ $meal['carbs'] }}g</span> |
                                 <strong>Fats:</strong> <span class="highlight">{{ $meal['fats'] }}g</span>
