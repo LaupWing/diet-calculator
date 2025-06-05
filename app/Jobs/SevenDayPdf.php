@@ -34,6 +34,7 @@ class SevenDayPdf implements ShouldQueue
      */
     public function handle(): void
     {
+        logger("dispatching job to generate 7-day meal plan");
         $recipes = $this->generateAllRecipesFromMealPlan($this->generateFull7DayMealPlan(
             $this->two_day_meal_plan,
             $this->user_info['calories'],

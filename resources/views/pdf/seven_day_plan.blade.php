@@ -120,6 +120,7 @@
             <div class="page-break"></div>
         @endif
     @endforeach
+    <div class="page-break"></div>
     <div class="day-header">Day 7 – Freestyle</div>
 
     <div class="meal-section">
