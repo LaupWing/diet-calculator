@@ -106,7 +106,7 @@
                 @if (isset($sevenDayMealplan['day' . $i]))
                     @foreach ($sevenDayMealplan['day' . $i] as $mealType => $meal)
                         <div class="meal">
-                            <h4>{{ ucfirst($mealType) }} <span class="badge">{{ $meal['name'] }}</span></h4>
+                            <h4>{{ ucfirst($meal['meal_type']) }} <span class="badge">{{ $meal['name'] }}</span></h4>
                             <p>{{ $meal['description'] }}</p>
                             <div class="macro">
                                 <strong>Calories:</strong> <span class="highlight">{{ $meal['calories'] }} kcal</span> |
