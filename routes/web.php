@@ -99,7 +99,7 @@ Route::post("/submit-email", function (Request $request) {
     //     ]);
     // }
 
-    return redirect()->back()->with("data", [
+    return redirect('/')->with("data", [
         "email" => $request->email,
         "calories" => $request->calories,
         "current_bodyfat" => $request->current_bodyfat,
