@@ -3,6 +3,28 @@
         style="max-width: 700px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
         <h1 style="font-size: 24px; color: #2c3e50; text-align: center;">Hi, {{ $dietInfo['email'] }}</h1>
         <p style="font-size: 16px; text-align: center; margin-top: -10px;">Here is your personalized diet plan:</p>
+        <div
+            style="margin-top: 20px; padding: 15px; background-color: #e8f6f3; border-left: 5px solid #16a085; border-radius: 8px;">
+            <h2 style="color: #16a085; margin-top: 0;">🔥 My Personal Strategy to Get Lean (And Stay Lean)</h2>
+            <p style="margin-bottom: 10px;">
+                I used to yo-yo diet and never felt truly in control. But once I cracked the code — I stayed lean
+                <strong>year-round</strong>, without starving, grinding cardio, or overthinking food.
+            </p>
+            <p style="margin-bottom: 10px;">
+                That method became <strong>The Slingshot Diet</strong> — a simple, effective framework to lose fat fast
+                and actually keep it off.
+            </p>
+            <p style="margin-bottom: 10px;">
+                If you're tired of temporary fixes and want the real strategy I used to get in shape and stay there...
+                <strong>this is it.</strong>
+            </p>
+            <p style="text-align: center;">
+                👉 <a href="https://slingshot.loc-ng.com/"
+                    style="font-weight: bold; color: #16a085; text-decoration: underline;">
+                    Check out The Slingshot Diet here
+                </a>
+            </p>
+        </div>
 
         {{-- User Profile Section --}}
         <div
