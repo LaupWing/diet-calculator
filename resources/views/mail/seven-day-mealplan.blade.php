@@ -152,7 +152,7 @@
 
         <footer>
             Stay strong and consistent — you got this! 💪<br>
-            <span>- Your Diet Coach</span>
+            <span>- Loc Nguyen</span>
         </footer>
     </div>
 </body>

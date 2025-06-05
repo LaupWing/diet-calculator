@@ -63,7 +63,7 @@
 
         <footer style="margin-top: 20px; text-align: center; font-size: 12px; color: #7f8c8d;">
             <p>Stay consistent and achieve your goals! 💪</p>
-            <p style="margin-top: -5px;">– Your Diet Coach</p>
+            <p style="margin-top: -5px;">– Loc Nguyen</p>
         </footer>
     </div>
 </div>
