@@ -120,6 +120,33 @@
             <div class="page-break"></div>
         @endif
     @endforeach
+    <div class="day-header">Day 7 – Freestyle</div>
+
+    <div class="meal-section">
+        <h2>🍽 Your Flexible Day to Recharge</h2>
+        <p>
+            You've stuck to the plan — now it's time to breathe a little.
+            <strong>Day 7 is your freestyle day.</strong>
+        </p>
+        <p>
+            Instead of following a strict meal plan, you’re encouraged to
+            <strong>pick and choose meals you enjoyed from earlier in the week</strong>,
+            mix things up, or enjoy a social meal — guilt-free.
+        </p>
+        <p>
+            The goal here is simple: give yourself mental space without derailing your progress.
+            You’ve earned it. This kind of flexibility is what makes the process sustainable long term.
+        </p>
+        <ul>
+            <li>Repeat meals from Days 1–6 that you liked</li>
+            <li>Go out to eat — just stay mindful of portions</li>
+            <li>Enjoy dessert or a “fun” meal if you want — without shame</li>
+            <li>Remember: progress over perfection</li>
+        </ul>
+        <p style="margin-top: 10px;">
+            This isn’t “cheating.” This is how real, sustainable nutrition works.
+        </p>
+    </div>
 
     <div class="cta-box">
         Want to stay lean year-round with minimal effort? <br>
