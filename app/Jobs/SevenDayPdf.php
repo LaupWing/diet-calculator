@@ -43,7 +43,6 @@ class SevenDayPdf implements ShouldQueue
         foreach ($recipes as $day => $meals) {
             foreach ($meals as $mealType => $recipe) {
                 Meal2::where('day', $day)
-                    ->where('meal_type', $mealType)
                     ->where('email', $this->user_info['email'])
                     ->delete();
 
