@@ -85,11 +85,23 @@ Route::post("/submit-email", function (Request $request) {
     //     public string $preferred_cuisine,
     //     public $two_day_meal_plan
     SevenDayPdf::dispatch(
-        $request->email,
-        $request->calories,
-        $guest->dietary_preference,
-        $guest->preferred_cuisine,
-        $request->meal_plan
+        $request->meal_plan,
+        [
+            'age' => $guest->age,
+            'height' => $guest->height,
+            'weight' => $guest->weight,
+            'activity' => $guest->activity,
+            'unit' => $guest->unit,
+            'goal_weight' => $guest->goal_weight,
+            'goal_months' => $guest->goal_months,
+            'preferred_cuisine' => $guest->preferred_cuisine,
+            'dietary_preference' => $guest->dietary_preference,
+            'current_bodyfat' => $request->current_bodyfat,
+            'goal_bodyfat' => $request->goal_bodyfat,
+            'calories' => $request->calories,
+            'protein' => $request->protein,
+            'email' => $request->email,
+        ]
     );
 
     // foreach ($request->meal_plan as $meal) {

@@ -23,11 +23,8 @@ class SevenDayPdf implements ShouldQueue
      * Create a new job instance.
      */
     public function __construct(
-        public string $email,
-        public int $calories,
-        public string $dietary_preference,
-        public string $preferred_cuisine,
-        public $two_day_meal_plan
+        public $two_day_meal_plan,
+        public $user_info
     ) {
         //
     }
@@ -39,16 +36,17 @@ class SevenDayPdf implements ShouldQueue
     {
         $recipes = $this->generateAllRecipesFromMealPlan($this->generateFull7DayMealPlan(
             $this->two_day_meal_plan,
-            $this->calories,
-            $this->dietary_preference,
-            $this->preferred_cuisine
+            $this->user_info['calories'],
+            $this->user_info['dietary_preference'],
+            $this->user_info['preferred_cuisine']
         ));
         foreach ($recipes as $day => $meals) {
             foreach ($meals as $mealType => $recipe) {
                 Meal2::where('day', $day)
                     ->where('meal_type', $mealType)
-                    ->where('email', $this->email)
+                    ->where('email', $this->user_info['email'])
                     ->delete();
+
                 Meal2::create([
                     'day' => $day,
                     'meal_type' => $mealType,
@@ -61,22 +59,21 @@ class SevenDayPdf implements ShouldQueue
                     'ingredients' => $recipe['ingredients'] ?? [],
                     'instructions' => $recipe['instructions'] ?? [],
                     'serving_suggestions' => $recipe['serving_suggestions'] ?? [],
-                    'email' => $this->email,
+                    'email' => $this->user_info['email'],
                 ]);
             }
         }
         $recipesStructure = [
-            "day1" => Meal2::where("day", "day1")->where("email", $this->email)->get(),
-            "day2" => Meal2::where("day", "day2")->where("email", $this->email)->get(),
-            "day3" => Meal2::where("day", "day3")->where("email", $this->email)->get(),
-            "day4" => Meal2::where("day", "day4")->where("email", $this->email)->get(),
-            "day5" => Meal2::where("day", "day5")->where("email", $this->email)->get(),
-            "day6" => Meal2::where("day", "day6")->where("email", $this->email)->get(),
+            "day1" => Meal2::where("day", "day1")->where("email", $this->user_info['email'])->get(),
+            "day2" => Meal2::where("day", "day2")->where("email", $this->user_info['email'])->get(),
+            "day3" => Meal2::where("day", "day3")->where("email", $this->user_info['email'])->get(),
+            "day4" => Meal2::where("day", "day4")->where("email", $this->user_info['email'])->get(),
+            "day5" => Meal2::where("day", "day5")->where("email", $this->user_info['email'])->get(),
+            "day6" => Meal2::where("day", "day6")->where("email", $this->user_info['email'])->get(),
         ];
-        Mail::to($this->email)->send(new SevenDayMealplan(
-            $recipes
+        Mail::to($this->user_info['email'])->send(new SevenDayMealplan(
+            $recipesStructure
         ));
-        logger($recipes);
     }
 
     public function generateFull7DayMealPlan(
