@@ -79,7 +79,8 @@
 <body>
     <div class="container">
         <h1>Hello, {{ $userInfo['email'] }}</h1>
-        <p>Here is your personalized weekly meal plan along with your health data and fitness goals.</p>
+        <p>Here is your personalized weekly meal plan along with your health data and fitness goals (PDF is in
+            attachment).</p>
 
         <div class="section">
             <h2>User Info</h2>

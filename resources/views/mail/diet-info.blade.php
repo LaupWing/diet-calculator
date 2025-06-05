@@ -2,7 +2,8 @@
     <div
         style="max-width: 700px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
         <h1 style="font-size: 24px; color: #2c3e50; text-align: center;">Hi, {{ $dietInfo['email'] }}</h1>
-        <p style="font-size: 16px; text-align: center; margin-top: -10px;">Here is your personalized diet plan:</p>
+        <p style="font-size: 16px; text-align: center; margin-top: -10px;">Here is your personalized diet plan (PDF is in
+            attachment):</p>
         <div
             style="margin: 20px 0; padding: 15px; background-color: #fff3cd; border-left: 5px solid #ffc107; border-radius: 6px;">
             <p style="margin: 0; font-size: 14px; color: #856404;">
