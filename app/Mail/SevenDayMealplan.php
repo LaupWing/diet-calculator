@@ -31,7 +31,7 @@ class SevenDayMealplan extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Seven Day Mealplan',
+            subject: '7 Day Diet Plan ~ Loc Nguyen',
         );
     }
 

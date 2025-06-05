@@ -75,6 +75,12 @@
 </head>
 
 <body>
+    <div class="cta-box" style="margin-top: 0;">
+        Tired of crash diets that don’t last? <br>
+        <strong>Discover the strategy that got me lean — and kept me lean year-round:</strong><br>
+        The <strong>Slingshot Diet</strong> is fast, effective, and sustainable.<br>
+        🔗 <a href="https://slingshot.loc-ng.com/">Click here to get it now</a>
+    </div>
     @foreach ($days as $day => $meals)
         <div class="day-header">Day {{ $loop->iteration }}</div>
 
@@ -119,11 +125,11 @@
         Want to stay lean year-round with minimal effort? <br>
         <strong>Check out my personal strategy — the Slingshot Diet.</strong><br>
         It’s the exact approach that got me shredded and made it easy to maintain.<br>
-        🔗 <a href="https://yourdomain.com/slingshot-diet">Grab it here</a>
+        🔗 <a href="https://slingshot.loc-ng.com/">Grab it here</a>
     </div>
-
     <footer>
-        This PDF is custom-generated. Your 7-day plan may take a few minutes to arrive by email.
+        Stay strong and consistent — you got this! 💪<br>
+        <span>- Loc Nguyen</span>
     </footer>
 </body>
 

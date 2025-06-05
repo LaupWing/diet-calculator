@@ -32,6 +32,7 @@ class DietInfo extends Mailable
     {
         return new Envelope(
             subject: '2 Day Diet Plan ~ Loc Nguyen',
+
         );
     }
 
