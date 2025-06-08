@@ -72,7 +72,7 @@ export default function Welcome() {
         current_bodyfat: page.props.flash.data.current_bodyfat,
         calories: page.props.flash.data.calories,
         goal_bodyfat: page.props.flash.data.goal_bodyfat,
-        meal_plan: page.props.flash.data.meal_plan,
+        // meal_plan: page.props.flash.data.meal_plan,
         guest_id: page.props.flash.guest_id,
         months: page.props.flash.data.months,
     })
@@ -156,7 +156,7 @@ export default function Welcome() {
                         Bodyfat % is an approximation based on the data you
                         provided and may not be 100% accurate.
                     </p>
-                    <Dialog open={open} onOpenChange={setOpen}>
+                    {/* <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
                             <Button className="mx-auto mt-10">
                                 Show Example Diet
@@ -174,7 +174,7 @@ export default function Welcome() {
                             goalBodyFat={page.props.flash.data.goal_bodyfat}
                             timeframe={3}
                         />
-                    </Dialog>
+                    </Dialog> */}
                 </div>
             </div>
         </>

@@ -22,7 +22,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::post("/generate", [AiController::class, "generate"])->name("generate");
+Route::post("/generate", [AiController::class, "generateSummary"])->name("generate");
 Route::get("/generated", [AiController::class, "generated"])->name("generated");
 
 Route::post("/submit-email", function (Request $request) {
