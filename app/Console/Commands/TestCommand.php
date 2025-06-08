@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Guest;
 use App\Models\Meal2;
 use Exception;
 use Illuminate\Console\Command;
@@ -28,129 +29,60 @@ class TestCommand extends Command
      */
     public function handle()
     {
+        $age = 30;
+        $gender = "male";
+        $height = 170;
+        $weight = 70;
+        $activity = "sedentary";
+        $goal_weight = 65;
+        $goal_months = 3;
+        $unit = "kg";
+        $preferred_cuisine = "asian";
+        $dietary_preference = "omnivore";
+
+
+
+        $activities = [
+            "sedentary" => "Little or no exercise.",
+            "lightly" => "Light exercise 1-3 days a week.",
+            "moderately" => "Moderate 3-5 days a week.",
+            "very" => "Hard exercise 6-7 days a week.",
+            "extra" => "Very hard exercise or physical job.",
+        ];
+
+        $preferred_cuisines = [
+            "mediterranean" => "Mediterranean",
+            "asian" => "Asian",
+            "american" => "American",
+            "middleEastern" => "Middle Eastern",
+            "latinAmerican" => "Latin American",
+            "iLoveEverything" => "I love everything",
+        ];
+
+        $dietary_preferences = [
+            "vegetarian" => "Vegetarian: No meat, may include dairy and eggs.",
+            "vegan" => "Vegan: No animal products.",
+            "carnivore" => "Carnivore: Primarily meat-based.",
+            "pescatarian" => "Pescatarian: No meat except fish.",
+            "omnivore" => "Omnivore: No dietary restrictions.",
+        ];
+
+        $activity = $activities[$activity];
+        $preferred_cuisine = $preferred_cuisines[$preferred_cuisine];
+        $dietary_preference = $dietary_preferences[$dietary_preference];
+
         $open_ai = OpenAI::client(env("OPENAI_API_KEY"));
 
-        $meal_plan = [
-            'day1' => [
-                'breakfast' => [
-                    'name' => 'Oatmeal with Berries and Nuts',
-                    'calories' => 350,
-                    'protein' => 10,
-                    'carbs' => 60,
-                    'fats' => 10,
-                    'instructions' => [
-                        'Cook 1 cup of oats in water according to package instructions.',
-                        'Top with 1 cup of mixed berries.',
-                        'Sprinkle with a handful of nuts (almonds or walnuts).',
-                    ],
-                ],
-                'lunch' => [
-                    'name' => 'Grilled Chicken Salad',
-                    'calories' => 550,
-                    'protein' => 40,
-                    'carbs' => 30,
-                    'fats' => 20,
-                    'instructions' => [
-                        'Grill a 150g chicken breast until cooked through.',
-                        'Chop mixed greens and add cherry tomatoes, cucumbers, and bell peppers.',
-                        'Slice the chicken and place it on top of the salad.',
-                        'Drizzle with 2 tablespoons of olive oil and vinegar dressing.',
-                    ],
-                ],
-                'dinner' => [
-                    'name' => 'Salmon with Quinoa and Asparagus',
-                    'calories' => 600,
-                    'protein' => 45,
-                    'carbs' => 50,
-                    'fats' => 25,
-                    'instructions' => [
-                        'Preheat the oven to 200°C.',
-                        'Season a 200g salmon fillet with lemon, salt, and pepper.',
-                        'Bake for 12-15 minutes until cooked through.',
-                        'Cook 1 cup of quinoa according to package instructions.',
-                        'Sauté asparagus in a pan with a bit of olive oil until tender.',
-                    ],
-                ],
-                'snack' => [
-                    'name' => 'Greek Yogurt with Honey',
-                    'calories' => 200,
-                    'protein' => 15,
-                    'carbs' => 30,
-                    'fats' => 5,
-                    'instructions' => [
-                        'Spoon 200g of Greek yogurt into a bowl.',
-                        'Drizzle with 1 tablespoon of honey.',
-                        'Top with a sprinkle of cinnamon.',
-                    ],
-                ],
-            ],
-            'day2' => [
-                'breakfast' => [
-                    'name' => 'Scrambled Eggs with Spinach and Toast',
-                    'calories' => 400,
-                    'protein' => 25,
-                    'carbs' => 40,
-                    'fats' => 20,
-                    'instructions' => [
-                        'Whisk 3 eggs in a bowl and season with salt and pepper.',
-                        'Sauté a handful of spinach in a pan.',
-                        'Add eggs and stir until scrambled.',
-                        'Serve with 1 slice of whole grain toast.',
-                    ],
-                ],
-                'lunch' => [
-                    'name' => 'Turkey and Avocado Wrap',
-                    'calories' => 500,
-                    'protein' => 35,
-                    'carbs' => 40,
-                    'fats' => 25,
-                    'instructions' => [
-                        'Take a whole wheat wrap and layer with 100g sliced turkey, avocado, lettuce, and tomato.',
-                        'Roll it up tightly and slice in half.',
-                    ],
-                ],
-                'dinner' => [
-                    'name' => 'Stir-fry Tofu with Mixed Vegetables',
-                    'calories' => 450,
-                    'protein' => 25,
-                    'carbs' => 40,
-                    'fats' => 20,
-                    'instructions' => [
-                        'Cube 150g of tofu and fry until golden in a pan.',
-                        'Add a mix of vegetables (bell peppers, broccoli, snap peas) and stir-fry for 5-7 minutes.',
-                        'Season with soy sauce and sesame oil.',
-                    ],
-                ],
-                'snack' => [
-                    'name' => 'Apple with Peanut Butter',
-                    'calories' => 250,
-                    'protein' => 8,
-                    'carbs' => 30,
-                    'fats' => 12,
-                    'instructions' => [
-                        'Slice an apple and serve with 2 tablespoons of peanut butter for dipping.',
-                    ],
-                ],
-            ],
-        ];
-        $days = ['day1', 'day2'];
-        $content = "Based on the following 2-day meal plan, generate expanded instructions for each meal along with a grocery list. The response must be in JSON format matching the provided schema exactly. Do not include any explanations.\n\n";
+        $content = "I'm a $gender and $age years old. I'm $height cm tall and weigh $weight $unit. I'm $activity and I want to reach $goal_weight $unit in $goal_months months.";
 
-        foreach ($days as $day) {
-            if (!isset($meal_plan[$day])) continue;
+        $content .= " My dietary preference is $dietary_preference.";
 
-            $content .= strtoupper($day) . ":\n";
-            foreach ($meal_plan[$day] as $meal_type => $meal) {
-                $content .= ucfirst($meal_type) . ":\n";
-                $content .= "- Name: {$meal['name']}\n";
-                $content .= "- Calories: {$meal['calories']}\n";
-                $content .= "- Protein: {$meal['protein']}\n";
-                $content .= "- Carbs: {$meal['carbs']}\n";
-                $content .= "- Fats: {$meal['fats']}\n\n";
-            }
+        if ($preferred_cuisine === "I love everything") {
+            $content .= "For Cuisine. I love everything.";
+        } else {
+            $content .= " I prefer $preferred_cuisine cuisine.";
         }
 
-        // Define meal schema
         $mealSchema = [
             "type" => "object",
             "properties" => [
@@ -161,18 +93,11 @@ class TestCommand extends Command
                 "fats" => ["type" => "number"],
                 "instructions" => [
                     "type" => "array",
-                    "items" => ["type" => "string"]
-                ],
-                "ingredients" => [
-                    "type" => "array",
-                    "items" => ["type" => "string"]
-                ],
-                "serving_suggestions" => [
-                    "type" => "array",
-                    "items" => ["type" => "string"]
+                    "items" => ["type" => "string"],
+                    "description" => "Step-by-step preparation instructions"
                 ]
             ],
-            "required" => ["name", "calories", "protein", "carbs", "fats", "instructions", "ingredients", "serving_suggestions"],
+            "required" => ["name", "calories", "protein", "carbs", "fats", "instructions"],
             "additionalProperties" => false
         ];
 
@@ -193,7 +118,7 @@ class TestCommand extends Command
             "messages" => [
                 [
                     "role" => "system",
-                    "content" => "You are a helpful assistant. Expand a 2-day meal plan by providing ingredients, instructions, and serving suggestions for each meal. Also generate a combined grocery list."
+                    "content" => "You are a helpful assistant that generates a 2-day meal plan for health and fitness goals. Each day includes breakfast, lunch, dinner, and snack with macros and instructions. Respond in JSON format matching the schema exactly. No explanations."
                 ],
                 [
                     "role" => "user",
@@ -203,11 +128,15 @@ class TestCommand extends Command
             "response_format" => [
                 "type" => "json_schema",
                 "json_schema" => [
-                    "name" => "meal_plan_expansion",
+                    "name" => "two_day_meal_plan",
                     "strict" => true,
                     "schema" => [
                         "type" => "object",
                         "properties" => [
+                            "protein" => ["type" => "number"],
+                            "current_bodyfat" => ["type" => "number"],
+                            "goal_bodyfat" => ["type" => "number"],
+                            "calories" => ["type" => "number"],
                             "meal_plan" => [
                                 "type" => "object",
                                 "properties" => [
@@ -216,315 +145,15 @@ class TestCommand extends Command
                                 ],
                                 "required" => ["day1", "day2"],
                                 "additionalProperties" => false
-                            ],
-                            "grocery_list" => [
-                                "type" => "array",
-                                "items" => [
-                                    "type" => "object",
-                                    "properties" => [
-                                        "name" => ["type" => "string"],
-                                        "quantity" => ["type" => "string"]
-                                    ],
-                                    "required" => ["name", "quantity"],
-                                    "additionalProperties" => false
-                                ]
                             ]
                         ],
-                        "required" => ["meal_plan", "grocery_list"],
+                        "required" => ["protein", "current_bodyfat", "goal_bodyfat", "calories", "meal_plan"],
                         "additionalProperties" => false
                     ]
                 ]
             ]
         ]);
-        logger($response->choices[0]->message->content);
+
         $data = json_decode($response->choices[0]->message->content, true);
-        // $recipes = $this->generateAllRecipesFromMealPlan($this->generateFull7DayMealPlan(
-        //     [
-        //         "day1" => [
-        //             "breakfast" => [
-        //                 "name" => "Oatmeal with Protein and Fruit",
-        //                 "calories" => 400,
-        //                 "protein" => 30,
-        //                 "carbs" => 60,
-        //                 "fats" => 10,
-        //             ],
-        //             "lunch" => [
-        //                 "name" => "Grilled Chicken Salad",
-        //                 "calories" => 450,
-        //                 "protein" => 45,
-        //                 "carbs" => 20,
-        //                 "fats" => 18,
-        //             ],
-        //             "dinner" => [
-        //                 "name" => "Stir-Fried Tofu with Vegetables",
-        //                 "calories" => 500,
-        //                 "protein" => 35,
-        //                 "carbs" => 50,
-        //                 "fats" => 20,
-        //             ],
-        //             "snack" => [
-        //                 "name" => "Greek Yogurt with Honey and Nuts",
-        //                 "calories" => 450,
-        //                 "protein" => 30,
-        //                 "carbs" => 40,
-        //                 "fats" => 20,
-        //             ]
-        //         ],
-        //         "day2" => [
-        //             "breakfast" => [
-        //                 "name" => "Scrambled Eggs with Spinach and Whole Grain Toast",
-        //                 "calories" => 350,
-        //                 "protein" => 25,
-        //                 "carbs" => 30,
-        //                 "fats" => 15,
-        //             ],
-        //             "lunch" => [
-        //                 "name" => "Turkey and Avocado Wrap",
-        //                 "calories" => 500,
-        //                 "protein" => 40,
-        //                 "carbs" => 45,
-        //                 "fats" => 20,
-        //             ],
-        //             "dinner" => [
-        //                 "name" => "Baked Salmon with Quinoa and Asparagus",
-        //                 "calories" => 550,
-        //                 "protein" => 40,
-        //                 "carbs" => 40,
-        //                 "fats" => 25,
-        //             ],
-        //             "snack" => [
-        //                 "name" => "Cottage Cheese with Pineapple",
-        //                 "calories" => 400,
-        //                 "protein" => 30,
-        //                 "carbs" => 40,
-        //                 "fats" => 10,
-        //             ]
-        //         ]
-        //     ],
-        //     1800,
-        //     'vegetarian',
-        //     'Mediterranean'
-        // ));
-        // logger($recipes);
-        // foreach ($recipes as $day => $meals) {
-        //     foreach ($meals as $mealType => $recipe) {
-        //         Meal2::create([
-        //             'day' => $day,
-        //             'meal_type' => $mealType,
-        //             'name' => $recipe['name'],
-        //             'calories' => $recipe['calories'],
-        //             'protein' => $recipe['protein'],
-        //             'carbs' => $recipe['carbs'] ?? null,
-        //             'fats' => $recipe['fats'] ?? null,
-        //             'description' => $recipe['description'] ?? null,
-        //             'ingredients' => $recipe['ingredients'] ?? [],
-        //             'instructions' => $recipe['instructions'] ?? [],
-        //             'serving_suggestions' => $recipe['serving_suggestions'] ?? [],
-        //             'email' => 'test@test.com'
-        //         ]);
-        //     }
-        // }
-    }
-
-    public function generateFull7DayMealPlan(
-        array $mealPlanDay1And2,
-        int $calories,
-        string $dietary_preference,
-        string $preferred_cuisine
-    ) {
-        $open_ai = OpenAI::client(env("OPENAI_API_KEY"));
-
-        // Format day1 and day2 JSON to include in prompt
-        $day1Json = json_encode($mealPlanDay1And2['day1'], JSON_PRETTY_PRINT);
-        $day2Json = json_encode($mealPlanDay1And2['day2'], JSON_PRETTY_PRINT);
-
-        $content = "I already have a 2-day meal plan as follows:\n\n" .
-            "Day 1:\n$day1Json\n\n" .
-            "Day 2:\n$day2Json\n\n" .
-            "Please generate Day 3 through Day 7 using the same JSON structure and nutritional style. " .
-            "Each day should total approximately $calories calories. " .
-            "Each day must include: breakfast, lunch, dinner, and snack. " .
-            "Each meal must include: name, calories, protein, carbs, fats, and an array of instructions. " .
-            "Dietary preference: $dietary_preference. " .
-            ($preferred_cuisine === 'I love everything'
-                ? "You can vary the cuisine types, I enjoy all kinds of food."
-                : "Please focus on $preferred_cuisine cuisine.");
-
-        // Schema: meal
-        $mealSchema = [
-            "type" => "object",
-            "properties" => [
-                "name" => ["type" => "string"],
-                "calories" => ["type" => "number"],
-                "protein" => ["type" => "number"],
-                "carbs" => ["type" => "number"],
-                "fats" => ["type" => "number"],
-            ],
-            "required" => ["name", "calories", "protein", "carbs", "fats"],
-            "additionalProperties" => false
-        ];
-
-        // Schema: day
-        $daySchema = [
-            "type" => "object",
-            "properties" => [
-                "breakfast" => $mealSchema,
-                "lunch" => $mealSchema,
-                "dinner" => $mealSchema,
-                "snack" => $mealSchema
-            ],
-            "required" => ["breakfast", "lunch", "dinner", "snack"],
-            "additionalProperties" => false
-        ];
-
-        // Generate new days
-        $response = $open_ai->chat()->create([
-            "model" => "gpt-4o-mini",
-            "messages" => [
-                [
-                    "role" => "system",
-                    "content" => "You are a nutrition assistant. Expand a 2-day meal plan into a 7-day plan with consistent structure and macros. Return JSON only. No explanations."
-                ],
-                [
-                    "role" => "user",
-                    "content" => $content
-                ]
-            ],
-            "response_format" => [
-                "type" => "json_schema",
-                "json_schema" => [
-                    "name" => "meal_plan_days_3_to_7",
-                    "strict" => true,
-                    "schema" => [
-                        "type" => "object",
-                        "properties" => [
-                            "day3" => $daySchema,
-                            "day4" => $daySchema,
-                            "day5" => $daySchema,
-                            "day6" => $daySchema
-                        ],
-                        "required" => ["day3", "day4", "day5", "day6"],
-                        "additionalProperties" => false
-                    ]
-                ]
-            ]
-        ]);
-
-        $newDays = json_decode($response->choices[0]->message->content, true);
-
-        if (is_null($newDays)) {
-            throw new Exception("Invalid response from OpenAI API.");
-        }
-
-        // Combine all 7 days
-        return [
-            'meal_plan' => array_merge(
-                ['day1' => $mealPlanDay1And2['day1']],
-                ['day2' => $mealPlanDay1And2['day2']],
-                $newDays
-            )
-        ];
-    }
-
-    public function generateRecipeFromMeal(array $meal): array
-    {
-        $open_ai = OpenAI::client(env("OPENAI_API_KEY"));
-
-        $response = $open_ai->chat()->create([
-            "model" => "gpt-4o-mini",
-            "messages" => [
-                [
-                    "role" => "system",
-                    "content" => "You are a recipe assistant that generates detailed recipes based on user preferences."
-                ],
-                [
-                    "role" => "user",
-                    "content" =>
-                    "Generate a detailed recipe for my fitness plan. " .
-                        "Name: {$meal['name']}. " .
-                        "Calories: {$meal['calories']}. " .
-                        "Protein: {$meal['protein']}. " .
-                        "Description: A meal called '{$meal['name']}' with approximately {$meal['calories']} calories, {$meal['protein']}g protein, and a Mediterranean vegetarian style. " .
-                        "Additional notes: Use healthy oils and spices. " .
-                        "Respond in JSON format matching the provided schema exactly. Do not include any explanations, just the JSON."
-                ]
-            ],
-            "response_format" => [
-                "type" => "json_schema",
-                "json_schema" => [
-                    "name" => "recipe",
-                    "strict" => true,
-                    "schema" => [
-                        "type" => "object",
-                        "properties" => [
-                            "name" => ["type" => "string"],
-                            "description" => ["type" => "string"],
-                            "calories" => ["type" => "integer"],
-                            "protein" => ["type" => "integer"],
-                            "carbs" => ["type" => "integer"],
-                            "fats" => ["type" => "integer"],
-                            "ingredients" => [
-                                "type" => "array",
-                                "items" => ["type" => "string"]
-                            ],
-                            "instructions" => [
-                                "type" => "array",
-                                "items" => [
-                                    "type" => "object",
-                                    "properties" => [
-                                        "title" => ["type" => "string"],
-                                        "description" => ["type" => "string"]
-                                    ],
-                                    "required" => ["title", "description"],
-                                    "additionalProperties" => false
-                                ]
-                            ],
-                            "serving_suggestions" => [
-                                "type" => "array",
-                                "items" => ["type" => "string"]
-                            ]
-                        ],
-                        "required" => [
-                            "name",
-                            "description",
-                            "calories",
-                            "protein",
-                            "ingredients",
-                            "instructions",
-                            "serving_suggestions",
-                            "carbs",
-                            "fats"
-                        ],
-                        "additionalProperties" => false
-                    ]
-                ]
-            ]
-        ]);
-
-        return json_decode($response->choices[0]->message->content, true);
-    }
-
-    public function generateAllRecipesFromMealPlan(array $mealPlan): array
-    {
-        $detailedRecipes = [];
-
-        foreach ($mealPlan['meal_plan'] as $day => $meals) {
-            $detailedRecipes[$day] = [];
-
-            foreach ($meals as $mealType => $meal) {
-                try {
-                    $recipe = $this->generateRecipeFromMeal($meal);
-                    $detailedRecipes[$day][$mealType] = $recipe;
-                } catch (Exception $e) {
-                    // Optional: fallback or log the error
-                    $detailedRecipes[$day][$mealType] = [
-                        'error' => "Failed to generate recipe: " . $e->getMessage(),
-                        'fallback' => $meal
-                    ];
-                }
-            }
-        }
-
-        return $detailedRecipes;
     }
 }
