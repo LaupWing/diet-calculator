@@ -29,6 +29,8 @@ class TestCommand extends Command
      */
     public function handle()
     {
+        $start = microtime(true);
+        logger('Test command started');
         $age = 30;
         $gender = "male";
         $height = 170;
@@ -39,8 +41,6 @@ class TestCommand extends Command
         $unit = "kg";
         $preferred_cuisine = "asian";
         $dietary_preference = "omnivore";
-
-
 
         $activities = [
             "sedentary" => "Little or no exercise.",
@@ -155,5 +155,9 @@ class TestCommand extends Command
         ]);
 
         $data = json_decode($response->choices[0]->message->content, true);
+        logger($data);
+        logger($response->choices[0]->message->content);
+        $duration = round(microtime(true) - $start, 4);
+        logger("Command executed in $duration seconds");
     }
 }
