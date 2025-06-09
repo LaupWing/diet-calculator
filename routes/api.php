@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Requests\AiRequest;
+use App\Models\Guest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -9,8 +10,9 @@ use Illuminate\Support\Facades\Route;
 // })->middleware('auth:sanctum');
 
 
-Route::post('/get-meals', function (AiRequest $request) {
-    $data = $request->validated();
+Route::post('/get-meals', function (Request $request) {
+    $data = $request->all();
+    $guest = Guest::where("id", $data["guest_id"])->firstOrFail();
 
     $activities = [
         "sedentary" => "Little or no exercise.",
@@ -37,11 +39,18 @@ Route::post('/get-meals', function (AiRequest $request) {
         "omnivore" => "Omnivore: No dietary restrictions.",
     ];
 
-    $activity = $activities[$data["activity"]];
-    $preferred_cuisine = $preferred_cuisines[$data["preferred_cuisine"]];
-    $dietary_preference = $dietary_preferences[$data["dietary_preference"]];
+    $activity = $activities[$guest->activity];
+    $preferred_cuisine = $preferred_cuisines[$guest->preferred_cuisine];
+    $dietary_preference = $dietary_preferences[$guest->dietary_preference];
+    $gender = $guest->gender;
+    $age = $guest->age;
+    $height = $guest->height;
+    $weight = $guest->weight;
+    $unit = $guest->unit;
+    $goal_weight = $guest->goal_weight;
+    $goal_months = $guest->goal_months;
 
-    $content = "I'm a {$data["gender"]} and {$data["age"]} years old. I'm {$data["height"]} cm tall and weigh {$data["weight"]} {$data["unit"]}. I'm $activity and I want to reach {$data["goal_weight"]} {$data["unit"]} in {$data["goal_months"]} months. My dietary preference is $dietary_preference.";
+    $content = "I'm a {$gender} and {$age} years old. I'm {$height} cm tall and weigh {$weight} {$unit}. I'm $activity and I want to reach {$goal_weight} {$unit} in {$goal_months} months. My dietary preference is $dietary_preference.";
 
     if ($preferred_cuisine === "I love everything") {
         $content .= " For Cuisine: I love everything.";
@@ -118,5 +127,7 @@ Route::post('/get-meals', function (AiRequest $request) {
         ]
     ]);
 
-    return response()->json(json_decode($response->choices[0]->message->content, true));
+    return response()->json(
+        json_decode($response->choices[0]->message->content, true)
+    );
 })->name('get-meals');

@@ -22,7 +22,7 @@ import {
     Send,
     X,
 } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import CountUp from "react-countup"
 
 interface Meal {
@@ -77,6 +77,25 @@ export default function Welcome() {
         months: page.props.flash.data.months,
     })
     const { toast } = useToast()
+
+    useEffect(() => {
+        const test = async () => {
+            const res = await fetch(route("get-meals"), {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                body: JSON.stringify({
+                    guest_id: page.props.flash.guest_id,
+                }),
+            })
+            console.log(res)
+            const data = await res.json()
+            console.log(data)
+        }
+        test()
+    }, [])
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
