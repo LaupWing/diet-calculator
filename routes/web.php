@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AiController;
+use App\Http\Controllers\Generate2MealsController;
 use App\Http\Controllers\ProfileController;
 use App\Jobs\SevenDayPdf;
 use App\Mail\DietInfo;
@@ -50,6 +51,7 @@ Route::post("/submit-email", function (Request $request) {
         "goal_bodyfat" => $request->goal_bodyfat ?? 0,
         "protein" => $request->protein ?? 0,
     ]);
+    $meal_plan = $request->meal_plan ?? (new Generate2MealsController())->index($request->guest_id)["meal_plan"];
 
     Mail::to($request->email)->send(new DietInfo([
         "email" => $request->email,
@@ -58,7 +60,7 @@ Route::post("/submit-email", function (Request $request) {
         "goal_bodyfat" => $request->goal_bodyfat,
         "protein" => $request->protein,
         "guest_id" => $request->guest_id,
-        "meal_plan" => $request->meal_plan,
+        "meal_plan" => $meal_plan,
         'age' => $guest->age,
         'gender' => $guest->gender,
         'height' => $guest->height,
@@ -72,7 +74,7 @@ Route::post("/submit-email", function (Request $request) {
     ]));
 
     SevenDayPdf::dispatch(
-        $request->meal_plan,
+        $meal_plan,
         [
             'age' => $guest->age,
             'height' => $guest->height,
@@ -91,14 +93,6 @@ Route::post("/submit-email", function (Request $request) {
         ]
     );
 
-    // foreach ($request->meal_plan as $meal) {
-    //     $guest->meals()->create([
-    //         "recipe_name" => $meal["recipe_name"],
-    //         "calories" => $meal["calories"],
-    //         "meal_type" => $meal["meal_type"],
-    //     ]);
-    // }
-
     return redirect('/')->with("data", [
         "email" => $request->email,
         "calories" => $request->calories,
@@ -106,7 +100,7 @@ Route::post("/submit-email", function (Request $request) {
         "goal_bodyfat" => $request->goal_bodyfat,
         "protein" => $request->protein,
         "guest_id" => $request->guest_id,
-        "meal_plan" => $request->meal_plan,
+        "meal_plan" => $meal_plan,
     ]);
 })->name("submit-email");
 

@@ -286,7 +286,24 @@ function DietPlanModal({
                                 required
                                 className="w-full"
                             />
-                            {mealPlan ? (
+                            <Button
+                                type="submit"
+                                className="w-full"
+                                disabled={isSubmitting}
+                            >
+                                {isSubmitting ? (
+                                    <span className="flex items-center gap-2">
+                                        <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
+                                        Sending...
+                                    </span>
+                                ) : (
+                                    <span className="flex items-center gap-2">
+                                        <Send size={16} />
+                                        Send My Plan
+                                    </span>
+                                )}
+                            </Button>
+                            {/* {mealPlan ? (
                                 <Button
                                     type="submit"
                                     className="w-full"
@@ -314,7 +331,7 @@ function DietPlanModal({
                                         <Loader2 className="animate-spin h-4 w-4" />
                                     </span>
                                 </Button>
-                            )}
+                            )} */}
                         </div>
                     </form>
                 </div>
