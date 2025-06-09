@@ -72,7 +72,7 @@ export default function Welcome() {
         current_bodyfat: page.props.flash.data.current_bodyfat,
         calories: page.props.flash.data.calories,
         goal_bodyfat: page.props.flash.data.goal_bodyfat,
-        // meal_plan: page.props.flash.data.meal_plan,
+        meal_plan: null,
         guest_id: page.props.flash.guest_id,
         months: page.props.flash.data.months,
     })
@@ -90,9 +90,8 @@ export default function Welcome() {
                     guest_id: page.props.flash.guest_id,
                 }),
             })
-            console.log(res)
             const data = await res.json()
-            console.log(data)
+            form.setData("meal_plan", data.meal_plan)
         }
         test()
     }, [])
@@ -175,7 +174,7 @@ export default function Welcome() {
                         Bodyfat % is an approximation based on the data you
                         provided and may not be 100% accurate.
                     </p>
-                    {/* <Dialog open={open} onOpenChange={setOpen}>
+                    <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
                             <Button className="mx-auto mt-10">
                                 Show Example Diet
@@ -184,7 +183,7 @@ export default function Welcome() {
                         <DietPlanModal
                             isSubmitting={isSubmitting}
                             handleSubmit={handleSubmit}
-                            mealPlan={page.props.flash.data.meal_plan}
+                            mealPlan={form.data.meal_plan}
                             months={page.props.flash.data.months}
                             form={form}
                             currentBodyFat={
@@ -193,7 +192,7 @@ export default function Welcome() {
                             goalBodyFat={page.props.flash.data.goal_bodyfat}
                             timeframe={3}
                         />
-                    </Dialog> */}
+                    </Dialog>
                 </div>
             </div>
         </>
@@ -205,7 +204,7 @@ interface DietPlanModalProps {
     currentBodyFat: number
     goalBodyFat: number
     timeframe: number // in months
-    mealPlan: Record<string, DayPlan>
+    mealPlan: Record<string, DayPlan> | null
     form: any
     handleSubmit: (e: React.FormEvent) => void
     isSubmitting: boolean
@@ -231,7 +230,7 @@ function DietPlanModal({
         }
     }
 
-    const dayPlan = mealPlan[currentDay]
+    const dayPlan = mealPlan ? mealPlan[currentDay] : null
     const progressPercentage = Math.round(
         ((currentBodyFat - goalBodyFat) / currentBodyFat) * 100
     )
@@ -326,64 +325,78 @@ function DietPlanModal({
                     </Tabs>
                 </div>
 
-                <div className="space-y-3">
-                    {Object.entries(dayPlan).map(([mealType, meal]) => (
-                        <div
-                            key={mealType}
-                            className="border rounded-lg p-3 cursor-pointer hover:bg-gray-50 transition-colors"
-                            onClick={() => toggleMealExpansion(mealType)}
-                        >
-                            <div className="flex justify-between items-center">
-                                <div>
-                                    <div className="flex items-center gap-2">
-                                        {mealType === "breakfast" && (
-                                            <span>🥣</span>
-                                        )}
-                                        {mealType === "lunch" && (
-                                            <span>🍲</span>
-                                        )}
-                                        {mealType === "dinner" && (
-                                            <span>🍽️</span>
-                                        )}
-                                        {mealType === "snack" && (
-                                            <span>🥪</span>
-                                        )}
-                                        <h3 className="font-medium capitalize">
-                                            {mealType}: {meal.name}
-                                        </h3>
+                {mealPlan ? (
+                    <div className="space-y-3">
+                        {Object.entries(dayPlan!).map(([mealType, meal]) => (
+                            <div
+                                key={mealType}
+                                className="border rounded-lg p-3 cursor-pointer hover:bg-gray-50 transition-colors"
+                                onClick={() => toggleMealExpansion(mealType)}
+                            >
+                                <div className="flex justify-between items-center">
+                                    <div>
+                                        <div className="flex items-center gap-2">
+                                            {mealType === "breakfast" && (
+                                                <span>🥣</span>
+                                            )}
+                                            {mealType === "lunch" && (
+                                                <span>🍲</span>
+                                            )}
+                                            {mealType === "dinner" && (
+                                                <span>🍽️</span>
+                                            )}
+                                            {mealType === "snack" && (
+                                                <span>🥪</span>
+                                            )}
+                                            <h3 className="font-medium capitalize">
+                                                {mealType}: {meal.name}
+                                            </h3>
+                                        </div>
+                                        <div className="text-sm text-gray-600 mt-1">
+                                            Calories: {meal.calories} kcal |
+                                            Protein: {meal.protein}g | Carbs:{" "}
+                                            {meal.carbs}g | Fats: {meal.fats}g
+                                        </div>
                                     </div>
-                                    <div className="text-sm text-gray-600 mt-1">
-                                        Calories: {meal.calories} kcal |
-                                        Protein: {meal.protein}g | Carbs:{" "}
-                                        {meal.carbs}g | Fats: {meal.fats}g
+                                    <div>
+                                        {expandedMeal === mealType ? (
+                                            <ChevronUp size={18} />
+                                        ) : (
+                                            <ChevronDown size={18} />
+                                        )}
                                     </div>
                                 </div>
-                                <div>
-                                    {expandedMeal === mealType ? (
-                                        <ChevronUp size={18} />
-                                    ) : (
-                                        <ChevronDown size={18} />
-                                    )}
-                                </div>
-                            </div>
 
-                            {expandedMeal === mealType && (
-                                <div className="mt-3 pt-3 border-t text-sm">
-                                    <h4 className="font-medium mb-2">
-                                        Instructions:
-                                    </h4>
-                                    <ol className="list-decimal pl-5 space-y-1 text-gray-600">
-                                        {meal.instructions.map(
-                                            (step: string, index: number) => (
-                                                <li key={index}>{step}</li>
-                                            )
-                                        )}
-                                    </ol>
-                                </div>
-                            )}
+                                {expandedMeal === mealType && (
+                                    <div className="mt-3 pt-3 border-t text-sm">
+                                        <h4 className="font-medium mb-2">
+                                            Instructions:
+                                        </h4>
+                                        <ol className="list-decimal pl-5 space-y-1 text-gray-600">
+                                            {meal.instructions.map(
+                                                (
+                                                    step: string,
+                                                    index: number
+                                                ) => (
+                                                    <li key={index}>{step}</li>
+                                                )
+                                            )}
+                                        </ol>
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <>
+                        <div className="flex items-center justify-center gap-2">
+                            <Loader2 className="animate-spin h-8 w-8 text-blue-500" />
+                            <p className="ml-2 text-gray-500">
+                                Loading meal plan...
+                            </p>
                         </div>
-                    ))}
-                </div>
+                    </>
+                )}
             </div>
         </DialogContent>
     )
