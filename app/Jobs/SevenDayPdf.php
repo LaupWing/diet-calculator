@@ -18,6 +18,7 @@ class SevenDayPdf implements ShouldQueue
     use Queueable;
 
     public $timeout = 600;
+    public $tries = 3;
 
     /**
      * Create a new job instance.
