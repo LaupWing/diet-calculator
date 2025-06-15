@@ -64,7 +64,6 @@ export default function Welcome() {
     if (!page.props.flash.data) {
         router.replace("/")
     }
-    console.log(page.props.flash.data)
 
     const form = useForm({
         email: "",
@@ -79,7 +78,7 @@ export default function Welcome() {
     const { toast } = useToast()
 
     useEffect(() => {
-        const test = async () => {
+        const getMeals = async () => {
             const res = await fetch(route("get-meals"), {
                 method: "POST",
                 headers: {
@@ -93,7 +92,13 @@ export default function Welcome() {
             const data = await res.json()
             form.setData("meal_plan", data.meal_plan)
         }
-        test()
+        getMeals()
+        if (typeof window.gtag === "function") {
+            window.gtag("event", "page_view", {
+                page_path: window.location.pathname,
+                page_title: document.title,
+            })
+        }
     }, [])
 
     const handleSubmit = (e: React.FormEvent) => {
